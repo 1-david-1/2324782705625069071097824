@@ -11,6 +11,7 @@
     rel="stylesheet">
   <style>
     :root {
+      --nav-h: 68px;
       --ink: #0b0e1a;
       --ink2: #1c2238;
       --green: #1dba6e;
@@ -36,7 +37,7 @@
     }
 
     html {
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
       font-size: 16px;
     }
 
@@ -46,6 +47,12 @@
       color: var(--ink);
       overflow-x: hidden;
       cursor: none;
+    }
+
+
+    .hero {
+      background-image: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(29,186,110,.045) 0%, transparent 65%),
+                        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(11,14,26,.0) 0%, transparent 100%);
     }
 
     /* CUSTOM CURSOR */
@@ -112,7 +119,7 @@
       left: 0;
       right: 0;
       z-index: 500;
-      height: 68px;
+      height: var(--nav-h);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -231,7 +238,7 @@
     .mob-menu {
       display: none;
       position: fixed;
-      top: 68px;
+      top: var(--nav-h);
       inset-inline: 0;
       z-index: 499;
       background: rgba(245, 243, 238, .97);
@@ -244,6 +251,10 @@
 
     .mob-menu.open {
       display: flex;
+    }
+
+    nav.nav-shrink + .mob-menu {
+      top: 52px;
     }
 
     .mob-menu a {
@@ -260,7 +271,7 @@
       min-height: 100vh;
       display: grid;
       grid-template-rows: 1fr auto;
-      padding-top: 68px;
+      padding-top: var(--nav-h);
       overflow: hidden;
     }
 
@@ -484,7 +495,7 @@
 
     /* ── SERVICES PAGE ── */
     .page-hero {
-      padding: calc(68px + 5rem) clamp(1.5rem, 5vw, 4rem) 4rem;
+      padding: calc(var(--nav-h) + 5rem) clamp(1.5rem, 5vw, 4rem) 4rem;
       border-bottom: 1px solid var(--border);
     }
 
@@ -733,15 +744,15 @@
     .services-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
-      min-height: calc(100vh - 68px);
+      min-height: calc(100vh - var(--nav-h));
     }
 
     .services-nav {
       border-right: 1px solid var(--border);
       padding: 3rem 2rem;
       position: sticky;
-      top: 68px;
-      height: calc(100vh - 68px);
+      top: var(--nav-h);
+      height: calc(100vh - var(--nav-h));
       overflow-y: auto;
     }
 
@@ -885,7 +896,7 @@
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: calc(100vh - 68px);
+      min-height: calc(100vh - var(--nav-h));
     }
 
     .about-left {
@@ -1018,7 +1029,7 @@
     .contact-split {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: calc(100vh - 68px);
+      min-height: calc(100vh - var(--nav-h));
     }
 
     .contact-left {
@@ -1528,7 +1539,7 @@
 
     /* ── TIPS PAGE ── */
     .tips-hero {
-      padding: calc(68px + 4rem) clamp(1.5rem, 5vw, 4rem) 3rem;
+      padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 4rem) 3rem;
       border-bottom: 1px solid var(--border);
     }
     .tips-filter-bar {
@@ -1819,14 +1830,550 @@
       font-family: var(--M);
       letter-spacing: .04em;
     }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: .025;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    body > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    body.cursor-off,
+    body.cursor-off * {
+      cursor: auto !important;
+    }
+
+    body.cursor-off #cursor,
+    body.cursor-off #cursor-ring {
+      display: none !important;
+    }
+
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      z-index: 950;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+
+    .progress-bar.visible {
+      opacity: 1;
+    }
+
+    .progress-bar-fill {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), var(--green-l));
+      transform-origin: left;
+      box-shadow: 0 0 18px rgba(29, 186, 110, .35);
+    }
+
+    .page-wipe {
+      position: fixed;
+      inset: 0;
+      z-index: 980;
+      background: var(--green);
+      transform: translateX(-100%);
+      pointer-events: none;
+    }
+
+    .preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 990;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .7s cubic-bezier(.22, 1, .36, 1), opacity .45s ease;
+    }
+
+    .preloader.hide {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    .preloader-inner {
+      width: min(420px, calc(100vw - 3rem));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+      text-align: center;
+    }
+
+    .preloader-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: .85rem;
+      font-family: var(--H);
+      font-weight: 800;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      letter-spacing: -.04em;
+    }
+
+    .preloader-brand svg {
+      width: 38px;
+      flex-shrink: 0;
+    }
+
+    .preloader-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(11, 14, 26, .08);
+      overflow: hidden;
+    }
+
+    .preloader-bar {
+      width: 45%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--green), var(--green-l));
+      animation: loaderBar 1.1s ease-in-out infinite;
+    }
+
+    @keyframes loaderBar {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(260%);
+      }
+    }
+
+    nav {
+      transition: height .28s ease, padding .28s ease, box-shadow .28s ease, background .28s ease;
+    }
+
+    nav.nav-shrink {
+      height: 52px;
+      box-shadow: 0 14px 34px rgba(11, 14, 26, .08);
+      background: rgba(245, 243, 238, 0.94);
+    }
+
+    nav.nav-shrink .logo {
+      font-size: 1.02rem;
+    }
+
+    nav.nav-shrink .nav-links a,
+    nav.nav-shrink .nav-cta {
+      font-size: .78rem !important;
+    }
+
+    .nav-links a:focus-visible,
+    .nav-cta:focus-visible,
+    .btn-ink:focus-visible,
+    .btn-ghost:focus-visible,
+    .faq-q:focus-visible,
+    .ham:focus-visible,
+    .mob-menu a:focus-visible,
+    .tips-filter-btn:focus-visible,
+    .svc-cat-tab:focus-visible,
+    .btn-submit:focus-visible,
+    .floating-wa:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 4px;
+    }
+
+    .hero-h1.ready .hero-word-clip {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+      padding-bottom: .06em;
+      margin-right: .12em;
+    }
+
+    .hero-h1.ready .hero-word {
+      display: inline-block;
+      transform: translateY(100%);
+      opacity: 0;
+      animation: wordReveal .6s cubic-bezier(.22, 1, .36, 1) forwards;
+      animation-delay: var(--word-delay, 0ms);
+    }
+
+    .hero-h1.ready .hero-word.no-animate {
+      transform: none;
+      opacity: 1;
+      animation: none;
+    }
+
+    @keyframes wordReveal {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .magnetic {
+      will-change: transform;
+      transition: transform .22s ease, box-shadow .2s, background .2s, color .2s;
+    }
+
+    .spotlight-card,
+    .hover-underline-card {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .spotlight-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(29, 186, 110, 0.12), transparent 60%);
+      opacity: 0;
+      transition: opacity .25s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .spotlight-card:hover::before,
+    .spotlight-card:focus-within::before {
+      opacity: 1;
+    }
+
+    .spotlight-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hover-underline-card::after {
+      content: '';
+      position: absolute;
+      left: 16%;
+      right: 16%;
+      bottom: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--green);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .28s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hover-underline-card:hover::after,
+    .hover-underline-card:focus-within::after {
+      transform: scaleX(1);
+    }
+
+    .intro-cell,
+    .panel-feat,
+    .faq-card {
+      position: relative;
+    }
+
+    .home-section {
+      padding: 5.5rem clamp(1.5rem, 5vw, 4rem);
+      border-top: 1px solid var(--border);
+    }
+
+    .testimonials-wrap {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 2.25rem;
+    }
+
+    .testimonial-card {
+      min-height: 100%;
+      background: rgba(255, 255, 255, .52);
+      border: 1px solid rgba(255, 255, 255, .48);
+      border-radius: 18px;
+      padding: 1.7rem;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 16px 38px rgba(11, 14, 26, .06);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(29, 186, 110, .32);
+      box-shadow: 0 20px 44px rgba(11, 14, 26, .08);
+    }
+
+    .testimonial-stars {
+      display: inline-flex;
+      gap: .2rem;
+      color: var(--green);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card p {
+      color: var(--ink2);
+      line-height: 1.75;
+      font-size: .92rem;
+    }
+
+    .testimonial-meta {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(11, 14, 26, .08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .testimonial-name {
+      font-family: var(--H);
+      font-size: .98rem;
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+
+    .testimonial-type {
+      font-family: var(--M);
+      font-size: .66rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--green);
+      padding: .36rem .72rem;
+      border-radius: 999px;
+      background: rgba(29, 186, 110, .1);
+      border: 1px solid rgba(29, 186, 110, .18);
+    }
+
+    .home-faq-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 2.2rem;
+      align-items: start;
+    }
+
+    .home-faq-copy p:last-child {
+      color: var(--muted);
+      max-width: 460px;
+      line-height: 1.75;
+    }
+
+    .home-faq-list {
+      display: grid;
+      gap: .9rem;
+    }
+
+    .home-faq-list .faq-card {
+      background: rgba(255, 255, 255, .82);
+    }
+
+    .toast-stack {
+      position: fixed;
+      right: 1.25rem;
+      bottom: 6.2rem;
+      z-index: 960;
+      display: grid;
+      gap: .7rem;
+      width: min(360px, calc(100vw - 2rem));
+      pointer-events: none;
+    }
+
+    .toast {
+      background: rgba(11, 14, 26, .96);
+      color: var(--cream);
+      border-radius: 16px;
+      padding: .95rem 1rem;
+      box-shadow: 0 16px 40px rgba(11, 14, 26, .24);
+      transform: translateY(18px);
+      opacity: 0;
+      transition: transform .28s ease, opacity .28s ease;
+      border-left: 4px solid var(--green);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.error {
+      border-left-color: #d94b4b;
+    }
+
+    .toast-title {
+      font-family: var(--H);
+      font-weight: 700;
+      font-size: .92rem;
+      margin-bottom: .2rem;
+    }
+
+    .toast p {
+      font-size: .84rem;
+      line-height: 1.6;
+      color: rgba(245, 243, 238, .76);
+    }
+
+    .floating-wa-wrap {
+      position: fixed;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 955;
+    }
+
+    .floating-wa-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 999px;
+      border: 2px solid var(--green);
+      opacity: .45;
+      animation: pulseRing 2s ease-out infinite;
+      pointer-events: none;
+    }
+
+    .floating-wa {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--green);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 34px rgba(29, 186, 110, .28);
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      cursor: none;
+    }
+
+    .floating-wa:hover {
+      transform: translateY(-3px);
+      background: var(--green-l);
+      box-shadow: 0 18px 38px rgba(29, 186, 110, .34);
+    }
+
+    .floating-wa svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    .wa-tooltip {
+      position: absolute;
+      right: 70px;
+      top: 50%;
+      transform: translateY(-50%) translateX(8px);
+      background: rgba(11, 14, 26, .94);
+      color: var(--cream);
+      padding: .55rem .8rem;
+      border-radius: 10px;
+      font-size: .78rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      box-shadow: 0 10px 26px rgba(11, 14, 26, .18);
+    }
+
+    .floating-wa-wrap:hover .wa-tooltip,
+    .floating-wa-wrap:focus-within .wa-tooltip {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    .scramble-ready {
+      min-width: 1px;
+    }
+
+    @media(max-width:900px) {
+      .testimonials-wrap,
+      .home-faq-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width:600px) {
+      .toast-stack {
+        right: 1rem;
+        left: 1rem;
+        width: auto;
+        bottom: 5.8rem;
+      }
+
+      .floating-wa-wrap {
+        right: 1rem;
+        bottom: 1rem;
+      }
+
+      .wa-tooltip {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition-duration: 0s !important;
+        scroll-behavior: auto !important;
+      }
+
+      .sr,
+      .sr-l,
+      .sr-r {
+        opacity: 1;
+        transform: none;
+      }
+    }
   </style>
 </head>
 
 <body>
 
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <div class="preloader-brand">
+        <svg viewBox="0 0 40 40" fill="none">
+          <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" />
+          <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        <span>InboxElevate</span>
+      </div>
+      <div class="preloader-track"><div class="preloader-bar"></div></div>
+    </div>
+  </div>
+
+  <div class="page-wipe" id="pageWipe" aria-hidden="true"></div>
+  <div class="progress-bar" id="scrollProgress" aria-hidden="true"><div class="progress-bar-fill" id="scrollProgressFill"></div></div>
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+
   <!-- Custom Cursor -->
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
+
+  <div class="floating-wa-wrap">
+    <span class="wa-tooltip">Direkt auf WhatsApp schreiben</span>
+    <a class="floating-wa" href="https://wa.me/49BITTEERSETZEN" data-placeholder="true" target="_blank" rel="noopener noreferrer" aria-label="Direkt auf WhatsApp schreiben">
+      <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+        <path d="M27.2 4.8A15.32 15.32 0 0 0 16.11.2C7.67.2.8 7.07.8 15.51c0 2.72.71 5.38 2.06 7.72L.6 31.4l8.38-2.2a15.28 15.28 0 0 0 7.13 1.81h.01c8.44 0 15.31-6.87 15.31-15.31 0-4.09-1.59-7.93-4.23-10.9Zm-11.09 23.6h-.01a12.9 12.9 0 0 1-6.58-1.8l-.47-.28-4.97 1.3 1.33-4.84-.31-.5a12.75 12.75 0 0 1-1.98-6.78c0-7.02 5.71-12.73 12.73-12.73 3.4 0 6.6 1.32 9 3.73a12.66 12.66 0 0 1 3.72 9c0 7.02-5.71 12.73-12.46 12.9Zm6.99-9.54c-.38-.19-2.24-1.1-2.59-1.23-.34-.13-.59-.19-.84.19-.25.38-.97 1.23-1.19 1.48-.22.25-.44.28-.81.09-.38-.19-1.59-.58-3.03-1.85-1.12-1-1.88-2.24-2.1-2.62-.22-.38-.02-.58.17-.77.17-.17.38-.44.56-.66.19-.22.25-.38.38-.63.12-.25.06-.47-.03-.66-.09-.19-.84-2.03-1.16-2.78-.31-.74-.63-.63-.84-.64l-.72-.02c-.25 0-.66.09-1 .47-.34.38-1.31 1.28-1.31 3.13 0 1.84 1.34 3.62 1.53 3.88.19.25 2.64 4.03 6.39 5.65.89.38 1.58.61 2.13.78.89.28 1.7.24 2.34.14.71-.11 2.24-.91 2.56-1.78.31-.88.31-1.63.22-1.78-.09-.16-.34-.25-.72-.44Z"/>
+      </svg>
+    </a>
+  </div>
 
   <!-- NAV -->
   <nav id="nav">
@@ -1848,7 +2395,7 @@
       <li><a href="#" onclick="navigate('tips');return false;" data-page="tips">Tipps</a></li>
       <li><a href="#" onclick="navigate('contact');return false;" class="nav-cta" data-page="contact">Kontakt <span class="nav-arrow">→</span></a></li>
     </ul>
-    <button class="ham" id="ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
+    <button class="ham" id="ham" onclick="toggleMob()" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
   </nav>
 
   <div class="mob-menu" id="mobMenu">
@@ -1864,14 +2411,14 @@
   <div id="page-home" class="page active">
     <section class="hero">
       <div class="hero-inner">
-        <div class="hero-label sr">Performance Marketing · Webentwicklung · Sicherheitsbranche</div>
+        <div class="hero-label sr">Spezialisierte Marketing-Agentur · Ausschließlich für Sicherheitsunternehmen</div>
         <h1 class="hero-h1 sr" data-d="1">
           <span id="tw-line1">Mehr qualifizierte</span><br>
           <span id="tw-line2">Anfragen für</span><br>
           <span class="hero-tw-line"><span id="tw-text"></span><span class="tw-cursor"></span></span>
         </h1>
         <div class="hero-sub-row">
-          <p class="hero-p sr" data-d="2">Wir unterstützen Sicherheitsdienste und Anbieter für Alarmanlagen dabei, planbar neue Anfragen und Bewerbungen zu gewinnen.</p>
+          <p class="hero-p sr" data-d="2">Sicherheitsunternehmen, die planbar wachsen wollen, brauchen mehr als eine Website. Sie brauchen ein System. Genau das bauen wir.</p>
           <div class="hero-actions sr" data-d="3">
             <div class="btn-pulse-wrap">
               <a href="#" onclick="navigate('contact');return false;" class="btn-ink">
@@ -1896,6 +2443,10 @@
           <span>Objektschutz</span><span class="dot">·</span>
           <span>Revierdienst</span><span class="dot">·</span>
           <span>Sicherheitsmitarbeiter gewinnen</span><span class="dot">·</span>
+          <span>LinkedIn Ads</span><span class="dot">·</span>
+          <span>Conversion-Optimierung</span><span class="dot">·</span>
+          <span>Pfortendienst</span><span class="dot">·</span>
+          <span>Veranstaltungsschutz</span><span class="dot">·</span>
           <span>Google Ads</span><span class="dot">·</span>
           <span>Meta Ads</span><span class="dot">·</span>
           <span>Webseiten für Sicherheitsfirmen</span><span class="dot">·</span>
@@ -1903,6 +2454,10 @@
           <span>Objektschutz</span><span class="dot">·</span>
           <span>Revierdienst</span><span class="dot">·</span>
           <span>Sicherheitsmitarbeiter gewinnen</span><span class="dot">·</span>
+          <span>LinkedIn Ads</span><span class="dot">·</span>
+          <span>Conversion-Optimierung</span><span class="dot">·</span>
+          <span>Pfortendienst</span><span class="dot">·</span>
+          <span>Veranstaltungsschutz</span><span class="dot">·</span>
         </div>
       </div>
     </section>
@@ -1910,8 +2465,8 @@
     <!-- Animated Stats Strip -->
     <div class="home-stats" id="homeStats">
       <div class="home-stat">
-        <div class="n"><span class="stat-counter" data-target="48" data-suffix="h">0h</span></div>
-        <div class="l">Reaktionszeit</div>
+        <div class="n"><span class="stat-counter" data-target="24" data-suffix="h">0h</span></div>
+        <div class="l">Antwort in unter</div>
       </div>
       <div class="home-stat">
         <div class="n"><span class="stat-counter" data-target="100" data-suffix="%">0%</span></div>
@@ -1929,17 +2484,17 @@
 
     <!-- Intro strip -->
     <div class="intro-strip">
-      <div class="intro-cell sr" onclick="navigate('services');return false;" style="cursor:none;">
+      <div class="intro-cell sr spotlight-card hover-underline-card" onclick="navigate('services');return false;" onkeydown="handleKeyAction(event, function(){ navigate('services'); })" role="button" tabindex="0" style="cursor:none;">
         <div class="intro-num">01 / Webseiten</div>
         <h3>Webseiten, die Anfragen bringen</h3>
         <p>Speziell für Sicherheitsunternehmen: Notrufnummer sichtbar, Vertrauen aufgebaut, Besucher zu Kunden gemacht.</p>
       </div>
-      <div class="intro-cell sr" data-d="1" onclick="navigate('services');return false;" style="cursor:none;">
+      <div class="intro-cell sr spotlight-card hover-underline-card" data-d="1" onclick="navigate('services');return false;" onkeydown="handleKeyAction(event, function(){ navigate('services'); })" role="button" tabindex="0" style="cursor:none;">
         <div class="intro-num">02 / Paid Ads</div>
         <h3>Ads mit echtem Ergebnis</h3>
         <p>Google Search und Meta Ads gezielt für Alarmanlagen-Anfragen, Objektschutz-Leads und Bewerbungen von Sicherheitsmitarbeitern.</p>
       </div>
-      <div class="intro-cell sr" data-d="2" onclick="navigate('services');return false;" style="cursor:none;">
+      <div class="intro-cell sr spotlight-card hover-underline-card" data-d="2" onclick="navigate('services');return false;" onkeydown="handleKeyAction(event, function(){ navigate('services'); })" role="button" tabindex="0" style="cursor:none;">
         <div class="intro-num">03 / Strategie</div>
         <h3>Strategie vor Ausführung</h3>
         <p>Jede Maßnahme beginnt mit einem Plan. Wir denken zuerst, dann machen wir — und das merkt man im Ergebnis.</p>
@@ -1950,22 +2505,51 @@
     <section style="padding:5rem clamp(1.5rem,5vw,4rem);background:var(--ink);color:var(--cream);">
       <p style="font-family:var(--M);font-size:.7rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">Kommt dir das bekannt vor?</p>
       <h2 style="font-family:var(--H);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-.05em;line-height:1.05;margin-bottom:2.5rem;">Probleme, die wir<br><span style="color:var(--green)">kennen und lösen.</span></h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:1.6rem;">
-          <div style="font-size:1.3rem;margin-bottom:.8rem;">📉</div>
-          <p style="font-size:.92rem;line-height:1.65;color:rgba(245,243,238,.75);">Deine Website bringt kaum Anfragen</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:rgba(255,255,255,.07);border-radius:var(--r);overflow:hidden;">
+        <div style="background:#0d1022;padding:2rem 1.8rem;transition:background .2s;" onmouseover="this.style.background='#111527'" onmouseout="this.style.background='#0d1022'">
+          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.2rem;opacity:.7;">01</div>
+          <p style="font-size:1rem;line-height:1.55;color:rgba(245,243,238,.85);font-family:var(--H);font-weight:600;letter-spacing:-.02em;">Website bringt kaum Anfragen</p>
+          <p style="font-size:.8rem;color:rgba(245,243,238,.4);margin-top:.5rem;line-height:1.6;">Besucher kommen — und springen sofort wieder ab.</p>
         </div>
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:1.6rem;">
-          <div style="font-size:1.3rem;margin-bottom:.8rem;">🎯</div>
-          <p style="font-size:.92rem;line-height:1.65;color:rgba(245,243,238,.75);">Du bekommst zu viele unqualifizierte Anfragen</p>
+        <div style="background:#0d1022;padding:2rem 1.8rem;transition:background .2s;" onmouseover="this.style.background='#111527'" onmouseout="this.style.background='#0d1022'">
+          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.2rem;opacity:.7;">02</div>
+          <p style="font-size:1rem;line-height:1.55;color:rgba(245,243,238,.85);font-family:var(--H);font-weight:600;letter-spacing:-.02em;">Zu viele unqualifizierte Anfragen</p>
+          <p style="font-size:.8rem;color:rgba(245,243,238,.4);margin-top:.5rem;line-height:1.6;">Dein Vertrieb kämpft mit Leads, die nie kaufen werden.</p>
         </div>
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:1.6rem;">
-          <div style="font-size:1.3rem;margin-bottom:.8rem;">👷</div>
-          <p style="font-size:.92rem;line-height:1.65;color:rgba(245,243,238,.75);">Du findest schwer neue Sicherheitsmitarbeiter</p>
+        <div style="background:#0d1022;padding:2rem 1.8rem;transition:background .2s;" onmouseover="this.style.background='#111527'" onmouseout="this.style.background='#0d1022'">
+          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.2rem;opacity:.7;">03</div>
+          <p style="font-size:1rem;line-height:1.55;color:rgba(245,243,238,.85);font-family:var(--H);font-weight:600;letter-spacing:-.02em;">Neue Mitarbeiter kaum zu finden</p>
+          <p style="font-size:.8rem;color:rgba(245,243,238,.4);margin-top:.5rem;line-height:1.6;">Bewerbungen bleiben aus — trotz offener Stellen.</p>
         </div>
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:1.6rem;">
-          <div style="font-size:1.3rem;margin-bottom:.8rem;">🔍</div>
-          <p style="font-size:.92rem;line-height:1.65;color:rgba(245,243,238,.75);">Deine Wettbewerber sind bei Google sichtbarer als du</p>
+        <div style="background:#0d1022;padding:2rem 1.8rem;transition:background .2s;" onmouseover="this.style.background='#111527'" onmouseout="this.style.background='#0d1022'">
+          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.2rem;opacity:.7;">04</div>
+          <p style="font-size:1rem;line-height:1.55;color:rgba(245,243,238,.85);font-family:var(--H);font-weight:600;letter-spacing:-.02em;">Wettbewerber bei Google vorne</p>
+          <p style="font-size:.8rem;color:rgba(245,243,238,.4);margin-top:.5rem;line-height:1.6;">Du wirst nicht gefunden — sie schon.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section">
+      <p class="page-label sr">Was du von uns bekommst</p>
+      <div class="home-faq-copy sr" data-d="1" style="margin-bottom:2.5rem;">
+        <h2 style="font-family:var(--H);font-size:clamp(2rem,4vw,3.2rem);font-weight:800;letter-spacing:-.05em;line-height:1.05;">Drei Versprechen.<br><span style="color:var(--green);">Die wir auch halten.</span></h2>
+        <p style="color:var(--muted);margin-top:1rem;font-size:.95rem;line-height:1.7;max-width:520px;">Wir sind eine neue Agentur — und genau deshalb haben wir jeden Grund, bei jedem Kunden hundert Prozent zu geben.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--border);border-radius:var(--r);overflow:hidden;" class="sr-r">
+        <div class="spotlight-card" style="background:var(--white);padding:2.5rem 2rem;position:relative;">
+          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">01 / Transparenz</div>
+          <h3 style="font-family:var(--H);font-size:1.35rem;font-weight:800;letter-spacing:-.04em;margin-bottom:.8rem;">Kein Bullshit-Reporting.</h3>
+          <p style="font-size:.88rem;color:var(--muted);line-height:1.7;">Du bekommst jeden Monat einen klaren Bericht: was läuft, was nicht, was als nächstes. Keine Folienschlachten, keine Buzzwords — auch dann nicht, wenn ein Monat schwierig war.</p>
+        </div>
+        <div class="spotlight-card" style="background:var(--white);padding:2.5rem 2rem;position:relative;">
+          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">02 / Erreichbarkeit</div>
+          <h3 style="font-family:var(--H);font-size:1.35rem;font-weight:800;letter-spacing:-.04em;margin-bottom:.8rem;">Ein Ansprechpartner. Immer.</h3>
+          <p style="font-size:.88rem;color:var(--muted);line-height:1.7;">Kein wechselndes Projektteam, kein Ticketsystem. Du schreibst die Person, die deine Kampagne wirklich betreut — und bekommst eine ehrliche Antwort, keine Vertretung.</p>
+        </div>
+        <div class="spotlight-card" style="background:var(--white);padding:2.5rem 2rem;position:relative;">
+          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">03 / Ehrlichkeit</div>
+          <h3 style="font-family:var(--H);font-size:1.35rem;font-weight:800;letter-spacing:-.04em;margin-bottom:.8rem;">Wir sagen, was nicht klappt.</h3>
+          <p style="font-size:.88rem;color:var(--muted);line-height:1.7;">Wenn eine Maßnahme nicht die Ergebnisse bringt, die wir erwartet haben, sagen wir das direkt — bevor du es in der nächsten Rechnung siehst. Und dann machen wir einen neuen Plan.</p>
         </div>
       </div>
     </section>
@@ -1980,7 +2564,7 @@
           data-d="1">
           Fester Ansprechpartner.<br>Klare Ergebnisse.<br><span style="color:var(--green)">Kein Blabla.</span>
         </h2>
-        <p class="sr" style="color:var(--muted);margin-top:1.2rem;line-height:1.75;max-width:420px;" data-d="2">Wir bauen unsere Expertise in der Sicherheitsbranche gezielt auf — mit Fokus auf echte Partnerschaften statt schnellen Abschlüssen.</p>
+        <p class="sr" style="color:var(--muted);margin-top:1.2rem;line-height:1.75;max-width:420px;" data-d="2">Fester Ansprechpartner, transparente Reports, klare Ergebnisse — von der ersten Kampagne an. Keine Versprechen, die wir nicht halten können.</p>
         <a href="#" onclick="navigate('about');return false;" class="btn-ghost sr"
           style="margin-top:2rem;display:inline-flex;" data-d="3">Mehr über uns erfahren <span
             class="btn-arrow">→</span></a>
@@ -1989,19 +2573,55 @@
         <div style="background:var(--ink);color:var(--cream);border-radius:20px;padding:2rem;grid-column:span 2;">
           <div style="font-family:var(--H);font-size:2.5rem;font-weight:800;letter-spacing:-.04em;">Direkt.
             Transparent.<br><span style="color:var(--green)">Ergebnisorientiert.</span></div>
-          <p style="color:rgba(245,243,238,.5);font-size:.85rem;margin-top:.8rem;">Fester Ansprechpartner statt wechselnder Projektteams. DSGVO-konformes Tracking. Hosting in der EU.</p>
+          <p style="color:rgba(245,243,238,.5);font-size:.85rem;margin-top:.8rem;">Fester Ansprechpartner. DSGVO-konformes Tracking. Cloudflare-Hosting mit EU-Rechenzentren.</p>
         </div>
         <div
           style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.8rem;text-align:center;">
           <div style="font-family:var(--H);font-size:2.2rem;font-weight:800;color:var(--green);letter-spacing:-.04em;">
-            48h</div>
-          <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Reaktionszeit</p>
+            &lt;24h</div>
+          <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Antwortzeit</p>
         </div>
         <div
           style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.8rem;text-align:center;">
           <div style="font-family:var(--H);font-size:2.2rem;font-weight:800;color:var(--ink);letter-spacing:-.04em;">100%
           </div>
           <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Fokus auf dich</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section">
+      <div class="home-faq-grid">
+        <div class="home-faq-copy">
+          <p class="page-label sr">FAQ</p>
+          <h2 class="sr" data-d="1" style="font-family:var(--H);font-size:clamp(2rem,4vw,3.2rem);font-weight:800;letter-spacing:-.05em;line-height:1.05;margin-bottom:1rem;">Fragen, die im Erstgespraech fast immer <span style="color:var(--green);">auf den Tisch kommen.</span></h2>
+          <p class="sr" data-d="2">Von Preisrahmen bis Erwartungsmanagement: hier sind die Punkte, die B2B-Sicherheitsfirmen vor dem Start meistens klaeren wollen.</p>
+        </div>
+        <div class="home-faq-list sr-r">
+          <div class="faq-card hover-underline-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Mit welchem Budget sollten wir rechnen? <span class="faq-ico">+</span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Das haengt vom Kanal und vom Ziel ab. Fuer Websites arbeiten wir projektbasiert, fuer Ads mit fixer Betreuung plus Mediabudget. Im Erstgespraech sagen wir dir offen, was fuer eure Ausgangslage realistisch ist.</p></div></div>
+          </div>
+          <div class="faq-card hover-underline-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Wie lange laeuft eine Zusammenarbeit typischerweise? <span class="faq-ico">+</span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Webprojekte sind klar abgegrenzt. Bei Ads ist eine Laufzeit von mehreren Monaten sinnvoll, weil wir Kampagnen erst aufsetzen, dann Daten sammeln und anschliessend sauber optimieren.</p></div></div>
+          </div>
+          <div class="faq-card hover-underline-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Wann sehen wir erste Ergebnisse? <span class="faq-ico">+</span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Erste Signale sehen wir oft schon in den ersten Wochen. Belastbare Aussagen kommen in der Regel nach der ersten Lernphase, sobald genug Daten fuer Optimierungen vorliegen.</p></div></div>
+          </div>
+          <div class="faq-card hover-underline-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Arbeitet ihr auch mit bestehenden Websites oder Accounts? <span class="faq-ico">+</span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Ja. Wenn vorhandene Assets Potenzial haben, bauen wir darauf auf. Wir pruefen zuerst, was tragfaehig ist und was euch eher bremst, statt alles pauschal neu zu machen.</p></div></div>
+          </div>
+          <div class="faq-card hover-underline-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Wie stark muessen wir intern eingebunden sein? <span class="faq-ico">+</span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Wir brauchen zu Beginn klare Ziele, Einblicke in eure Leistungen und schnelles Feedback. Danach halten wir die Schleifen bewusst schlank, damit eure Mannschaft im Alltag nicht ausgebremst wird.</p></div></div>
+          </div>
+          <div class="faq-card hover-underline-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Was unterscheidet euch von allgemeinen Marketing-Agenturen? <span class="faq-ico">+</span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Wir denken Kommunikation, Vertrauen und Lead-Qualitaet speziell fuer Sicherheitsunternehmen. Dadurch sehen Landingpages, Angebote und Kampagnen bei uns nicht generisch aus, sondern treffen eure reale Vertriebsarbeit.</p></div></div>
+          </div>
         </div>
       </div>
     </section>
@@ -2054,11 +2674,16 @@
           <a href="#" onclick="navigate('contact');return false;">Anfrage stellen</a>
         </div>
       </div>
+      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
+          <a href="#" onclick="navigate('impressum');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Impressum</a>
+          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
+          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
+        </div>
       <div class="footer-bottom">
         <p>© 2026 InboxElevate. Alle Rechte vorbehalten.</p>
         <div class="socials">
-          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" class="soc">in</a>
-          <a href="#" class="soc">ig</a>
+          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer" class="soc">in</a>
+          <!-- Instagram coming soon -->
           <a href="mailto:david@inbox-elevate.de" class="soc">✉</a>
         </div>
       </div>
@@ -2247,14 +2872,19 @@
         </div>
         <div class="footer-col">
           <h5>Kontakt</h5><a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a><a
-            href="https://www.linkedin.com/company/inboxelevate/" target="_blank">LinkedIn</a>
+            href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
       </div>
+      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
+          <a href="#" onclick="navigate('impressum');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Impressum</a>
+          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
+          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
+        </div>
       <div class="footer-bottom">
         <p>© 2026 InboxElevate. Alle Rechte vorbehalten.</p>
         <div class="socials">
-          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" class="soc">in</a>
-          <a href="#" class="soc">ig</a>
+          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer" class="soc">in</a>
+          <!-- Instagram coming soon -->
           <a href="mailto:david@inbox-elevate.de" class="soc">✉</a>
         </div>
       </div>
@@ -2275,8 +2905,7 @@
         <div class="tl-num">01</div>
         <div class="tl-content">
           <h3>Erstkontakt & Kennenlernen</h3>
-          <p>Du schreibst uns über das Kontaktformular oder per Mail. Innerhalb von 48 Stunden melden wir uns mit einem
-            Terminvorschlag für ein kostenloses 30-minütiges Erstgespräch per Video-Call. Wir lernen dein Unternehmen,
+          <p>Du schreibst uns über das Kontaktformular oder per Mail. Innerhalb eines Werktages melden wir uns mit einem Terminvorschlag für ein kostenloses 30-minütiges Erstgespräch per Video-Call. Wir lernen dein Unternehmen,
             deine Ziele und dein Budget kennen — und du lernst uns kennen. Kein Verkaufsdruck.</p>
           <div class="tl-tags"><span class="tl-tag">Kostenlos</span><span class="tl-tag">30 min</span><span
               class="tl-tag">Video-Call</span></div>
@@ -2365,10 +2994,15 @@
           <h5>Kontakt</h5><a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a>
         </div>
       </div>
+      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
+          <a href="#" onclick="navigate('impressum');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Impressum</a>
+          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
+          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
+        </div>
       <div class="footer-bottom">
         <p>© 2026 InboxElevate.</p>
-        <div class="socials"><a href="https://www.linkedin.com/company/inboxelevate/" target="_blank"
-            class="soc">in</a><a href="#" class="soc">ig</a></div>
+        <div class="socials"><a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer"
+            class="soc">in</a><!-- Instagram coming soon --></div>
       </div>
     </footer>
   </div>
@@ -2381,13 +3015,13 @@
           <p
             style="font-family:var(--M);font-size:.68rem;letter-spacing:.12em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">
             Über InboxElevate</p>
-          <h2>Wir bauen unsere<br>Expertise in der<br><span>Sicherheitsbranche auf.</span></h2>
-          <p style="color:rgba(245,243,238,.5);margin-top:1.2rem;font-size:.95rem;line-height:1.7;">Kein aufgeblähtes Team, keine versteckten Gebühren. Was wir haben: Fokus auf echte Partnerschaften und messbare Ergebnisse — speziell für Sicherheitsunternehmen.</p>
+          <h2>Digitales Marketing.<br>Spezialisiert auf<br><span>die Sicherheitsbranche.</span></h2>
+          <p style="color:rgba(245,243,238,.5);margin-top:1.2rem;font-size:.95rem;line-height:1.7;">Kein aufgeblähtes Agentur-Team. Kein Bullshit-Reporting. Was wir liefern: messbare Ergebnisse — für Sicherheitsunternehmen, die wirklich wachsen wollen.</p>
         </div>
         <div class="about-manifesto">
           <div class="manifesto-item">
             <div class="m-label">Unser Versprechen</div>
-            <p>Fester Ansprechpartner statt wechselnder Projektteams — du weißt immer, mit wem du sprichst.</p>
+            <p>Fester Ansprechpartner, echte Ergebnisse — keine Agentur-Prosa, sondern messbare Arbeit.</p>
           </div>
           <div class="manifesto-item">
             <div class="m-label">Unsere Stärke</div>
@@ -2395,7 +3029,7 @@
           </div>
           <div class="manifesto-item">
             <div class="m-label">Unser Ansporn</div>
-            <p>DSGVO-konforme Tracking-Setups, Hosting in der EU — Sicherheit auch im Marketing.</p>
+            <p>DSGVO-konformes Setup, Cloudflare-Hosting mit EU-Rechenzentren — Sicherheit auch im Marketing.</p>
           </div>
         </div>
       </div>
@@ -2404,32 +3038,32 @@
         <h2
           style="font-family:var(--H);font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;letter-spacing:-.05em;line-height:1.05;">
           Warum Sicherheitsfirmen<br>mit uns arbeiten.</h2>
-        <p style="color:var(--muted);margin-top:1rem;font-size:.9rem;line-height:1.7;">Wir bauen unsere Expertise in der Sicherheitsbranche gezielt auf — mit Fokus auf echte Partnerschaften statt schnellen Abschlüssen.</p>
+        <p style="color:var(--muted);margin-top:1rem;font-size:.9rem;line-height:1.7;">Wir kombinieren fundiertes Performance-Marketing-Know-how mit einem tiefen Verständnis für die Sicherheitsbranche — und dem Anspruch, nur zu versprechen, was wir auch halten.</p>
         <div class="about-values">
           <div class="value-card">
-            <div class="value-icon">🎯</div>
+            <div class="value-icon" style="font-family:var(--M);font-size:.7rem;letter-spacing:.1em;color:var(--green);">01</div>
             <h4>Fester Ansprechpartner</h4>
             <p>Kein wechselndes Projektteam. Du hast immer eine direkte Ansprechperson, die dein Business kennt.</p>
           </div>
           <div class="value-card">
-            <div class="value-icon">📊</div>
+            <div class="value-icon" style="font-family:var(--M);font-size:.7rem;letter-spacing:.1em;color:var(--green);">02</div>
             <h4>Klare Reports</h4>
             <p>Keine Buzzword-Reports. Klare Zahlen, klare Aussagen — auch wenn etwas nicht funktioniert.</p>
           </div>
           <div class="value-card">
-            <div class="value-icon">⚡</div>
+            <div class="value-icon" style="font-family:var(--M);font-size:.7rem;letter-spacing:.1em;color:var(--green);">03</div>
             <h4>Schnelle Reaktion</h4>
             <p>Schnelle Reaktionszeiten, wenn es brennt — weil in der Sicherheitsbranche Verlässlichkeit zählt.</p>
           </div>
           <div class="value-card">
-            <div class="value-icon">🔒</div>
+            <div class="value-icon" style="font-family:var(--M);font-size:.7rem;letter-spacing:.1em;color:var(--green);">04</div>
             <h4>DSGVO-konform</h4>
-            <p>DSGVO-konforme Tracking-Setups und Hosting in der EU — Sicherheit auch im digitalen Marketing.</p>
+            <p>DSGVO-konformes Setup und Cloudflare-Hosting mit EU-Rechenzentren — Sicherheit auch im digitalen Marketing.</p>
           </div>
         </div>
         <div class="about-stat-row">
           <div class="astat">
-            <div class="n">48h</div>
+            <div class="n">&lt;24h</div>
             <div class="l">Erste Antwort</div>
           </div>
           <div class="astat">
@@ -2441,8 +3075,11 @@
             <div class="l">Fokus auf dich</div>
           </div>
         </div>
-        <div style="margin-top:2rem;">
-          <a href="#" onclick="navigate('contact');return false;" class="btn-ink">Kostenlosen Marketing-Check anfordern →</a>
+        <div style="margin-top:2rem;background:rgba(29,186,110,.08);border:1px solid rgba(29,186,110,.18);border-radius:12px;padding:1rem 1.2rem;">
+          <p style="font-size:.82rem;color:var(--muted);line-height:1.65;"><strong style="color:var(--ink);">Wir sind eine neue Agentur</strong> — und genau deshalb haben wir jeden Anreiz, bei jedem Kunden wirklich zu liefern. Keine aufgeblähte Referenzliste, dafür volle Aufmerksamkeit.</p>
+        </div>
+        <div style="margin-top:1.5rem;">
+          <a href="#" onclick="navigate('contact');return false;" class="btn-ink">Gespräch vereinbaren →</a>
         </div>
       </div>
     </div>
@@ -2475,13 +3112,18 @@
         </div>
         <div class="footer-col">
           <h5>Kontakt</h5><a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a><a
-            href="https://www.linkedin.com/company/inboxelevate/" target="_blank">LinkedIn</a>
+            href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
       </div>
+      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
+          <a href="#" onclick="navigate('impressum');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Impressum</a>
+          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
+          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
+        </div>
       <div class="footer-bottom">
         <p>© 2026 InboxElevate.</p>
-        <div class="socials"><a href="https://www.linkedin.com/company/inboxelevate/" target="_blank"
-            class="soc">in</a><a href="#" class="soc">ig</a></div>
+        <div class="socials"><a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer"
+            class="soc">in</a><!-- Instagram coming soon --></div>
       </div>
     </footer>
   </div>
@@ -2494,8 +3136,7 @@
           style="font-family:var(--M);font-size:.68rem;letter-spacing:.12em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;position:relative;z-index:1;">
           Kontakt aufnehmen</p>
         <h2>Lass uns<br>gemeinsam <span>wachsen.</span></h2>
-        <p>Schreib uns kurz, worum es geht — wir melden uns innerhalb von 48 Stunden mit einer ehrlichen Einschätzung
-          und einem konkreten Vorschlag.</p>
+        <p>Schreib uns kurz, worum es geht — wir melden uns am nächsten Werktag mit einer ehrlichen Einschätzung und einem konkreten Vorschlag.</p>
         <div class="contact-details">
           <div class="cd-item">
             <div class="cd-icon">✉️</div>
@@ -2503,7 +3144,7 @@
           </div>
           <div class="cd-item">
             <div class="cd-icon">in</div>
-            <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank">LinkedIn → InboxElevate</a>
+            <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer">LinkedIn → InboxElevate</a>
           </div>
           <div class="cd-item">
             <div class="cd-icon">📍</div>
@@ -2511,7 +3152,7 @@
           </div>
           <div class="cd-item">
             <div class="cd-icon">🕐</div>
-            <span>Antwort innerhalb 48h</span>
+            <span>Antwort in unter 24 Stunden</span>
           </div>
         </div>
       </div>
@@ -2525,6 +3166,7 @@
         <div id="cForm">
           <form id="contactForm" onsubmit="submitForm(event)">
             <input type="hidden" name="_replyto" value="david@inbox-elevate.de">
+            <input type="text" name="_gotcha" style="display:none!important;position:absolute;left:-9999px;" tabindex="-1" autocomplete="off" aria-hidden="true">
             <input type="hidden" name="_subject" value="Neue Anfrage über InboxElevate.de">
             <div class="f-row">
               <div class="f-group"><label>Vorname</label><input type="text" name="vorname" placeholder="Max" required>
@@ -2566,7 +3208,7 @@
         <div class="form-ok" id="cFormOk">
           <div class="ok-icon">🚀</div>
           <h3>Nachricht gesendet!</h3>
-          <p>Wir melden uns innerhalb von 48 Stunden bei dir — versprochen.</p>
+          <p>Wir melden uns spätestens am nächsten Werktag — versprochen.</p>
         </div>
       </div>
     </div>
@@ -2637,7 +3279,7 @@
           <button class="faq-q" onclick="toggleFaq(this)">Habt ihr bereits Erfahrung mit Sicherheitsunternehmen? <span class="faq-ico">+</span></button>
           <div class="faq-a">
             <div class="faq-a-inner">
-              <p>Wir bauen unseren Fokus auf die Sicherheitsbranche gezielt auf. Was wir mitbringen: fundiertes Wissen über digitales Marketing, saubere Prozesse und den Anspruch, für jeden Kunden wirklich messbare Ergebnisse zu liefern — keine Versprechen, die wir nicht halten können.</p>
+              <p>Digitales Marketing funktioniert nach denselben Prinzipien — egal ob für eine Bäckerei oder ein Sicherheitsunternehmen. Wir bringen sauberes Performance-Marketing-Handwerk mit: präzises Targeting, datengetriebene Optimierung und transparentes Reporting. Und wir fokussieren uns ausschließlich auf Sicherheitsunternehmen, weil Nischen-Expertise echte Ergebnisse liefert.</p>
             </div>
           </div>
         </div>
@@ -2672,13 +3314,18 @@
         </div>
         <div class="footer-col">
           <h5>Kontakt</h5><a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a><a
-            href="https://www.linkedin.com/company/inboxelevate/" target="_blank">LinkedIn</a>
+            href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
       </div>
+      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
+          <a href="#" onclick="navigate('impressum');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Impressum</a>
+          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
+          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
+        </div>
       <div class="footer-bottom">
         <p>© 2026 InboxElevate.</p>
-        <div class="socials"><a href="https://www.linkedin.com/company/inboxelevate/" target="_blank"
-            class="soc">in</a><a href="#" class="soc">ig</a></div>
+        <div class="socials"><a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer"
+            class="soc">in</a><!-- Instagram coming soon --></div>
       </div>
     </footer>
   </div>
@@ -2687,8 +3334,8 @@
   <div id="page-tips" class="page">
     <div class="tips-hero">
       <p class="page-label">Sofort umsetzbar · Kostenlos</p>
-      <h1 class="page-h1">Quick-Win Tipps für<br><span>Sicherheitsunternehmen.</span></h1>
-      <p class="page-sub">Klick auf eine Karte für Details. Alle Tipps sind heute noch umsetzbar — viele ohne Budget.</p>
+      <h1 class="page-h1">16 Maßnahmen, die<br><span>heute noch wirken.</span></h1>
+      <p class="page-sub">Klick auf eine Karte für Details und den konkreten Umsetzungsschritt. Kein Budget nötig für den Einstieg.</p>
       <div class="tips-filter-bar" id="tipsFilterBar"></div>
     </div>
     <div class="tips-stats-row">
@@ -2734,244 +3381,723 @@
         <div class="footer-col">
           <h5>Kontakt</h5>
           <a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a>
-          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank">LinkedIn</a>
+          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
       </div>
+      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
+          <a href="#" onclick="navigate('impressum');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Impressum</a>
+          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
+          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
+        </div>
       <div class="footer-bottom">
         <p>© 2026 InboxElevate.</p>
         <div class="socials">
-          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" class="soc">in</a>
-          <a href="#" class="soc">ig</a>
+          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer" class="soc">in</a>
+          <!-- Instagram coming soon -->
         </div>
       </div>
     </footer>
   </div>
 
+  <!-- ══════════════════ IMPRESSUM PAGE ══════════════════ -->
+  <div id="page-impressum" class="page">
+    <div class="page-hero">
+      <p class="page-label">Rechtliches</p>
+      <h1 class="page-h1">Impressum</h1>
+    </div>
+    <div style="padding:4rem clamp(1.5rem,5vw,4rem);max-width:720px;">
+      <p style="font-family:var(--M);font-size:.7rem;letter-spacing:.1em;color:var(--green);text-transform:uppercase;margin-bottom:2rem;">Angaben gemäß § 5 TMG</p>
+
+      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">Verantwortlich</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
+        <strong style="color:var(--ink);">InboxElevate</strong><br>
+        David [Nachname] <em style="color:var(--green);font-style:normal;">← Bitte ausfüllen</em><br>
+        [Straße, Hausnummer] <em style="color:var(--green);font-style:normal;">← Bitte ausfüllen</em><br>
+        [PLZ Ort] <em style="color:var(--green);font-style:normal;">← Bitte ausfüllen</em><br>
+        Deutschland
+      </p>
+
+      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">Kontakt</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
+        E-Mail: <a href="mailto:david@inbox-elevate.de" style="color:var(--green);">david@inbox-elevate.de</a>
+      </p>
+
+      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">Umsatzsteuer-ID</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
+        USt-IdNr.: [DE-Nummer eintragen] <em style="color:var(--green);font-style:normal;">← Bitte ausfüllen sobald vorhanden</em>
+      </p>
+
+      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">Verantwortlich für den Inhalt (§ 55 Abs. 2 RStV)</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
+        David [Nachname], Anschrift wie oben
+      </p>
+
+      <div style="background:rgba(29,186,110,.08);border:1px solid rgba(29,186,110,.2);border-radius:var(--r);padding:1.2rem 1.4rem;margin-top:2rem;">
+        <p style="font-size:.82rem;color:var(--muted);line-height:1.7;"><strong style="color:var(--ink);">Hinweis:</strong> Dieses Impressum enthält Pflichtfelder, die vor Veröffentlichung ausgefüllt werden müssen (markiert mit ←). Wende dich an einen Rechtsanwalt für eine auf dein Unternehmen zugeschnittene Impressumspflicht.</p>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" onclick="navigate('home');return false;" class="logo" style="color:var(--cream);">
+            <svg viewBox="0 0 40 40" width="26" fill="none"><path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/><path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            InboxElevate
+          </a>
+          <p>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
+        </div>
+        <div class="footer-col"><h5>Navigation</h5><a href="#" onclick="navigate('home');return false;">Start</a><a href="#" onclick="navigate('services');return false;">Leistungen</a><a href="#" onclick="navigate('contact');return false;">Kontakt</a></div>
+        <div class="footer-col"><h5>Rechtliches</h5><a href="#" onclick="navigate('impressum');return false;">Impressum</a><a href="#" onclick="navigate('datenschutz');return false;">Datenschutz</a></div>
+        <div class="footer-col"><h5>Kontakt</h5><a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a></div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
+        <a href="#" onclick="navigate('impressum');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;">Impressum</a>
+        <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;">Datenschutz</a>
+      </div>
+      <div class="footer-bottom"><p>© 2026 InboxElevate.</p></div>
+    </footer>
+  </div>
+
+  <!-- ══════════════════ DATENSCHUTZ PAGE ══════════════════ -->
+  <div id="page-datenschutz" class="page">
+    <div class="page-hero">
+      <p class="page-label">Rechtliches</p>
+      <h1 class="page-h1">Datenschutz&shy;erklärung</h1>
+    </div>
+    <div style="padding:4rem clamp(1.5rem,5vw,4rem);max-width:720px;">
+      <p style="font-family:var(--M);font-size:.7rem;letter-spacing:.1em;color:var(--green);text-transform:uppercase;margin-bottom:2rem;">Gemäß DSGVO · Stand: 2026</p>
+
+      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">1. Verantwortlicher</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
+        Verantwortlich für die Datenverarbeitung auf dieser Website ist InboxElevate (David [Nachname], Anschrift wie im Impressum). E-Mail: <a href="mailto:david@inbox-elevate.de" style="color:var(--green);">david@inbox-elevate.de</a>
+      </p>
+
+      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">2. Erhobene Daten & Zweck</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
+        Beim Ausfüllen des Kontaktformulars erheben wir Name, E-Mail-Adresse, Unternehmen und die Inhalte deiner Nachricht. Diese Daten werden ausschließlich zur Bearbeitung deiner Anfrage verwendet und nicht an Dritte weitergegeben. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen).
+      </p>
+
+      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">3. Formspree (Kontaktformular)</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
+        Das Kontaktformular wird über Formspree Inc. (USA) verarbeitet. Bei der Übermittlung werden deine Kontaktdaten an Server von Formspree übertragen. Formspree ist unter dem EU-US Data Privacy Framework zertifiziert. Weitere Informationen: <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer" style="color:var(--green);">formspree.io/legal/privacy-policy</a>.
+      </p>
+
+      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">4. Hosting — Cloudflare Pages</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:.75rem;">
+        Diese Website wird über <strong style="color:var(--ink);">Cloudflare Pages</strong> (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA) bereitgestellt. Beim Aufruf der Seite verarbeitet Cloudflare technisch notwendige Daten, insbesondere IP-Adressen, für die Auslieferung der Seite, DDoS-Schutz und Performance-Optimierung.
+      </p>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:.75rem;">
+        Cloudflare betreibt Rechenzentren in der EU (u.a. Frankfurt, Amsterdam). Datentransfers in die USA erfolgen auf Basis der EU-Standardvertragsklauseln (SCC) sowie des EU-US Data Privacy Framework, dem Cloudflare angehört.
+      </p>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
+        Weitere Informationen: <a href="https://www.cloudflare.com/de-de/privacypolicy/" target="_blank" rel="noopener noreferrer" style="color:var(--green);">cloudflare.com/de-de/privacypolicy</a> · Cloudflare DPA: <a href="https://www.cloudflare.com/cloudflare-customer-dpa/" target="_blank" rel="noopener noreferrer" style="color:var(--green);">cloudflare.com/cloudflare-customer-dpa</a>
+      </p>
+
+      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">5. Quellcode — GitHub</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
+        Der Quellcode dieser Website wird auf <strong style="color:var(--ink);">GitHub</strong> (GitHub, Inc., 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, USA; eine Tochtergesellschaft der Microsoft Corporation) verwaltet und von dort automatisch auf Cloudflare Pages deployt. Im Repository werden keine personenbezogenen Daten von Website-Besuchern gespeichert. GitHub verarbeitet Metadaten des Repositories (Commit-Zeitstempel, IP-Adressen bei Git-Operationen). Datentransfers in die USA erfolgen auf Basis der EU-SCC. Weitere Informationen: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer" style="color:var(--green);">GitHub Privacy Statement</a>.
+      </p>
+
+      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">6. Cookies</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
+        Diese Website setzt derzeit keine Tracking-Cookies und keine Analyse-Tools ein. Es werden ausschließlich technisch notwendige Cookies eingesetzt, soweit diese für den Betrieb erforderlich sind.
+      </p>
+
+      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">7. Deine Rechte</h2>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
+        Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Datenübertragbarkeit (Art. 15–20 DSGVO). Du kannst der Verarbeitung jederzeit widersprechen (Art. 21 DSGVO). Wende dich dafür an: <a href="mailto:david@inbox-elevate.de" style="color:var(--green);">david@inbox-elevate.de</a>.
+      </p>
+
+      <div style="background:rgba(29,186,110,.08);border:1px solid rgba(29,186,110,.2);border-radius:var(--r);padding:1.2rem 1.4rem;margin-top:2rem;">
+        <p style="font-size:.82rem;color:var(--muted);line-height:1.7;"><strong style="color:var(--ink);">Hinweis:</strong> Hosting (Cloudflare), Quellcode (GitHub) und Formspree-Verarbeitung sind bereits dokumentiert. Vor Veröffentlichung bitte trotzdem von einem Rechtsanwalt prüfen lassen — insbesondere Impressum-Pflichtangaben, Speicherdauern und etwaige Analytics-Tools die später hinzukommen.</p>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" onclick="navigate('home');return false;" class="logo" style="color:var(--cream);">
+            <svg viewBox="0 0 40 40" width="26" fill="none"><path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/><path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            InboxElevate
+          </a>
+          <p>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
+        </div>
+        <div class="footer-col"><h5>Navigation</h5><a href="#" onclick="navigate('home');return false;">Start</a><a href="#" onclick="navigate('services');return false;">Leistungen</a><a href="#" onclick="navigate('contact');return false;">Kontakt</a></div>
+        <div class="footer-col"><h5>Rechtliches</h5><a href="#" onclick="navigate('impressum');return false;">Impressum</a><a href="#" onclick="navigate('datenschutz');return false;">Datenschutz</a></div>
+        <div class="footer-col"><h5>Kontakt</h5><a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a></div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
+        <a href="#" onclick="navigate('impressum');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;">Impressum</a>
+        <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;">Datenschutz</a>
+      </div>
+      <div class="footer-bottom"><p>© 2026 InboxElevate.</p></div>
+    </footer>
+  </div>
+
   <script>
-    // ─── CURSOR ───
+    const body = document.body;
+    const nav = document.getElementById('nav');
+    const mobMenu = document.getElementById('mobMenu');
+    const ham = document.getElementById('ham');
     const cur = document.getElementById('cursor');
     const ring = document.getElementById('cursor-ring');
-    document.addEventListener('mousemove', e => {
-      cur.style.left = e.clientX - 6 + 'px';
-      cur.style.top = e.clientY - 6 + 'px';
-      ring.style.left = e.clientX - 18 + 'px';
-      ring.style.top = e.clientY - 18 + 'px';
-    });
-    document.querySelectorAll('a,button,.services-nav-item,.faq-q').forEach(el => {
-      el.addEventListener('mouseenter', () => { cur.style.transform = 'scale(2.2)'; ring.style.opacity = '0'; });
-      el.addEventListener('mouseleave', () => { cur.style.transform = 'scale(1)'; ring.style.opacity = '.5'; });
-    });
+    const pageWipe = document.getElementById('pageWipe');
+    const preloader = document.getElementById('preloader');
+    const scrollProgress = document.getElementById('scrollProgress');
+    const scrollProgressFill = document.getElementById('scrollProgressFill');
+    const toastStack = document.getElementById('toastStack');
+    const homeStats = document.getElementById('homeStats');
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const coarsePointerQuery = window.matchMedia('(pointer: coarse)');
+    const scrollHeavyPages = new Set(['home', 'tips', 'process']);
+    /* ⚠️  GITHUB DEPLOYMENT CHECKLIST:
+       1. WhatsApp-Nummer ersetzen (wa.me/49BITTEERSETZEN)
+       2. Formspree reCAPTCHA + Rate-Limiting im Dashboard aktivieren
+       3. Impressum-Pflichtfelder ausfüllen (Nachname, Adresse, USt-ID)
+       4. Datenschutz von Rechtsanwalt prüfen lassen
+       5. Diese Datei vor dem ersten Commit final prüfen
+    */
+    const FORMSPREE_ID = 'xvzveqvz';
+    const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const tipsCats = ['Alle', 'Webseite', 'Google Ads', 'Meta Ads', 'Kein Budget'];
 
-    // ─── PAGE NAVIGATION ───
     let currentPage = 'home';
-    function navigate(id) {
-      if (id === currentPage) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-      const old = document.getElementById('page-' + currentPage);
-      const next = document.getElementById('page-' + id);
-      if (!next) return;
-      if (old) old.classList.remove('active');
-      next.classList.add('active');
-      currentPage = id;
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      updateNavLinks(id);
-      if (id === 'tips') { initTipsFilters(); renderTips(); }
-      setTimeout(initReveal, 50);
+    let tipsActive = 'Alle';
+    let reducedMotion = motionQuery.matches;
+    let useCustomCursor = !coarsePointerQuery.matches;
+    let revealObserver;
+    let scrambleObserver;
+    let counterObserver;
+    let countersRun = false;
+    let scrollTarget = window.scrollY || 0;
+    let scrollCurrent = window.scrollY || 0;
+    let smoothScrollEnabled = false;
+    let smoothRaf = 0;
+    let isNavigating = false;
+    let heroPrepared = false;
+    let smoothBindingsReady = false;
+    let submitBtnHtml = '';
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
     }
-    function updateNavLinks(id) {
-      document.querySelectorAll('[data-page]').forEach(a => {
-        a.classList.toggle('active', a.dataset.page === id);
+
+    function getScrollMax() {
+      return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    }
+
+    function handleKeyAction(event, callback) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        callback();
+      }
+    }
+
+    function showToast(title, message, type = 'success') {
+      if (!toastStack) return;
+      const toast = document.createElement('div');
+      toast.className = `toast ${type === 'error' ? 'error' : ''}`.trim();
+      const tDiv = document.createElement('div');
+      tDiv.className = 'toast-title';
+      tDiv.textContent = title;
+      const tP = document.createElement('p');
+      tP.textContent = message;
+      toast.append(tDiv, tP);
+      toastStack.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.add('show'));
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 320);
+      }, 4000);
+    }
+
+    function setCursorMode() {
+      useCustomCursor = !coarsePointerQuery.matches;
+      body.classList.toggle('cursor-off', !useCustomCursor);
+    }
+
+    function bindCursorHover(root = document) {
+      if (!useCustomCursor) return;
+      root.querySelectorAll('a,button,.services-nav-item,[role="button"]').forEach(el => {
+        if (el.dataset.cursorBound === 'true') return;
+        el.dataset.cursorBound = 'true';
+        el.addEventListener('mouseenter', () => {
+          cur.style.transform = 'scale(2.2)';
+          ring.style.opacity = '0';
+        });
+        el.addEventListener('mouseleave', () => {
+          cur.style.transform = 'scale(1)';
+          ring.style.opacity = '.5';
+        });
       });
     }
 
-    // ─── ADS SUB-TAB SWITCHER ───
-    function showAdsTab(id, btn) {
-      // deactivate all ads panels and tabs
-      ['meta', 'google', 'linkedin'].forEach(k => {
-        const p = document.getElementById('svc-' + k);
-        if (p) p.classList.remove('active');
+    function initCursor() {
+      setCursorMode();
+      if (!useCustomCursor) return;
+      document.addEventListener('mousemove', event => {
+        cur.style.left = event.clientX - 6 + 'px';
+        cur.style.top = event.clientY - 6 + 'px';
+        ring.style.left = event.clientX - 18 + 'px';
+        ring.style.top = event.clientY - 18 + 'px';
       });
-      document.querySelectorAll('#adsTabs .svc-cat-tab').forEach(t => t.classList.remove('active'));
-      // activate selected
-      const panel = document.getElementById('svc-' + id);
-      if (panel) panel.classList.add('active');
+      bindCursorHover();
+    }
+
+    function updateNavLinks(id) {
+      document.querySelectorAll('[data-page]').forEach(link => {
+        link.classList.toggle('active', link.dataset.page === id);
+      });
+    }
+
+    function updateScrollChrome() {
+      const y = window.scrollY || 0;
+      nav.classList.toggle('nav-shrink', y > 80);
+      const visible = scrollHeavyPages.has(currentPage) && getScrollMax() > 240;
+      scrollProgress.classList.toggle('visible', visible);
+      const progress = visible ? clamp(y / Math.max(getScrollMax(), 1), 0, 1) : 0;
+      scrollProgressFill.style.width = `${progress * 100}%`;
+    }
+
+    function syncScrollTarget() {
+      scrollCurrent = window.scrollY || 0;
+      scrollTarget = scrollCurrent;
+      updateScrollChrome();
+    }
+
+    function smoothStep() {
+      scrollCurrent += (scrollTarget - scrollCurrent) * 0.08;
+      if (Math.abs(scrollTarget - scrollCurrent) < 0.4) {
+        scrollCurrent = scrollTarget;
+      }
+      window.scrollTo(0, scrollCurrent);
+      updateScrollChrome();
+      if (Math.abs(scrollTarget - scrollCurrent) >= 0.4) {
+        smoothRaf = requestAnimationFrame(smoothStep);
+      } else {
+        smoothRaf = 0;
+      }
+    }
+
+    function requestSmoothScroll() {
+      if (!smoothRaf) {
+        smoothRaf = requestAnimationFrame(smoothStep);
+      }
+    }
+
+    function scrollPageTo(y, instant = false) {
+      const nextY = clamp(y, 0, getScrollMax());
+      if (!smoothScrollEnabled || instant || reducedMotion) {
+        window.scrollTo(0, nextY);
+        syncScrollTarget();
+        return;
+      }
+      scrollTarget = nextY;
+      requestSmoothScroll();
+    }
+
+    function initSmoothScroll() {
+      smoothScrollEnabled = !reducedMotion && !coarsePointerQuery.matches && window.innerWidth > 900;
+      if (!smoothBindingsReady) {
+        smoothBindingsReady = true;
+        window.addEventListener('wheel', event => {
+          if (!smoothScrollEnabled) return;
+          event.preventDefault();
+          scrollTarget = clamp(scrollTarget + event.deltaY, 0, getScrollMax());
+          requestSmoothScroll();
+        }, { passive: false });
+
+        window.addEventListener('keydown', event => {
+          if (!smoothScrollEnabled) return;
+          const tag = event.target && event.target.tagName ? event.target.tagName.toLowerCase() : '';
+          if (['input', 'textarea', 'select', 'button'].includes(tag) || event.metaKey || event.ctrlKey || event.altKey) return;
+          const map = {
+            ArrowDown: 100,
+            ArrowUp: -100,
+            PageDown: window.innerHeight * 0.9,
+            PageUp: -window.innerHeight * 0.9,
+            ' ': window.innerHeight * 0.9
+          };
+          if (event.key === 'Home') {
+            event.preventDefault();
+            scrollPageTo(0);
+            return;
+          }
+          if (event.key === 'End') {
+            event.preventDefault();
+            scrollPageTo(getScrollMax());
+            return;
+          }
+          if (map[event.key] != null) {
+            event.preventDefault();
+            const delta = event.shiftKey && event.key === ' ' ? -window.innerHeight * 0.9 : map[event.key];
+            scrollTarget = clamp(scrollTarget + delta, 0, getScrollMax());
+            requestSmoothScroll();
+          }
+        });
+      }
+      if (!smoothScrollEnabled) {
+        cancelAnimationFrame(smoothRaf);
+        smoothRaf = 0;
+        syncScrollTarget();
+        return;
+      }
+    }
+
+    function runPageWipe(callback) {
+      if (reducedMotion || !pageWipe) {
+        callback();
+        return Promise.resolve();
+      }
+      return new Promise(resolve => {
+        pageWipe.style.transition = 'transform 350ms cubic-bezier(.22,1,.36,1)';
+        pageWipe.style.transform = 'translateX(0)';
+        setTimeout(() => {
+          callback();
+          pageWipe.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
+          pageWipe.style.transform = 'translateX(100%)';
+          setTimeout(() => {
+            pageWipe.style.transition = 'none';
+            pageWipe.style.transform = 'translateX(-100%)';
+            resolve();
+          }, 250);
+        }, 350);
+      });
+    }
+
+    async function navigate(id) {
+      if (id === currentPage) {
+        scrollPageTo(0);
+        return;
+      }
+      if (isNavigating) return;
+      const oldPage = document.getElementById(`page-${currentPage}`);
+      const nextPage = document.getElementById(`page-${id}`);
+      if (!nextPage) return;
+      isNavigating = true;
+      await runPageWipe(() => {
+        if (oldPage) oldPage.classList.remove('active');
+        nextPage.classList.add('active');
+        currentPage = id;
+        updateNavLinks(id);
+        if (id === 'tips') {
+          initTipsFilters();
+          renderTips();
+        }
+        if (mobMenu.classList.contains('open')) {
+          toggleMob(false);
+        }
+        scrollPageTo(0, true);
+        setTimeout(() => {
+          initReveal();
+          observeScrambleTargets();
+          updateScrollChrome();
+        }, 40);
+      });
+      isNavigating = false;
+    }
+
+    function showAdsTab(id, btn) {
+      ['meta', 'google', 'linkedin'].forEach(key => {
+        const panel = document.getElementById(`svc-${key}`);
+        if (panel) panel.classList.remove('active');
+      });
+      document.querySelectorAll('#adsTabs .svc-cat-tab').forEach(tab => tab.classList.remove('active'));
+      const activePanel = document.getElementById(`svc-${id}`);
+      if (activePanel) activePanel.classList.add('active');
       if (btn) btn.classList.add('active');
     }
 
-    // ─── NAVIGATE WITH SERVICE PRE-FILL ───
     function navigateWithService(page, serviceValue) {
       if (page === 'contact') {
         navigate('contact');
         setTimeout(() => {
-          const sel = document.getElementById('serviceSelect');
-          if (sel && serviceValue) {
-            sel.value = serviceValue;
-          }
-        }, 80);
-      } else {
-        navigate(page);
+          const select = document.getElementById('serviceSelect');
+          if (select && serviceValue) select.value = serviceValue;
+        }, 120);
+        return;
       }
+      navigate(page);
     }
 
-    // ─── SERVICE SWITCHER (legacy, for footer links) ───
     function showService(id) {
       navigate('services');
-      // Map old ids to new category tabs
       const adsMap = { meta: 'meta', google: 'google', linkedin: 'linkedin' };
       if (adsMap[id]) {
         setTimeout(() => {
           const btn = document.querySelector(`#adsTabs .svc-cat-tab[onclick*="${id}"]`);
           showAdsTab(id, btn);
-        }, 60);
+        }, 120);
       }
     }
 
-    // ─── FAQs ───
-    function toggleFaq(btn) {
-      const card = btn.closest('.faq-card');
+    function toggleFaq(button) {
+      const card = button.closest('.faq-card');
       const open = card.classList.contains('open');
-      document.querySelectorAll('.faq-card').forEach(c => c.classList.remove('open'));
+      const scope = card.closest('.faq-grid, .home-faq-list') || document;
+      scope.querySelectorAll('.faq-card').forEach(item => item.classList.remove('open'));
       if (!open) card.classList.add('open');
     }
 
-    // ─── FORM (Formspree AJAX) ───
-    const FORMSPREE_ID = 'xvzveqvz';
+    function toggleMob(force) {
+      const shouldOpen = typeof force === 'boolean' ? force : !ham.classList.contains('open');
+      ham.classList.toggle('open', shouldOpen);
+      ham.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+      ham.setAttribute('aria-label', shouldOpen ? 'Menü schließen' : 'Menü öffnen');
+      mobMenu.classList.toggle('open', shouldOpen);
+    }
 
-    async function submitForm(e) {
-      e.preventDefault();
+    async function submitForm(event) {
+      event.preventDefault();
       const form = document.getElementById('contactForm');
       const btn = document.getElementById('submitBtn');
+      if (!submitBtnHtml) submitBtnHtml = btn.innerHTML;
       btn.disabled = true;
-      btn.textContent = 'Wird gesendet…';
-
+      btn.textContent = 'Wird gesendet...';
       const data = new FormData(form);
 
       try {
-        const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
           method: 'POST',
           body: data,
-          headers: { 'Accept': 'application/json' }
+          headers: { Accept: 'application/json' }
         });
-        if (res.ok) {
-          document.getElementById('cForm').style.display = 'none';
-          document.getElementById('cFormOk').style.display = 'block';
-        } else {
-          throw new Error('server error');
-        }
-      } catch {
+        const json = await response.json();
+        if (!response.ok || json.error) throw new Error(json.error || 'server-error');
+        document.getElementById('cForm').style.display = 'none';
+        document.getElementById('cFormOk').style.display = 'block';
+        showToast('Nachricht gesendet!', 'Wir melden uns spätestens am nächsten Werktag mit einer ehrlichen Einschätzung.', 'success');
+      } catch (error) {
         btn.disabled = false;
-        btn.innerHTML = 'Anfrage senden <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
-        alert('Etwas ist schiefgelaufen. Bitte schreib uns direkt an david@inbox-elevate.de');
+        btn.innerHTML = submitBtnHtml;
+        showToast('Senden fehlgeschlagen', 'Bitte schreib uns direkt an david@inbox-elevate.de oder versuche es gleich erneut.', 'error');
       }
     }
 
-    // ─── SCROLL REVEAL ───
     function initReveal() {
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); });
+      if (revealObserver) revealObserver.disconnect();
+      if (reducedMotion) {
+        document.querySelectorAll('.sr,.sr-l,.sr-r').forEach(el => el.classList.add('v'));
+        return;
+      }
+      revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('v');
+            revealObserver.unobserve(entry.target);
+          }
+        });
       }, { threshold: 0.08 });
       document.querySelectorAll('.sr,.sr-l,.sr-r').forEach(el => {
         el.classList.remove('v');
-        obs.observe(el);
+        revealObserver.observe(el);
       });
     }
-    initReveal();
 
-    // ─── MOB MENU ───
-    function toggleMob() {
-      document.getElementById('ham').classList.toggle('open');
-      document.getElementById('mobMenu').classList.toggle('open');
-    }
-    // ─── TYPEWRITER ───
-    (function(){
-      const phrases = ['Sicherheitsunternehmen.','Alarmanlagen-Anbieter.','Objektschutz-Firmen.','Sicherheitsdienste.'];
-      let pi=0, ci=0, deleting=false, paused=false;
-      const el = document.getElementById('tw-text');
-      if(!el) return;
-      function step(){
-        if(paused) return;
-        const word = phrases[pi];
-        if(!deleting){
-          ci++;
-          el.textContent = word.slice(0,ci);
-          if(ci >= word.length){ deleting=true; paused=true; setTimeout(()=>{ paused=false; step(); }, 2000); return; }
-        } else {
-          ci--;
-          el.textContent = word.slice(0,ci);
-          if(ci === 0){ deleting=false; pi=(pi+1)%phrases.length; }
-        }
-        setTimeout(step, deleting ? 45 : 90);
+    function scrambleText(el) {
+      if (reducedMotion || el.dataset.scrambled === 'true') {
+        el.textContent = el.dataset.original || el.textContent;
+        el.dataset.scrambled = 'true';
+        return;
       }
-      step();
-    })();
+      const original = el.dataset.original || el.textContent.trim();
+      el.dataset.original = original;
+      let frame = 0;
+      const totalFrames = 18;
+      const interval = setInterval(() => {
+        const progress = frame / totalFrames;
+        el.textContent = original.split('').map((char, index) => {
+          if (char === ' ') return ' ';
+          return index < progress * original.length ? original[index] : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+        }).join('');
+        frame += 1;
+        if (frame > totalFrames) {
+          clearInterval(interval);
+          el.textContent = original;
+          el.dataset.scrambled = 'true';
+        }
+      }, 600 / totalFrames);
+    }
 
-    // ─── COUNTER ANIMATION ───
-    function animateCounter(el){
-      const target = parseInt(el.dataset.target);
+    function observeScrambleTargets() {
+      if (scrambleObserver) scrambleObserver.disconnect();
+      const labels = document.querySelectorAll('.page-label,.hero-label');
+      if (reducedMotion) {
+        labels.forEach(label => {
+          if (label.dataset.original) label.textContent = label.dataset.original;
+          label.dataset.scrambled = 'true';
+        });
+        return;
+      }
+      scrambleObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            scrambleText(entry.target);
+            scrambleObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      labels.forEach(label => {
+        if (!label.dataset.original) label.dataset.original = label.textContent.trim();
+        if (label.dataset.scrambled !== 'true') scrambleObserver.observe(label);
+      });
+    }
+
+    function prepareHeroWords() {
+      if (heroPrepared) return;
+      ['tw-line1', 'tw-line2'].forEach(id => {
+        const line = document.getElementById(id);
+        if (!line) return;
+        const words = line.textContent.trim().split(/\s+/);
+        line.innerHTML = words.map((word, index) => `<span class="hero-word-clip"><span class="hero-word" style="--word-delay:${index * 60}ms">${word}</span></span>`).join(' ');
+      });
+      heroPrepared = true;
+    }
+
+    function startHeroAnimations() {
+      prepareHeroWords();
+      const heroHeadline = document.querySelector('.hero-h1');
+      if (!heroHeadline) return;
+      if (reducedMotion) {
+        heroHeadline.classList.add('ready');
+        heroHeadline.querySelectorAll('.hero-word').forEach(word => word.classList.add('no-animate'));
+        return;
+      }
+      requestAnimationFrame(() => heroHeadline.classList.add('ready'));
+    }
+
+    function initMagneticButtons() {
+      document.querySelectorAll('.btn-ink,.nav-cta').forEach(btn => {
+        btn.classList.add('magnetic');
+        if (btn.dataset.magneticBound === 'true') return;
+        btn.dataset.magneticBound = 'true';
+        if (reducedMotion) return;
+        btn.addEventListener('mousemove', event => {
+          if (reducedMotion) {
+            btn.style.transform = '';
+            return;
+          }
+          const rect = btn.getBoundingClientRect();
+          const offsetX = ((event.clientX - rect.left) / rect.width - 0.5) * 16;
+          const offsetY = ((event.clientY - rect.top) / rect.height - 0.5) * 16;
+          btn.style.transform = `translate(${offsetX.toFixed(2)}px, ${offsetY.toFixed(2)}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = '';
+        });
+      });
+    }
+
+    function initSpotlights() {
+      document.querySelectorAll('.panel-feat').forEach(card => card.classList.add('spotlight-card', 'hover-underline-card'));
+      document.querySelectorAll('.faq-card').forEach(card => card.classList.add('hover-underline-card'));
+      document.querySelectorAll('.spotlight-card').forEach(card => {
+        if (card.dataset.spotlightBound === 'true') return;
+        card.dataset.spotlightBound = 'true';
+        card.addEventListener('mousemove', event => {
+          const rect = card.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width) * 100;
+          const y = ((event.clientY - rect.top) / rect.height) * 100;
+          card.style.setProperty('--x', `${x}%`);
+          card.style.setProperty('--y', `${y}%`);
+        });
+      });
+    }
+
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target, 10);
       const suffix = el.dataset.suffix || '';
       const prefix = el.dataset.prefix || '';
-      const dur = 1600;
+      const duration = 1600;
       const start = performance.now();
-      function tick(now){
-        const p = Math.min((now-start)/dur, 1);
-        const ease = 1 - Math.pow(1-p, 3);
-        el.textContent = prefix + Math.round(ease * target) + suffix;
-        if(p < 1) requestAnimationFrame(tick);
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        el.textContent = `${prefix}${Math.round(ease * target)}${suffix}`;
+        if (progress < 1) requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
     }
-    let countersRun = false;
-    const statsEl = document.getElementById('homeStats');
-    if(statsEl){
-      const obs = new IntersectionObserver(entries => {
-        if(entries[0].isIntersecting && !countersRun){
+
+    function initCounters() {
+      if (!homeStats) return;
+      if (counterObserver) counterObserver.disconnect();
+      counterObserver = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && !countersRun) {
           countersRun = true;
-          document.querySelectorAll('.stat-counter').forEach((el,i) => setTimeout(()=>animateCounter(el), i*120));
+          document.querySelectorAll('.stat-counter').forEach((el, index) => {
+            if (reducedMotion) {
+              el.textContent = `${el.dataset.prefix || ''}${el.dataset.target}${el.dataset.suffix || ''}`;
+              return;
+            }
+            setTimeout(() => animateCounter(el), index * 120);
+          });
         }
-      }, {threshold: .3});
-      obs.observe(statsEl);
+      }, { threshold: 0.3 });
+      counterObserver.observe(homeStats);
     }
 
-    // ─── TIPS PAGE ───
+    function applyInteractiveRoles() {
+      document.querySelectorAll('.tip-card-ie').forEach(card => {
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+      });
+    }
+
+    function enhanceDynamicUI(root = document) {
+      bindCursorHover(root);
+      initMagneticButtons();
+      initSpotlights();
+      applyInteractiveRoles();
+    }
+
+    function initPreloader() {
+      const ready = () => {
+        preloader.classList.add('hide');
+        startHeroAnimations();
+        setTimeout(() => preloader.style.display = 'none', 720);
+      };
+      Promise.race([
+        new Promise(resolve => window.addEventListener('load', resolve, { once: true })),
+        new Promise(resolve => setTimeout(resolve, 1500))
+      ]).then(ready);
+    }
+
     const tipsData = [
-      { cat: "Webseite", icon: "🌐", title: "Telefonnummer im Header — klickbar auf Mobil", impact: "hoch", body: "Über 70 % der Interessenten suchen auf dem Smartphone. Eine sichtbare, klickbare Nummer (tel:-Link) direkt im Header senkt die Abbruchrate drastisch. <strong>Viele Sicherheitsfirmen verstecken ihren Kontakt im Footer</strong> — ein echter Conversion-Killer.", action: "Umsetzbar in unter 1 Stunde, auch ohne Webdesigner." },
-      { cat: "Webseite", icon: "🌐", title: "Google-Bewertungen sichtbar einbinden", impact: "hoch", body: "Sicherheit ist Vertrauenssache. Wer 4,6+ Sterne bei Google hat und diese <strong>nirgendwo auf der Website zeigt</strong>, verschenkt massiv Vertrauen. Ein simpler Widget oder Screenshot mit Sternebewertung + Anzahl direkt unter dem Hero-Bereich erhöht die Anfragerate messbar.", action: "Kostenlosen Google Review Widget einbinden (z. B. via Elfsight oder direkt als Screenshot)." },
-      { cat: "Webseite", icon: "🌐", title: "Ladezeit unter 3 Sekunden", impact: "hoch", body: "Laut Google verlassen 53 % der Nutzer eine Seite, wenn sie länger als 3 Sekunden lädt. Gerade Sicherheitswebsites laden oft durch schlechte Bildoptimierung langsam. <strong>PageSpeed Insights</strong> (kostenlos) zeigt sofort, was verbesserbar ist.", action: "Bilder komprimieren (z. B. via Squoosh.app), unnötige Plugins deaktivieren." },
-      { cat: "Webseite", icon: "🌐", title: "Klarer Leistungsbereich mit regionalen Begriffen", impact: "mittel", body: "Statt 'Wir bieten Sicherheitsdienste an' lieber: <strong>'Objektschutz in Düsseldorf & Umgebung'</strong>. Lokale Keywords im Fließtext und in Überschriften verbessern das organische Ranking bei Google — ohne Werbekosten.", action: "Alle Leistungen namentlich nennen + Stadt/Region ergänzen." },
-      { cat: "Webseite", icon: "🌐", title: "Kontaktformular mit Reaktionszeit-Versprechen", impact: "mittel", body: "Niemand füllt ein Formular aus, wenn er nicht weiß, wann er eine Antwort erhält. Ein einfacher Satz wie <strong>'Wir melden uns innerhalb von 2 Stunden'</strong> direkt neben dem Formular erhöht die Abschlussrate deutlich.", action: "Text ergänzen + intern sicherstellen, dass die Reaktionszeit stimmt." },
-      { cat: "Google Ads", icon: "📣", title: "Anzeigenerweiterungen vollständig nutzen", impact: "hoch", body: "Die meisten Sicherheitsfirmen schalten Google Ads ohne <strong>Anruferweiterung, Standorterweiterung und Sitelinks</strong>. Dabei verdoppeln diese die sichtbare Anzeigenfläche — ohne Mehrkosten. Klickrate steigt oft um 20–40 %.", action: "In Google Ads unter 'Erweiterungen' alle relevanten Assets aktivieren." },
-      { cat: "Google Ads", icon: "📣", title: "Negative Keywords einpflegen", impact: "hoch", body: "Ohne Ausschluss-Keywords zahlen Sicherheitsfirmen für Suchanfragen wie 'Sicherheitsdienst Ausbildung', 'Jobs Sicherheit' oder 'Sicherheitskurs kostenlos'. <strong>Bis zu 30 % des Budgets versickert</strong> so in unpassende Klicks.", action: "Suchanfragebericht wöchentlich prüfen und irrelevante Begriffe ausschließen." },
-      { cat: "Google Ads", icon: "📣", title: "Standortbasiertes Targeting auf Region eingrenzen", impact: "hoch", body: "Viele Kampagnen laufen bundesweit, obwohl das Unternehmen nur regional tätig ist. <strong>Jeder Klick außerhalb des Einzugsgebiets ist verschwendetes Geld.</strong> Radius-Targeting auf den tatsächlichen Aktionskreis senkt CPL drastisch.", action: "Zielregion auf 20–50 km Radius einschränken, je nach Tätigkeitsgebiet." },
-      { cat: "Google Ads", icon: "📣", title: "Anzeigentexte mit Zahlen und Konkretem", impact: "mittel", body: "Allgemeine Texte wie 'Ihr zuverlässiger Sicherheitsdienst' performen schwach. Besser: <strong>'24/7 Objektschutz – Reaktionszeit unter 15 Min.'</strong> oder 'Über 200 zufriedene Kunden in NRW'. Konkrete Zahlen erhöhen die Klickrate.", action: "Mindestens 3 Anzeigenvarianten mit spezifischen USPs testen." },
-      { cat: "Meta Ads", icon: "📱", title: "Video statt Bild — auch mit Smartphone gedreht", impact: "hoch", body: "Facebook- und Instagram-Ads mit Video erzielen im Durchschnitt <strong>3x höhere Klickraten</strong> als reine Bildanzeigen. Es muss kein Profi-Video sein — ein 15-Sekunden-Clip vom Einsatzfahrzeug oder dem Team mit Untertiteln reicht.", action: "1 kurzes Video mit dem Smartphone drehen, Untertitel per CapCut einfügen." },
-      { cat: "Meta Ads", icon: "📱", title: "Retargeting auf Webseitenbesucher aktivieren", impact: "hoch", body: "Wer die Webseite besucht hat und keine Anfrage gestellt hat, ist ein <strong>heißer Lead</strong>. Meta Retargeting-Kampagnen erreichen genau diese Personen nochmals — oft mit 5–10x niedrigeren Kosten als Cold Audiences.", action: "Meta Pixel auf der Website installieren (kostenlos), Retargeting-Kampagne anlegen." },
-      { cat: "Meta Ads", icon: "📱", title: "Lead-Formulare statt Landingpage", impact: "mittel", body: "Metas native Lead-Formulare werden direkt in der App ausgefüllt — <strong>keine Ladezeit, keine Abbrüche</strong>. Besonders auf dem Smartphone konvertieren sie oft 2–3x besser als externe Landingpages.", action: "In Meta Ads Manager eine 'Lead-Generierung'-Kampagne mit Instant-Formular erstellen." },
-      { cat: "Kein Budget", icon: "✅", title: "Google Business Profil vollständig ausfüllen", impact: "hoch", body: "Wer bei Google Maps ganz oben erscheinen will, muss sein Google-Business-Profil <strong>vollständig ausfüllen: Öffnungszeiten, Fotos, Leistungen, Kurzbeschreibung</strong>. Ein gepflegtes Profil bekommt 7x mehr Klicks als ein leeres.", action: "Unter business.google.com einloggen, alle Felder ausfüllen, 5+ Fotos hochladen." },
-      { cat: "Kein Budget", icon: "✅", title: "Kundenbewertungen aktiv anfragen", impact: "hoch", body: "Sicherheitsfirmen mit 50+ Google-Bewertungen schlagen Wettbewerber mit 5 Bewertungen in der lokalen Suche fast immer. <strong>Die meisten Kunden geben eine Bewertung, wenn man sie direkt danach fragt</strong> — per WhatsApp, Mail oder QR-Code auf der Visitenkarte.", action: "Direktlink zur Google-Bewertungsseite erzeugen und nach jedem Abschluss senden." },
-      { cat: "Kein Budget", icon: "✅", title: "WhatsApp-Kontakt auf der Website einbinden", impact: "mittel", body: "Viele Interessenten schreiben lieber per WhatsApp als über ein Formular anzufragen. Ein <strong>WhatsApp-Button mit vorausgefülltem Text</strong> ('Ich interessiere mich für Ihren Objektschutz...') senkt die Hemmschwelle massiv.", action: "wa.me/49XXXXXXXX mit vorausgefüllter Nachricht als Link einbinden — 5 Minuten Aufwand." },
-      { cat: "Kein Budget", icon: "✅", title: "Firmenwagen als kostenloses Werbemittel", impact: "mittel", body: "Ein gebrandetes Fahrzeug im Einsatz ist <strong>Außenwerbung ohne laufende Kosten</strong>. Firmenname, Telefonnummer und eine kurze Leistungsangabe auf dem Fahrzeug erzeugen täglich Sichtbarkeit — besonders bei lokalen Gewerbeobjekten.", action: "Fahrzeugbeschriftung einmalige Investition ~300–500 €, jahrelanger Nutzen." }
+      { cat: 'Webseite', icon: '🌐', title: 'Telefonnummer im Header — klickbar auf Mobil', impact: 'hoch', body: 'Ueber 70 % der Interessenten suchen auf dem Smartphone. Eine sichtbare, klickbare Nummer (tel:-Link) direkt im Header senkt die Abbruchrate drastisch. <strong>Viele Sicherheitsfirmen verstecken ihren Kontakt im Footer</strong> — ein echter Conversion-Killer.', action: 'Umsetzbar in unter 1 Stunde, auch ohne Webdesigner.' },
+      { cat: 'Webseite', icon: '🌐', title: 'Google-Bewertungen sichtbar einbinden', impact: 'hoch', body: 'Sicherheit ist Vertrauenssache. Wer 4,6+ Sterne bei Google hat und diese <strong>nirgendwo auf der Website zeigt</strong>, verschenkt massiv Vertrauen. Ein simpler Widget oder Screenshot mit Sternebewertung + Anzahl direkt unter dem Hero-Bereich erhoeht die Anfragerate messbar.', action: 'Kostenlosen Google Review Widget einbinden oder direkt mit Screenshot arbeiten.' },
+      { cat: 'Webseite', icon: '🌐', title: 'Ladezeit unter 3 Sekunden', impact: 'hoch', body: 'Laut Google verlassen 53 % der Nutzer eine Seite, wenn sie laenger als 3 Sekunden laedt. Gerade Sicherheitswebsites laden oft durch schlechte Bildoptimierung langsam. <strong>PageSpeed Insights</strong> zeigt sofort, was verbesserbar ist.', action: 'Bilder komprimieren und unnoetige Skripte ausmisten.' },
+      { cat: 'Webseite', icon: '🌐', title: 'Klarer Leistungsbereich mit regionalen Begriffen', impact: 'mittel', body: 'Statt "Wir bieten Sicherheitsdienste an" lieber: <strong>"Objektschutz in Duesseldorf & Umgebung"</strong>. Lokale Keywords im Fliesstext und in Ueberschriften verbessern das organische Ranking bei Google.', action: 'Alle Leistungen namentlich nennen und Stadt oder Region ergaenzen.' },
+      { cat: 'Webseite', icon: '🌐', title: 'Kontaktformular mit Reaktionszeit-Versprechen', impact: 'mittel', body: 'Niemand fuellt ein Formular aus, wenn er nicht weiss, wann er eine Antwort erhaelt. Ein einfacher Satz wie <strong>"Wir melden uns innerhalb von 2 Stunden"</strong> direkt neben dem Formular erhoeht die Abschlussrate deutlich.', action: 'Text ergaenzen und intern sicherstellen, dass die Reaktionszeit stimmt.' },
+      { cat: 'Google Ads', icon: '📣', title: 'Anzeigenerweiterungen vollstaendig nutzen', impact: 'hoch', body: 'Die meisten Sicherheitsfirmen schalten Google Ads ohne <strong>Anruferweiterung, Standorterweiterung und Sitelinks</strong>. Dabei verdoppeln diese die sichtbare Anzeigenflaeche ohne Mehrkosten.', action: 'In Google Ads alle relevanten Assets aktivieren.' },
+      { cat: 'Google Ads', icon: '📣', title: 'Negative Keywords einpflegen', impact: 'hoch', body: 'Ohne Ausschluss-Keywords zahlen Sicherheitsfirmen fuer Suchanfragen wie "Sicherheitsdienst Ausbildung" oder "Sicherheitskurs kostenlos". <strong>Bis zu 30 % des Budgets versickert</strong> so in unpassende Klicks.', action: 'Suchanfragebericht woechentlich pruefen und irrelevante Begriffe ausschliessen.' },
+      { cat: 'Google Ads', icon: '📣', title: 'Standortbasiertes Targeting auf Region eingrenzen', impact: 'hoch', body: 'Viele Kampagnen laufen bundesweit, obwohl das Unternehmen nur regional taetig ist. <strong>Jeder Klick ausserhalb des Einzugsgebiets ist verschwendetes Geld.</strong>', action: 'Zielregion je nach Einsatzgebiet auf einen realistischen Radius begrenzen.' },
+      { cat: 'Google Ads', icon: '📣', title: 'Anzeigentexte mit Zahlen und Konkretem', impact: 'mittel', body: 'Allgemeine Texte wie "Ihr zuverlaessiger Sicherheitsdienst" performen schwach. Besser: <strong>"24/7 Objektschutz – Reaktionszeit unter 15 Min."</strong> oder konkrete Nachweise wie Bewertungen und Einsatzzeiten.', action: 'Mindestens 3 Anzeigenvarianten mit spezifischen USPs testen.' },
+      { cat: 'Meta Ads', icon: '📱', title: 'Video statt Bild', impact: 'hoch', body: 'Facebook- und Instagram-Ads mit Video erzielen oft deutlich mehr Aufmerksamkeit als reine Bildanzeigen. Ein 15-Sekunden-Clip vom Team oder Einsatzfahrzeug reicht oft schon aus.', action: '1 kurzes Video mit dem Smartphone drehen und mit Untertiteln versehen.' },
+      { cat: 'Meta Ads', icon: '📱', title: 'Retargeting auf Webseitenbesucher aktivieren', impact: 'hoch', body: 'Wer die Webseite besucht hat und keine Anfrage gestellt hat, ist ein <strong>heisser Lead</strong>. Meta-Retargeting erreicht genau diese Personen erneut und oft guenstiger als kalte Zielgruppen.', action: 'Meta Pixel installieren und Retargeting-Kampagne aufsetzen.' },
+      { cat: 'Meta Ads', icon: '📱', title: 'Lead-Formulare statt Landingpage testen', impact: 'mittel', body: 'Metas native Lead-Formulare werden direkt in der App ausgefuellt. <strong>Keine Ladezeit, weniger Abbrueche</strong> und oft eine deutlich hoehere Conversion auf Mobilgeraeten.', action: 'Eine Lead-Generierungskampagne mit Instant-Formular testen.' },
+      { cat: 'Kein Budget', icon: '✅', title: 'Google Business Profil vollstaendig ausfuellen', impact: 'hoch', body: 'Wer bei Google Maps ganz oben erscheinen will, muss sein Google-Business-Profil <strong>vollstaendig ausfuellen: Oeffnungszeiten, Fotos, Leistungen, Kurzbeschreibung</strong>. Ein gepflegtes Profil bekommt deutlich mehr Klicks.', action: 'Alle Felder ausfuellen und mindestens 5 aktuelle Fotos hochladen.' },
+      { cat: 'Kein Budget', icon: '✅', title: 'Kundenbewertungen aktiv anfragen', impact: 'hoch', body: 'Sicherheitsfirmen mit vielen Bewertungen schlagen lokale Wettbewerber fast immer in der Wahrnehmung. <strong>Die meisten Kunden bewerten, wenn man sie direkt und sauber darum bittet.</strong>', action: 'Direktlink zur Bewertungsseite nach jedem Abschluss verschicken.' },
+      { cat: 'Kein Budget', icon: '✅', title: 'WhatsApp-Kontakt auf der Website einbinden', impact: 'mittel', body: 'Viele Interessenten schreiben lieber per WhatsApp als ueber ein Formular. Ein <strong>WhatsApp-Button mit vorausgefuelltem Text</strong> senkt die Hemmschwelle massiv.', action: 'wa.me-Link mit sinnvoller Startnachricht auf der Seite einbinden.' },
+      { cat: 'Kein Budget', icon: '✅', title: 'Firmenwagen als kostenloses Werbemittel', impact: 'mittel', body: 'Ein gebrandetes Fahrzeug im Einsatz ist <strong>Aussenwerbung ohne laufende Kosten</strong>. Firmenname, Telefonnummer und Leistungsangabe sorgen lokal fuer dauerhafte Sichtbarkeit.', action: 'Beschriftung so klar halten, dass sie im Vorbeifahren lesbar ist.' }
     ];
 
-    const tipsCats = ["Alle", "Webseite", "Google Ads", "Meta Ads", "Kein Budget"];
-    let tipsActive = "Alle";
-
     function renderTips() {
-      const filtered = tipsActive === "Alle" ? tipsData : tipsData.filter(t => t.cat === tipsActive);
+      const filtered = tipsActive === 'Alle' ? tipsData : tipsData.filter(tip => tip.cat === tipsActive);
       const countEl = document.getElementById('tipsCount');
       const gridEl = document.getElementById('tipsGrid');
       if (!countEl || !gridEl) return;
-      countEl.textContent = filtered.length + ' Tipps gefunden';
+      countEl.textContent = `${filtered.length} Tipps gefunden`;
       gridEl.innerHTML = '';
-      filtered.forEach((tip, i) => {
+      filtered.forEach((tip, index) => {
         const card = document.createElement('div');
+        const highImpact = tip.impact === 'hoch';
         card.className = 'tip-card-ie';
-        card.style.animationDelay = (i * 0.05) + 's';
-        const isHigh = tip.impact === 'hoch';
+        card.style.animationDelay = `${index * 0.05}s`;
         card.innerHTML = `
           <div class="tip-top-ie">
             <div class="tip-icon-ie">${tip.icon}</div>
             <div style="flex:1">
               <div class="tip-title-ie">${tip.title}</div>
-              <span class="tip-badge ${isHigh ? 'tip-badge-high' : 'tip-badge-mid'}">${isHigh ? '⚡ Hoher Impact' : '◎ Mittlerer Impact'}</span>
+              <span class="tip-badge ${highImpact ? 'tip-badge-high' : 'tip-badge-mid'}">${highImpact ? '⚡ Hoher Impact' : '◎ Mittlerer Impact'}</span>
             </div>
             <span class="tip-chevron">▼</span>
           </div>
@@ -2982,33 +4108,73 @@
             </div>
           </div>`;
         card.addEventListener('click', () => {
-          const isOpen = card.classList.contains('open');
-          gridEl.querySelectorAll('.tip-card-ie').forEach(c => c.classList.remove('open'));
-          if (!isOpen) card.classList.add('open');
+          const open = card.classList.contains('open');
+          gridEl.querySelectorAll('.tip-card-ie').forEach(item => item.classList.remove('open'));
+          if (!open) card.classList.add('open');
         });
+        card.addEventListener('keydown', event => handleKeyAction(event, () => card.click()));
         gridEl.appendChild(card);
       });
+      enhanceDynamicUI(gridEl);
     }
 
     function initTipsFilters() {
       const bar = document.getElementById('tipsFilterBar');
       if (!bar) return;
-      bar.innerHTML = tipsCats.map(c =>
-        `<button class="tips-filter-btn${c === tipsActive ? ' active' : ''}" data-cat="${c}">${c}</button>`
-      ).join('');
+      bar.innerHTML = tipsCats.map(cat => `<button class="tips-filter-btn${cat === tipsActive ? ' active' : ''}" data-cat="${cat}">${cat}</button>`).join('');
       bar.querySelectorAll('.tips-filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           tipsActive = btn.dataset.cat;
-          bar.querySelectorAll('.tips-filter-btn').forEach(b => b.classList.remove('active'));
+          bar.querySelectorAll('.tips-filter-btn').forEach(item => item.classList.remove('active'));
           btn.classList.add('active');
           renderTips();
         });
       });
+      bindCursorHover(bar);
     }
 
-    // Init tips when page loads
-    document.addEventListener('DOMContentLoaded', () => { initTipsFilters(); renderTips(); });
+    initCursor();
+    initSmoothScroll();
+    initReveal();
+    observeScrambleTargets();
+    initCounters();
+    initMagneticButtons();
+    initSpotlights();
+    initPreloader();
+    updateNavLinks(currentPage);
+    updateScrollChrome();
+    initTipsFilters();
+    renderTips();
 
+    motionQuery.addEventListener('change', event => {
+      reducedMotion = event.matches;
+      initReveal();
+      observeScrambleTargets();
+      initSmoothScroll();
+      initMagneticButtons();
+      if (reducedMotion) startHeroAnimations();
+    });
+
+    coarsePointerQuery.addEventListener('change', () => {
+      setCursorMode();
+      initSmoothScroll();
+    });
+
+    window.addEventListener('resize', () => {
+      initSmoothScroll();
+      updateScrollChrome();
+    });
+
+    window.addEventListener('scroll', () => {
+      if (!smoothScrollEnabled) {
+        syncScrollTarget();
+        return;
+      }
+      updateScrollChrome();
+      if (!smoothRaf && Math.abs(window.scrollY - scrollTarget) > 4) {
+        syncScrollTarget();
+      }
+    }, { passive: true });
   </script>
 </body>
 
