@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>InboxElevate – Mehr Anfragen für Sicherheitsunternehmen.</title>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
     href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap"
@@ -3189,6 +3190,9 @@
             </div>
             <div class="f-group"><label>Deine Nachricht</label><textarea name="nachricht"
                 placeholder="Erzähl uns kurz von deinem Projekt, Budget oder deinen Fragen..."></textarea></div>
+            <div class="f-group" style="display: flex; justify-content: center; margin: 0.5rem 0;">
+              <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="light"></div>
+            </div>
             <button type="submit" class="btn-submit" id="submitBtn">
               Kostenlosen Marketing-Check anfordern
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
