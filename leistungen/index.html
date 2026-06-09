@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leistungen – InboxElevate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/leistungen.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 40 40" fill="none" style="width:30px;">
+        <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      InboxElevate
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Start</a></li>
+      <li><a href="/leistungen" class="active">Leistungen</a></li>
+      <li><a href="/prozess">Prozess</a></li>
+      <li><a href="/ueber-uns">Über uns</a></li>
+      <li><a href="/tipps">Tipps</a></li>
+      <li><a href="/kontakt" class="nav-cta">Kontakt <span class="nav-arrow">→</span></a></li>
+    </ul>
+    <button class="ham" id="ham" onclick="document.getElementById('mobMenu').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="mob-menu" id="mobMenu">
+    <a href="/">Start</a>
+    <a href="/leistungen" style="color:var(--green)">Leistungen</a>
+    <a href="/prozess">Prozess</a>
+    <a href="/ueber-uns">Über uns</a>
+    <a href="/tipps">Tipps</a>
+    <a href="/kontakt">Kontakt →</a>
+  </div>
+
+  <main>
+    <section class="hub-hero">
+      <h1>Unsere Expertise.<br><span style="color:var(--green)">Dein Wachstum.</span></h1>
+      <p>Wir haben uns auf genau das spezialisiert, was Sicherheitsunternehmen wirklich voranbringt. Keine unnötigen Services, sondern glasklarer Fokus auf Leads, Recruiting und Effizienz.</p>
+    </section>
+
+    <section class="hub-grid">
+      <a href="/leistungen/webseiten" class="hub-card">
+        <div class="hub-card-icon">🌐</div>
+        <h2>Webseiten</h2>
+        <p>Conversion-starke Websites für Sicherheitsunternehmen — mit sichtbarer Notrufnummer, Vertrauenssignalen und starker lokaler SEO.</p>
+        <div class="hub-card-cta">Mehr erfahren <span style="font-size:1.2em">→</span></div>
+      </a>
+      
+      <a href="#" class="hub-card">
+        <div class="hub-card-icon">📣</div>
+        <h2>Paid Ads</h2>
+        <p>Google, Meta und LinkedIn Kampagnen — zielgenau ausgerichtet für Alarmanlagen-Anfragen, Objektschutz-Leads und Mitarbeiter-Recruiting.</p>
+        <div class="hub-card-cta">Mehr erfahren <span style="font-size:1.2em">→</span></div>
+      </a>
+
+      <a href="#" class="hub-card">
+        <div class="hub-card-icon">🤖</div>
+        <h2>KI im Unternehmen</h2>
+        <p>Prozesse automatisieren, Kundenanfragen per KI-Bot 24/7 vorqualifizieren und interne Workflows verschlanken. Direkt in der Praxis angewandt.</p>
+        <div class="hub-card-cta">Mehr erfahren <span style="font-size:1.2em">→</span></div>
+      </a>
+    </section>
+  </main>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
