@@ -5,14 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>InboxElevate – Mehr Anfragen für Sicherheitsunternehmen.</title>
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
     href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap"
     rel="stylesheet">
   <style>
     :root {
-      --nav-h: 68px;
       --ink: #0b0e1a;
       --ink2: #1c2238;
       --green: #1dba6e;
@@ -48,12 +46,6 @@
       color: var(--ink);
       overflow-x: hidden;
       cursor: none;
-    }
-
-
-    .hero {
-      background-image: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(29,186,110,.045) 0%, transparent 65%),
-                        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(11,14,26,.0) 0%, transparent 100%);
     }
 
     /* CUSTOM CURSOR */
@@ -120,7 +112,7 @@
       left: 0;
       right: 0;
       z-index: 500;
-      height: var(--nav-h);
+      height: 68px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -239,7 +231,7 @@
     .mob-menu {
       display: none;
       position: fixed;
-      top: var(--nav-h);
+      top: 68px;
       inset-inline: 0;
       z-index: 499;
       background: rgba(245, 243, 238, .97);
@@ -254,7 +246,7 @@
       display: flex;
     }
 
-    nav.nav-shrink + .mob-menu {
+    nav.nav-shrink+.mob-menu {
       top: 52px;
     }
 
@@ -272,7 +264,7 @@
       min-height: 100vh;
       display: grid;
       grid-template-rows: 1fr auto;
-      padding-top: var(--nav-h);
+      padding-top: 68px;
       overflow: hidden;
     }
 
@@ -496,7 +488,7 @@
 
     /* ── SERVICES PAGE ── */
     .page-hero {
-      padding: calc(var(--nav-h) + 5rem) clamp(1.5rem, 5vw, 4rem) 4rem;
+      padding: calc(68px + 5rem) clamp(1.5rem, 5vw, 4rem) 4rem;
       border-bottom: 1px solid var(--border);
     }
 
@@ -745,15 +737,15 @@
     .services-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
-      min-height: calc(100vh - var(--nav-h));
+      min-height: calc(100vh - 68px);
     }
 
     .services-nav {
       border-right: 1px solid var(--border);
       padding: 3rem 2rem;
       position: sticky;
-      top: var(--nav-h);
-      height: calc(100vh - var(--nav-h));
+      top: 68px;
+      height: calc(100vh - 68px);
       overflow-y: auto;
     }
 
@@ -897,7 +889,7 @@
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: calc(100vh - var(--nav-h));
+      min-height: calc(100vh - 68px);
     }
 
     .about-left {
@@ -1030,7 +1022,7 @@
     .contact-split {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: calc(100vh - var(--nav-h));
+      min-height: calc(100vh - 68px);
     }
 
     .contact-left {
@@ -1533,22 +1525,32 @@
       display: inline-block;
       animation: arrowBounce 1.2s ease-in-out infinite;
     }
+
     @keyframes arrowBounce {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(5px); }
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(5px);
+      }
     }
 
     /* ── TIPS PAGE ── */
     .tips-hero {
-      padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 5vw, 4rem) 3rem;
+      padding: calc(68px + 4rem) clamp(1.5rem, 5vw, 4rem) 3rem;
       border-bottom: 1px solid var(--border);
     }
+
     .tips-filter-bar {
       display: flex;
       gap: .5rem;
       flex-wrap: wrap;
       margin-top: 2rem;
     }
+
     .tips-filter-btn {
       font-family: var(--B);
       font-size: .82rem;
@@ -1561,15 +1563,18 @@
       cursor: none;
       transition: all .2s;
     }
+
     .tips-filter-btn:hover {
       border-color: var(--green);
       color: var(--ink);
     }
+
     .tips-filter-btn.active {
       background: var(--ink);
       border-color: var(--ink);
       color: var(--cream);
     }
+
     .tips-count {
       font-family: var(--M);
       font-size: .7rem;
@@ -1578,12 +1583,14 @@
       text-transform: uppercase;
       padding: 3rem clamp(1.5rem, 5vw, 4rem) 1rem;
     }
+
     .tips-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1rem;
       padding: 0 clamp(1.5rem, 5vw, 4rem) 4rem;
     }
+
     .tip-card-ie {
       background: var(--white);
       border: 1px solid var(--border);
@@ -1595,31 +1602,63 @@
       transform: translateY(20px);
       animation: tipCardIn .4s ease forwards;
     }
+
     .tip-card-ie:hover {
       border-color: var(--green);
       transform: translateY(-3px);
       box-shadow: 0 8px 28px rgba(29, 186, 110, .1);
     }
+
     .tip-card-ie.open {
       border-color: var(--green);
       background: rgba(29, 186, 110, .04);
     }
+
     @keyframes tipCardIn {
-      to { opacity: 1; transform: translateY(0); }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    .tip-card-ie:nth-child(1) { animation-delay: .05s; }
-    .tip-card-ie:nth-child(2) { animation-delay: .1s; }
-    .tip-card-ie:nth-child(3) { animation-delay: .15s; }
-    .tip-card-ie:nth-child(4) { animation-delay: .2s; }
-    .tip-card-ie:nth-child(5) { animation-delay: .25s; }
-    .tip-card-ie:nth-child(6) { animation-delay: .3s; }
-    .tip-card-ie:nth-child(7) { animation-delay: .35s; }
-    .tip-card-ie:nth-child(8) { animation-delay: .4s; }
+
+    .tip-card-ie:nth-child(1) {
+      animation-delay: .05s;
+    }
+
+    .tip-card-ie:nth-child(2) {
+      animation-delay: .1s;
+    }
+
+    .tip-card-ie:nth-child(3) {
+      animation-delay: .15s;
+    }
+
+    .tip-card-ie:nth-child(4) {
+      animation-delay: .2s;
+    }
+
+    .tip-card-ie:nth-child(5) {
+      animation-delay: .25s;
+    }
+
+    .tip-card-ie:nth-child(6) {
+      animation-delay: .3s;
+    }
+
+    .tip-card-ie:nth-child(7) {
+      animation-delay: .35s;
+    }
+
+    .tip-card-ie:nth-child(8) {
+      animation-delay: .4s;
+    }
+
     .tip-top-ie {
       display: flex;
       align-items: flex-start;
       gap: 12px;
     }
+
     .tip-icon-ie {
       font-size: 1.3rem;
       flex-shrink: 0;
@@ -1632,6 +1671,7 @@
       align-items: center;
       justify-content: center;
     }
+
     .tip-title-ie {
       font-family: var(--H);
       font-size: .95rem;
@@ -1640,6 +1680,7 @@
       line-height: 1.4;
       letter-spacing: -.02em;
     }
+
     .tip-badge {
       display: inline-flex;
       align-items: center;
@@ -1653,27 +1694,33 @@
       border-radius: 50px;
       margin-top: .8rem;
     }
+
     .tip-badge-high {
       background: rgba(29, 186, 110, .12);
       color: var(--green);
       border: 1px solid rgba(29, 186, 110, .25);
     }
+
     .tip-badge-mid {
       background: rgba(250, 199, 117, .12);
       color: #c98a00;
       border: 1px solid rgba(250, 199, 117, .3);
     }
+
     .tip-body-ie {
       display: grid;
       grid-template-rows: 0fr;
       transition: grid-template-rows .35s ease;
     }
+
     .tip-body-ie-inner {
       overflow: hidden;
     }
+
     .tip-card-ie.open .tip-body-ie {
       grid-template-rows: 1fr;
     }
+
     .tip-body-ie-inner p {
       padding-top: 1rem;
       margin-top: .8rem;
@@ -1682,10 +1729,12 @@
       font-size: .87rem;
       line-height: 1.7;
     }
+
     .tip-body-ie-inner p strong {
       color: var(--ink);
       font-weight: 600;
     }
+
     .tip-action-ie {
       display: flex;
       align-items: center;
@@ -1696,9 +1745,11 @@
       color: var(--green);
       font-family: var(--H);
     }
+
     .tip-action-ie::before {
       content: '→';
     }
+
     .tip-chevron {
       margin-left: auto;
       font-size: .7rem;
@@ -1706,24 +1757,51 @@
       transition: transform .3s, color .2s;
       flex-shrink: 0;
     }
+
     .tip-card-ie.open .tip-chevron {
       transform: rotate(180deg);
       color: var(--green);
     }
+
     .tips-cta-strip {
       background: var(--ink);
       padding: 4rem clamp(1.5rem, 5vw, 4rem);
       text-align: center;
     }
+
     @media(max-width:600px) {
-      .tips-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .ham { display: flex; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .hero-h1 { font-size: clamp(2.5rem, 11vw, 4rem); }
-      .panel-platforms { flex-direction: column; }
-      .svc-cat-tabs { gap: .4rem; }
-      .svc-cat-tab { font-size: .78rem; padding: .45rem .9rem; }
+      .tips-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .ham {
+        display: flex;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-h1 {
+        font-size: clamp(2.5rem, 11vw, 4rem);
+      }
+
+      .panel-platforms {
+        flex-direction: column;
+      }
+
+      .svc-cat-tabs {
+        gap: .4rem;
+      }
+
+      .svc-cat-tab {
+        font-size: .78rem;
+        padding: .45rem .9rem;
+      }
     }
 
     /* ── TYPEWRITER CURSOR ── */
@@ -1736,13 +1814,30 @@
       margin-left: 2px;
       animation: twBlink .7s step-end infinite;
     }
-    @keyframes twBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    @keyframes twBlink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0
+      }
+    }
 
     /* ── COUNTER ANIMATION ── */
-    .stat-counter { transition: color .3s; }
+    .stat-counter {
+      transition: color .3s;
+    }
 
     /* ── PULSE CTA ── */
-    .btn-pulse-wrap { position: relative; display: inline-flex; }
+    .btn-pulse-wrap {
+      position: relative;
+      display: inline-flex;
+    }
+
     .btn-pulse-wrap::before {
       content: '';
       position: absolute;
@@ -1753,28 +1848,42 @@
       animation: pulseRing 2s ease-out infinite;
       pointer-events: none;
     }
+
     @keyframes pulseRing {
-      0% { transform: scale(1); opacity: .6; }
-      70% { transform: scale(1.1); opacity: 0; }
-      100% { transform: scale(1.1); opacity: 0; }
+      0% {
+        transform: scale(1);
+        opacity: .6;
+      }
+
+      70% {
+        transform: scale(1.1);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1.1);
+        opacity: 0;
+      }
     }
 
     /* ── TIPS PAGE IMPROVEMENTS ── */
     .tips-stats-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
       border-radius: var(--r);
       overflow: hidden;
-      margin: 2rem clamp(1.5rem,5vw,4rem) 0;
+      margin: 2rem clamp(1.5rem, 5vw, 4rem) 0;
     }
+
     .tips-stat {
       background: var(--white);
       padding: 1.5rem 1.2rem;
       text-align: center;
     }
+
     .tips-stat .n {
       font-family: var(--H);
       font-size: 1.8rem;
@@ -1782,6 +1891,7 @@
       color: var(--green);
       letter-spacing: -.04em;
     }
+
     .tips-stat .l {
       font-size: .75rem;
       color: var(--muted);
@@ -1800,22 +1910,32 @@
       min-height: 1em;
     }
 
+    #tw-text {
+      display: inline-block;
+      min-width: 22ch;
+    }
+
     /* ── COUNTER STATS on home ── */
     .home-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px,1fr));
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 1px;
       background: var(--border);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
+
     .home-stat {
       background: var(--cream);
       padding: 2rem 1.5rem;
       text-align: center;
       transition: background .2s;
     }
-    .home-stat:hover { background: rgba(29,186,110,.06); }
+
+    .home-stat:hover {
+      background: rgba(29, 186, 110, .06);
+    }
+
     .home-stat .n {
       font-family: var(--H);
       font-size: 2.2rem;
@@ -1823,7 +1943,11 @@
       letter-spacing: -.05em;
       color: var(--ink);
     }
-    .home-stat .n span { color: var(--green); }
+
+    .home-stat .n span {
+      color: var(--green);
+    }
+
     .home-stat .l {
       font-size: .78rem;
       color: var(--muted);
@@ -1843,7 +1967,7 @@
       background-size: 200px 200px;
     }
 
-    body > * {
+    body>* {
       position: relative;
       z-index: 2;
     }
@@ -1985,8 +2109,7 @@
     .mob-menu a:focus-visible,
     .tips-filter-btn:focus-visible,
     .svc-cat-tab:focus-visible,
-    .btn-submit:focus-visible,
-    .floating-wa:focus-visible {
+    .btn-submit:focus-visible {
       outline: 2px solid var(--green);
       outline-offset: 4px;
     }
@@ -2049,7 +2172,7 @@
       opacity: 1;
     }
 
-    .spotlight-card > * {
+    .spotlight-card>* {
       position: relative;
       z-index: 1;
     }
@@ -2222,78 +2345,12 @@
       color: rgba(245, 243, 238, .76);
     }
 
-    .floating-wa-wrap {
-      position: fixed;
-      right: 1.25rem;
-      bottom: 1.25rem;
-      z-index: 955;
-    }
-
-    .floating-wa-wrap::before {
-      content: '';
-      position: absolute;
-      inset: -6px;
-      border-radius: 999px;
-      border: 2px solid var(--green);
-      opacity: .45;
-      animation: pulseRing 2s ease-out infinite;
-      pointer-events: none;
-    }
-
-    .floating-wa {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      background: var(--green);
-      color: var(--ink);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 16px 34px rgba(29, 186, 110, .28);
-      text-decoration: none;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-      cursor: none;
-    }
-
-    .floating-wa:hover {
-      transform: translateY(-3px);
-      background: var(--green-l);
-      box-shadow: 0 18px 38px rgba(29, 186, 110, .34);
-    }
-
-    .floating-wa svg {
-      width: 26px;
-      height: 26px;
-    }
-
-    .wa-tooltip {
-      position: absolute;
-      right: 70px;
-      top: 50%;
-      transform: translateY(-50%) translateX(8px);
-      background: rgba(11, 14, 26, .94);
-      color: var(--cream);
-      padding: .55rem .8rem;
-      border-radius: 10px;
-      font-size: .78rem;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .2s ease, transform .2s ease;
-      box-shadow: 0 10px 26px rgba(11, 14, 26, .18);
-    }
-
-    .floating-wa-wrap:hover .wa-tooltip,
-    .floating-wa-wrap:focus-within .wa-tooltip {
-      opacity: 1;
-      transform: translateY(-50%) translateX(0);
-    }
-
     .scramble-ready {
       min-width: 1px;
     }
 
     @media(max-width:900px) {
+
       .testimonials-wrap,
       .home-faq-grid {
         grid-template-columns: 1fr;
@@ -2305,17 +2362,535 @@
         right: 1rem;
         left: 1rem;
         width: auto;
-        bottom: 5.8rem;
-      }
-
-      .floating-wa-wrap {
-        right: 1rem;
         bottom: 1rem;
       }
+    }
 
-      .wa-tooltip {
-        display: none;
+    /* ── NAV DROPDOWN ── */
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown>a {
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+    }
+
+    .nav-dropdown-caret {
+      font-size: .65rem;
+      transition: transform .2s;
+    }
+
+    .nav-dropdown:hover .nav-dropdown-caret,
+    .nav-dropdown.open .nav-dropdown-caret {
+      transform: rotate(180deg);
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      min-width: 220px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: .5rem;
+      list-style: none;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s, visibility .2s;
+      box-shadow: 0 16px 40px rgba(11, 14, 26, .12);
+      z-index: 600;
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown.open .nav-dropdown-menu,
+    .nav-dropdown:focus-within .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .nav-dropdown-menu a {
+      display: block;
+      padding: .65rem .9rem;
+      border-radius: 10px;
+      font-size: .84rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: background .15s, color .15s;
+    }
+
+    .nav-dropdown-menu a::after {
+      display: none !important;
+    }
+
+    .nav-dropdown-menu a:hover {
+      background: var(--green-dim);
+      color: var(--ink);
+    }
+
+    /* ── LEISTUNGEN MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 14, 26, .55);
+      backdrop-filter: blur(6px);
+      z-index: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .25s, visibility .25s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-box {
+      background: var(--cream);
+      border-radius: 20px;
+      width: min(480px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      transform: translateY(16px) scale(.98);
+      transition: transform .25s;
+      border: 1px solid var(--border);
+    }
+
+    .modal-overlay.open .modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-head h3 {
+      font-family: var(--H);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -.04em;
+    }
+
+    .modal-close {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1.1rem;
+      cursor: none;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .modal-svc-list {
+      display: grid;
+      gap: .75rem;
+    }
+
+    .modal-svc-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1.1rem 1.2rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-align: left;
+      cursor: none;
+      transition: border-color .2s, transform .15s;
+      width: 100%;
+    }
+
+    .modal-svc-item:hover {
+      border-color: var(--green);
+      transform: translateY(-2px);
+    }
+
+    .modal-svc-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--green-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .modal-svc-item h4 {
+      font-family: var(--H);
+      font-size: .95rem;
+      font-weight: 700;
+      margin-bottom: .25rem;
+    }
+
+    .modal-svc-item p {
+      font-size: .82rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── STICKY MOBILE CTA ── */
+    .sticky-mobile-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 490;
+      padding: .75rem 1rem calc(.75rem + env(safe-area-inset-bottom));
+      background: rgba(245, 243, 238, .95);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border);
+      transform: translateY(100%);
+      transition: transform .3s ease;
+    }
+
+    .sticky-mobile-cta.visible {
+      transform: translateY(0);
+    }
+
+    .sticky-mobile-cta a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      width: 100%;
+      background: var(--ink);
+      color: var(--cream);
+      padding: .85rem 1.2rem;
+      border-radius: 50px;
+      font-family: var(--H);
+      font-weight: 700;
+      font-size: .9rem;
+      text-decoration: none;
+    }
+
+    @media(max-width:768px) {
+      .sticky-mobile-cta {
+        display: block;
       }
+
+      body.has-sticky-cta .toast-stack {
+        bottom: 5.5rem;
+      }
+    }
+
+    /* ── FAQ COLUMNS (independent accordions) ── */
+    .faq-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .faq-col {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media(max-width:768px) {
+      .faq-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── FAQ FOLLOW-UP ── */
+    .faq-followup {
+      margin-top: 2.5rem;
+      padding: 2rem;
+      background: var(--green-dim);
+      border: 1px solid rgba(29, 186, 110, .2);
+      border-radius: var(--r);
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+    }
+
+    .faq-followup-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .faq-followup h3 {
+      font-family: var(--H);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: .4rem;
+    }
+
+    .faq-followup p {
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.65;
+      margin-bottom: .8rem;
+    }
+
+    .faq-followup a {
+      color: var(--green);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: .88rem;
+    }
+
+    /* ── LEGAL PAGES ── */
+    .legal-page {
+      padding: calc(68px + 3rem) clamp(1.5rem, 5vw, 4rem) 4rem;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .legal-page h1 {
+      font-family: var(--H);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      margin-bottom: .5rem;
+    }
+
+    .legal-page .legal-updated {
+      font-family: var(--M);
+      font-size: .72rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .legal-page h2 {
+      font-family: var(--H);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 2rem 0 .75rem;
+    }
+
+    .legal-page p,
+    .legal-page li {
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.75;
+      margin-bottom: .75rem;
+    }
+
+    .legal-page ul {
+      padding-left: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ── ABOUT FOUNDER ── */
+    .founder-card {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 20px;
+      padding: 1.8rem;
+      margin-top: 2rem;
+    }
+
+    .founder-card h3 {
+      font-family: var(--H);
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: .2rem;
+    }
+
+    .founder-role {
+      font-family: var(--M);
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: .8rem;
+    }
+
+    .founder-card p {
+      color: rgba(245, 243, 238, .65);
+      font-size: .88rem;
+      line-height: 1.7;
+    }
+
+    /* ── INTRO ICONS (no numbering) ── */
+    .intro-icon {
+      font-size: 1.5rem;
+      margin-bottom: .8rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--green-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .intro-label {
+      font-family: var(--M);
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: .5rem;
+    }
+
+    /* ── KI PAGE ── */
+    .ki-hero-img {
+      width: 100%;
+      max-height: 320px;
+      object-fit: cover;
+      border-radius: var(--r);
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .ki-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      padding: 0 clamp(1.5rem, 5vw, 4rem) 4rem;
+    }
+
+    .ki-feat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.6rem;
+      transition: border-color .2s;
+    }
+
+    .ki-feat-card:hover {
+      border-color: var(--green);
+    }
+
+    .ki-feat-card h3 {
+      font-family: var(--H);
+      font-size: 1rem;
+      font-weight: 700;
+      margin: .6rem 0 .4rem;
+    }
+
+    .ki-feat-card p {
+      font-size: .86rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .price-signal {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-top: 1rem;
+      padding: .5rem 1rem;
+      background: var(--green-dim);
+      border: 1px solid rgba(29, 186, 110, .25);
+      border-radius: 50px;
+      font-family: var(--M);
+      font-size: .72rem;
+      color: var(--ink);
+      letter-spacing: .04em;
+    }
+
+    /* ── TIPS VISUAL UPGRADE ── */
+    .tips-hero {
+      background: linear-gradient(180deg, var(--cream) 0%, rgba(29, 186, 110, .04) 100%);
+    }
+
+    .tips-grid {
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .tip-card-ie {
+      border-radius: 18px;
+      padding: 1.6rem 1.7rem;
+      background: linear-gradient(145deg, var(--white) 0%, rgba(245, 243, 238, .6) 100%);
+      box-shadow: 0 2px 12px rgba(11, 14, 26, .04);
+    }
+
+    .tip-card-ie:hover {
+      box-shadow: 0 12px 36px rgba(29, 186, 110, .12);
+    }
+
+    .tip-icon-ie {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      font-size: 1.4rem;
+    }
+
+    .tips-stats-row {
+      background: var(--ink);
+      border: none;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .tips-stats-row .tips-stat {
+      background: transparent;
+      color: var(--cream);
+      border-right: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .tips-stats-row .tips-stat:last-child {
+      border-right: none;
+    }
+
+    .tips-stats-row .tips-stat .n {
+      color: var(--green);
+    }
+
+    .tips-stats-row .tips-stat .l {
+      color: rgba(245, 243, 238, .5);
+    }
+
+    .tips-filter-btn.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--ink);
+    }
+
+    .tips-noscript-fallback {
+      padding: 0 clamp(1.5rem, 5vw, 4rem) 2rem;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    /* ── FORM SUCCESS ACTIONS ── */
+    .form-ok-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      margin-top: 1.2rem;
+      justify-content: center;
+    }
+
+    .form-ok-actions a {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--green);
+      text-decoration: none;
+      padding: .5rem 1rem;
+      border: 1px solid rgba(29, 186, 110, .3);
+      border-radius: 50px;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -2355,25 +2930,24 @@
         </svg>
         <span>InboxElevate</span>
       </div>
-      <div class="preloader-track"><div class="preloader-bar"></div></div>
+      <div class="preloader-track">
+        <div class="preloader-bar"></div>
+      </div>
     </div>
   </div>
 
   <div class="page-wipe" id="pageWipe" aria-hidden="true"></div>
-  <div class="progress-bar" id="scrollProgress" aria-hidden="true"><div class="progress-bar-fill" id="scrollProgressFill"></div></div>
+  <div class="progress-bar" id="scrollProgress" aria-hidden="true">
+    <div class="progress-bar-fill" id="scrollProgressFill"></div>
+  </div>
   <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
 
   <!-- Custom Cursor -->
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
 
-  <div class="floating-wa-wrap">
-    <span class="wa-tooltip">Direkt auf WhatsApp schreiben</span>
-    <a class="floating-wa" href="https://wa.me/49BITTEERSETZEN" data-placeholder="true" target="_blank" rel="noopener noreferrer" aria-label="Direkt auf WhatsApp schreiben">
-      <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-        <path d="M27.2 4.8A15.32 15.32 0 0 0 16.11.2C7.67.2.8 7.07.8 15.51c0 2.72.71 5.38 2.06 7.72L.6 31.4l8.38-2.2a15.28 15.28 0 0 0 7.13 1.81h.01c8.44 0 15.31-6.87 15.31-15.31 0-4.09-1.59-7.93-4.23-10.9Zm-11.09 23.6h-.01a12.9 12.9 0 0 1-6.58-1.8l-.47-.28-4.97 1.3 1.33-4.84-.31-.5a12.75 12.75 0 0 1-1.98-6.78c0-7.02 5.71-12.73 12.73-12.73 3.4 0 6.6 1.32 9 3.73a12.66 12.66 0 0 1 3.72 9c0 7.02-5.71 12.73-12.46 12.9Zm6.99-9.54c-.38-.19-2.24-1.1-2.59-1.23-.34-.13-.59-.19-.84.19-.25.38-.97 1.23-1.19 1.48-.22.25-.44.28-.81.09-.38-.19-1.59-.58-3.03-1.85-1.12-1-1.88-2.24-2.1-2.62-.22-.38-.02-.58.17-.77.17-.17.38-.44.56-.66.19-.22.25-.38.38-.63.12-.25.06-.47-.03-.66-.09-.19-.84-2.03-1.16-2.78-.31-.74-.63-.63-.84-.64l-.72-.02c-.25 0-.66.09-1 .47-.34.38-1.31 1.28-1.31 3.13 0 1.84 1.34 3.62 1.53 3.88.19.25 2.64 4.03 6.39 5.65.89.38 1.58.61 2.13.78.89.28 1.7.24 2.34.14.71-.11 2.24-.91 2.56-1.78.31-.88.31-1.63.22-1.78-.09-.16-.34-.25-.72-.44Z"/>
-      </svg>
-    </a>
+  <div class="sticky-mobile-cta" id="stickyMobileCta">
+    <a href="#" onclick="goToKontakt();return false;">Jetzt anfragen →</a>
   </div>
 
   <!-- NAV -->
@@ -2390,91 +2964,116 @@
     </a>
     <ul class="nav-links">
       <li><a href="#" onclick="navigate('home');return false;" data-page="home">Start</a></li>
-      <li><a href="#" onclick="navigate('services');return false;" data-page="services">Leistungen</a></li>
+      <li class="nav-dropdown" id="navLeistungen">
+        <a href="#" onclick="openLeistungenModal();return false;" data-page="services">Leistungen <span
+            class="nav-dropdown-caret">▾</span></a>
+        <ul class="nav-dropdown-menu">
+          <li><a href="#" onclick="showService('web');return false;">Webseiten</a></li>
+          <li><a href="#" onclick="showService('meta');return false;">Paid Ads</a></li>
+          <li><a href="#" onclick="navigate('ki');return false;">KI im Unternehmen</a></li>
+        </ul>
+      </li>
       <li><a href="#" onclick="navigate('process');return false;" data-page="process">Prozess</a></li>
       <li><a href="#" onclick="navigate('about');return false;" data-page="about">Über uns</a></li>
       <li><a href="#" onclick="navigate('tips');return false;" data-page="tips">Tipps</a></li>
-      <li><a href="#" onclick="navigate('contact');return false;" class="nav-cta" data-page="contact">Kontakt <span class="nav-arrow">→</span></a></li>
+      <li><a href="#" onclick="goToKontakt();return false;" class="nav-cta" data-page="contact">Kontakt <span
+            class="nav-arrow">→</span></a></li>
     </ul>
-    <button class="ham" id="ham" onclick="toggleMob()" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="ham" id="ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
   </nav>
 
   <div class="mob-menu" id="mobMenu">
     <a href="#" onclick="navigate('home');toggleMob();return false;">Start</a>
-    <a href="#" onclick="navigate('services');toggleMob();return false;">Leistungen</a>
+    <a href="#" onclick="openLeistungenModal();toggleMob();return false;">Leistungen</a>
+    <a href="#" onclick="showService('web');toggleMob();return false;">→ Webseiten</a>
+    <a href="#" onclick="showService('meta');toggleMob();return false;">→ Paid Ads</a>
+    <a href="#" onclick="navigate('ki');toggleMob();return false;">→ KI im Unternehmen</a>
     <a href="#" onclick="navigate('process');toggleMob();return false;">Prozess</a>
     <a href="#" onclick="navigate('about');toggleMob();return false;">Über uns</a>
     <a href="#" onclick="navigate('tips');toggleMob();return false;">Tipps</a>
-    <a href="#" onclick="navigate('contact');toggleMob();return false;" style="color:var(--green)">Kontakt →</a>
+    <a href="#" onclick="goToKontakt();toggleMob();return false;" style="color:var(--green)">Kontakt →</a>
+  </div>
+
+  <div class="modal-overlay" id="leistungenModal" role="dialog" aria-labelledby="leistungenModalTitle"
+    aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="leistungenModalTitle">Unsere Leistungen</h3>
+        <button class="modal-close" onclick="closeLeistungenModal()" aria-label="Schließen">×</button>
+      </div>
+      <div class="modal-svc-list">
+        <button class="modal-svc-item" onclick="showService('web');closeLeistungenModal();">
+          <div class="modal-svc-icon">🌐</div>
+          <div>
+            <h4>Webseiten</h4>
+            <p>Conversion-starke Websites für Sicherheitsunternehmen — mit Notrufnummer, Vertrauenssignalen und lokaler
+              SEO.</p>
+          </div>
+        </button>
+        <button class="modal-svc-item" onclick="showService('meta');closeLeistungenModal();">
+          <div class="modal-svc-icon">📣</div>
+          <div>
+            <h4>Paid Ads</h4>
+            <p>Google, Meta und LinkedIn — gezielt für Alarmanlagen-Anfragen, Objektschutz-Leads und Recruiting.</p>
+          </div>
+        </button>
+        <button class="modal-svc-item" onclick="navigate('ki');closeLeistungenModal();">
+          <div class="modal-svc-icon">🤖</div>
+          <div>
+            <h4>KI im Unternehmen</h4>
+            <p>KI-Tools sinnvoll einsetzen: Automatisierung, bessere Anfragenbearbeitung und effizientere Prozesse.</p>
+          </div>
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- ══════════════════ HOME PAGE ══════════════════ -->
   <div id="page-home" class="page active">
     <section class="hero">
       <div class="hero-inner">
-        <div class="hero-label sr">Spezialisierte Marketing-Agentur · Ausschließlich für Sicherheitsunternehmen</div>
+        <div class="hero-label sr">Performance Marketing · Webentwicklung · Sicherheitsbranche</div>
         <h1 class="hero-h1 sr" data-d="1">
           <span id="tw-line1">Mehr qualifizierte</span><br>
           <span id="tw-line2">Anfragen für</span><br>
-          <span class="hero-tw-line"><span id="tw-text"></span><span class="tw-cursor"></span></span>
+          <span class="hero-tw-line"><span id="tw-text" aria-live="polite">Sicherheitsunternehmen</span><span
+              class="tw-cursor" aria-hidden="true"></span></span>
         </h1>
         <div class="hero-sub-row">
-          <p class="hero-p sr" data-d="2">Sicherheitsunternehmen, die planbar wachsen wollen, brauchen mehr als eine Website. Sie brauchen ein System. Genau das bauen wir.</p>
+          <p class="hero-p sr" data-d="2">Wir unterstützen Sicherheitsdienste und Anbieter für Alarmanlagen dabei,
+            planbar neue Anfragen und Bewerbungen zu gewinnen.</p>
           <div class="hero-actions sr" data-d="3">
             <div class="btn-pulse-wrap">
-              <a href="#" onclick="navigate('contact');return false;" class="btn-ink">
+              <a href="#" onclick="goToKontakt();return false;" class="btn-ink">
                 Kostenlosen Marketing-Check anfordern
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
               </a>
             </div>
-            <a href="#" onclick="navigate('services');return false;" class="btn-ghost">
+            <a href="#" onclick="openLeistungenModal();return false;" class="btn-ghost">
               Leistungen entdecken <span class="btn-arrow">→</span>
             </a>
           </div>
         </div>
       </div>
 
-      <!-- Marquee -->
-      <div class="marquee-band">
-        <div class="marquee-track">
-          <span>Google Ads</span><span class="dot">·</span>
-          <span>Meta Ads</span><span class="dot">·</span>
-          <span>Webseiten für Sicherheitsfirmen</span><span class="dot">·</span>
-          <span>Alarmanlagen-Leads</span><span class="dot">·</span>
-          <span>Objektschutz</span><span class="dot">·</span>
-          <span>Revierdienst</span><span class="dot">·</span>
-          <span>Sicherheitsmitarbeiter gewinnen</span><span class="dot">·</span>
-          <span>LinkedIn Ads</span><span class="dot">·</span>
-          <span>Conversion-Optimierung</span><span class="dot">·</span>
-          <span>Pfortendienst</span><span class="dot">·</span>
-          <span>Veranstaltungsschutz</span><span class="dot">·</span>
-          <span>Google Ads</span><span class="dot">·</span>
-          <span>Meta Ads</span><span class="dot">·</span>
-          <span>Webseiten für Sicherheitsfirmen</span><span class="dot">·</span>
-          <span>Alarmanlagen-Leads</span><span class="dot">·</span>
-          <span>Objektschutz</span><span class="dot">·</span>
-          <span>Revierdienst</span><span class="dot">·</span>
-          <span>Sicherheitsmitarbeiter gewinnen</span><span class="dot">·</span>
-          <span>LinkedIn Ads</span><span class="dot">·</span>
-          <span>Conversion-Optimierung</span><span class="dot">·</span>
-          <span>Pfortendienst</span><span class="dot">·</span>
-          <span>Veranstaltungsschutz</span><span class="dot">·</span>
-        </div>
-      </div>
     </section>
 
     <!-- Animated Stats Strip -->
     <div class="home-stats" id="homeStats">
       <div class="home-stat">
-        <div class="n"><span class="stat-counter" data-target="24" data-suffix="h">0h</span></div>
-        <div class="l">Antwort in unter</div>
+        <div class="n"><span class="stat-counter" data-target="48" data-suffix="h">&lt;48h</span></div>
+        <div class="l">Reaktionszeit</div>
       </div>
       <div class="home-stat">
-        <div class="n"><span class="stat-counter" data-target="100" data-suffix="%">0%</span></div>
+        <div class="n"><span class="stat-counter" data-target="100" data-suffix="%">100%</span></div>
         <div class="l">Fokus auf dich</div>
       </div>
       <div class="home-stat">
-        <div class="n"><span class="stat-counter" data-target="3" data-suffix="×">0×</span></div>
+        <div class="n"><span class="stat-counter" data-target="3" data-suffix="×">3×</span></div>
         <div class="l">Plattformen</div>
       </div>
       <div class="home-stat">
@@ -2485,72 +3084,68 @@
 
     <!-- Intro strip -->
     <div class="intro-strip">
-      <div class="intro-cell sr spotlight-card hover-underline-card" onclick="navigate('services');return false;" onkeydown="handleKeyAction(event, function(){ navigate('services'); })" role="button" tabindex="0" style="cursor:none;">
-        <div class="intro-num">01 / Webseiten</div>
+      <div class="intro-cell sr spotlight-card hover-underline-card" onclick="showService('web');return false;"
+        onkeydown="handleKeyAction(event, function(){ showService('web'); })" role="button" tabindex="0"
+        style="cursor:none;">
+        <div class="intro-icon">🌐</div>
+        <div class="intro-label">Webseiten</div>
         <h3>Webseiten, die Anfragen bringen</h3>
-        <p>Speziell für Sicherheitsunternehmen: Notrufnummer sichtbar, Vertrauen aufgebaut, Besucher zu Kunden gemacht.</p>
+        <p>Speziell für Sicherheitsunternehmen: Notrufnummer sichtbar, Vertrauen aufgebaut, Besucher zu Kunden gemacht.
+        </p>
       </div>
-      <div class="intro-cell sr spotlight-card hover-underline-card" data-d="1" onclick="navigate('services');return false;" onkeydown="handleKeyAction(event, function(){ navigate('services'); })" role="button" tabindex="0" style="cursor:none;">
-        <div class="intro-num">02 / Paid Ads</div>
+      <div class="intro-cell sr spotlight-card hover-underline-card" data-d="1"
+        onclick="showService('meta');return false;"
+        onkeydown="handleKeyAction(event, function(){ showService('meta'); })" role="button" tabindex="0"
+        style="cursor:none;">
+        <div class="intro-icon">📣</div>
+        <div class="intro-label">Paid Ads</div>
         <h3>Ads mit echtem Ergebnis</h3>
-        <p>Google Search und Meta Ads gezielt für Alarmanlagen-Anfragen, Objektschutz-Leads und Bewerbungen von Sicherheitsmitarbeitern.</p>
+        <p>Google Search und Meta Ads gezielt für Alarmanlagen-Anfragen, Objektschutz-Leads und Bewerbungen von
+          Sicherheitsmitarbeitern.</p>
       </div>
-      <div class="intro-cell sr spotlight-card hover-underline-card" data-d="2" onclick="navigate('services');return false;" onkeydown="handleKeyAction(event, function(){ navigate('services'); })" role="button" tabindex="0" style="cursor:none;">
-        <div class="intro-num">03 / Strategie</div>
-        <h3>Strategie vor Ausführung</h3>
-        <p>Jede Maßnahme beginnt mit einem Plan. Wir denken zuerst, dann machen wir — und das merkt man im Ergebnis.</p>
+      <div class="intro-cell sr spotlight-card hover-underline-card" data-d="2" onclick="navigate('ki');return false;"
+        onkeydown="handleKeyAction(event, function(){ navigate('ki'); })" role="button" tabindex="0"
+        style="cursor:none;">
+        <div class="intro-icon">🤖</div>
+        <div class="intro-label">KI im Unternehmen</div>
+        <h3>KI, die wirklich hilft</h3>
+        <p>Automatisierung, schnellere Anfragenbearbeitung und smarte Workflows — ohne Tech-Blabla, mit messbarem
+          Nutzen.</p>
       </div>
     </div>
 
     <!-- Problem Section -->
     <section style="padding:5rem clamp(1.5rem,5vw,4rem);background:var(--ink);color:var(--cream);">
-      <p style="font-family:var(--M);font-size:.7rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">Kommt dir das bekannt vor?</p>
-      <h2 style="font-family:var(--H);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-.05em;line-height:1.05;margin-bottom:2.5rem;">Probleme, die wir<br><span style="color:var(--green)">kennen und lösen.</span></h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:rgba(255,255,255,.07);border-radius:var(--r);overflow:hidden;">
-        <div style="background:#0d1022;padding:2rem 1.8rem;transition:background .2s;" onmouseover="this.style.background='#111527'" onmouseout="this.style.background='#0d1022'">
-          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.2rem;opacity:.7;">01</div>
-          <p style="font-size:1rem;line-height:1.55;color:rgba(245,243,238,.85);font-family:var(--H);font-weight:600;letter-spacing:-.02em;">Website bringt kaum Anfragen</p>
-          <p style="font-size:.8rem;color:rgba(245,243,238,.4);margin-top:.5rem;line-height:1.6;">Besucher kommen — und springen sofort wieder ab.</p>
+      <p
+        style="font-family:var(--M);font-size:.7rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">
+        Kommt dir das bekannt vor?</p>
+      <h2
+        style="font-family:var(--H);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-.05em;line-height:1.05;margin-bottom:2.5rem;">
+        Probleme, die wir<br><span style="color:var(--green)">kennen und lösen.</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+        <div
+          style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:1.6rem;">
+          <div style="font-size:1.3rem;margin-bottom:.8rem;">📉</div>
+          <p style="font-size:.92rem;line-height:1.65;color:rgba(245,243,238,.75);">Deine Website bringt kaum Anfragen
+          </p>
         </div>
-        <div style="background:#0d1022;padding:2rem 1.8rem;transition:background .2s;" onmouseover="this.style.background='#111527'" onmouseout="this.style.background='#0d1022'">
-          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.2rem;opacity:.7;">02</div>
-          <p style="font-size:1rem;line-height:1.55;color:rgba(245,243,238,.85);font-family:var(--H);font-weight:600;letter-spacing:-.02em;">Zu viele unqualifizierte Anfragen</p>
-          <p style="font-size:.8rem;color:rgba(245,243,238,.4);margin-top:.5rem;line-height:1.6;">Dein Vertrieb kämpft mit Leads, die nie kaufen werden.</p>
+        <div
+          style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:1.6rem;">
+          <div style="font-size:1.3rem;margin-bottom:.8rem;">🎯</div>
+          <p style="font-size:.92rem;line-height:1.65;color:rgba(245,243,238,.75);">Du bekommst zu viele unqualifizierte
+            Anfragen</p>
         </div>
-        <div style="background:#0d1022;padding:2rem 1.8rem;transition:background .2s;" onmouseover="this.style.background='#111527'" onmouseout="this.style.background='#0d1022'">
-          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.2rem;opacity:.7;">03</div>
-          <p style="font-size:1rem;line-height:1.55;color:rgba(245,243,238,.85);font-family:var(--H);font-weight:600;letter-spacing:-.02em;">Neue Mitarbeiter kaum zu finden</p>
-          <p style="font-size:.8rem;color:rgba(245,243,238,.4);margin-top:.5rem;line-height:1.6;">Bewerbungen bleiben aus — trotz offener Stellen.</p>
+        <div
+          style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:1.6rem;">
+          <div style="font-size:1.3rem;margin-bottom:.8rem;">👷</div>
+          <p style="font-size:.92rem;line-height:1.65;color:rgba(245,243,238,.75);">Du findest schwer neue
+            Sicherheitsmitarbeiter</p>
         </div>
-        <div style="background:#0d1022;padding:2rem 1.8rem;transition:background .2s;" onmouseover="this.style.background='#111527'" onmouseout="this.style.background='#0d1022'">
-          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.2rem;opacity:.7;">04</div>
-          <p style="font-size:1rem;line-height:1.55;color:rgba(245,243,238,.85);font-family:var(--H);font-weight:600;letter-spacing:-.02em;">Wettbewerber bei Google vorne</p>
-          <p style="font-size:.8rem;color:rgba(245,243,238,.4);margin-top:.5rem;line-height:1.6;">Du wirst nicht gefunden — sie schon.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="home-section">
-      <p class="page-label sr">Was du von uns bekommst</p>
-      <div class="home-faq-copy sr" data-d="1" style="margin-bottom:2.5rem;">
-        <h2 style="font-family:var(--H);font-size:clamp(2rem,4vw,3.2rem);font-weight:800;letter-spacing:-.05em;line-height:1.05;">Drei Versprechen.<br><span style="color:var(--green);">Die wir auch halten.</span></h2>
-        <p style="color:var(--muted);margin-top:1rem;font-size:.95rem;line-height:1.7;max-width:520px;">Wir sind eine neue Agentur — und genau deshalb haben wir jeden Grund, bei jedem Kunden hundert Prozent zu geben.</p>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--border);border-radius:var(--r);overflow:hidden;" class="sr-r">
-        <div class="spotlight-card" style="background:var(--white);padding:2.5rem 2rem;position:relative;">
-          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">01 / Transparenz</div>
-          <h3 style="font-family:var(--H);font-size:1.35rem;font-weight:800;letter-spacing:-.04em;margin-bottom:.8rem;">Kein Bullshit-Reporting.</h3>
-          <p style="font-size:.88rem;color:var(--muted);line-height:1.7;">Du bekommst jeden Monat einen klaren Bericht: was läuft, was nicht, was als nächstes. Keine Folienschlachten, keine Buzzwords — auch dann nicht, wenn ein Monat schwierig war.</p>
-        </div>
-        <div class="spotlight-card" style="background:var(--white);padding:2.5rem 2rem;position:relative;">
-          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">02 / Erreichbarkeit</div>
-          <h3 style="font-family:var(--H);font-size:1.35rem;font-weight:800;letter-spacing:-.04em;margin-bottom:.8rem;">Ein Ansprechpartner. Immer.</h3>
-          <p style="font-size:.88rem;color:var(--muted);line-height:1.7;">Kein wechselndes Projektteam, kein Ticketsystem. Du schreibst die Person, die deine Kampagne wirklich betreut — und bekommst eine ehrliche Antwort, keine Vertretung.</p>
-        </div>
-        <div class="spotlight-card" style="background:var(--white);padding:2.5rem 2rem;position:relative;">
-          <div style="font-family:var(--M);font-size:.65rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">03 / Ehrlichkeit</div>
-          <h3 style="font-family:var(--H);font-size:1.35rem;font-weight:800;letter-spacing:-.04em;margin-bottom:.8rem;">Wir sagen, was nicht klappt.</h3>
-          <p style="font-size:.88rem;color:var(--muted);line-height:1.7;">Wenn eine Maßnahme nicht die Ergebnisse bringt, die wir erwartet haben, sagen wir das direkt — bevor du es in der nächsten Rechnung siehst. Und dann machen wir einen neuen Plan.</p>
+        <div
+          style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:1.6rem;">
+          <div style="font-size:1.3rem;margin-bottom:.8rem;">🔍</div>
+          <p style="font-size:.92rem;line-height:1.65;color:rgba(245,243,238,.75);">Deine Wettbewerber sind bei Google
+            sichtbarer als du</p>
         </div>
       </div>
     </section>
@@ -2565,26 +3160,30 @@
           data-d="1">
           Fester Ansprechpartner.<br>Klare Ergebnisse.<br><span style="color:var(--green)">Kein Blabla.</span>
         </h2>
-        <p class="sr" style="color:var(--muted);margin-top:1.2rem;line-height:1.75;max-width:420px;" data-d="2">Fester Ansprechpartner, transparente Reports, klare Ergebnisse — von der ersten Kampagne an. Keine Versprechen, die wir nicht halten können.</p>
+        <p class="sr" style="color:var(--muted);margin-top:1.2rem;line-height:1.75;max-width:420px;" data-d="2">Wir
+          bauen unsere Expertise in der Sicherheitsbranche gezielt auf — mit Fokus auf echte Partnerschaften statt
+          schnellen Abschlüssen.</p>
         <a href="#" onclick="navigate('about');return false;" class="btn-ghost sr"
-          style="margin-top:2rem;display:inline-flex;" data-d="3">Mehr über uns erfahren <span
+          style="margin-top:2rem;display:inline-flex;" data-d="3">Wer hinter InboxElevate steht <span
             class="btn-arrow">→</span></a>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;" class="sr-r">
         <div style="background:var(--ink);color:var(--cream);border-radius:20px;padding:2rem;grid-column:span 2;">
           <div style="font-family:var(--H);font-size:2.5rem;font-weight:800;letter-spacing:-.04em;">Direkt.
             Transparent.<br><span style="color:var(--green)">Ergebnisorientiert.</span></div>
-          <p style="color:rgba(245,243,238,.5);font-size:.85rem;margin-top:.8rem;">Fester Ansprechpartner. DSGVO-konformes Tracking. Cloudflare-Hosting mit EU-Rechenzentren.</p>
+          <p style="color:rgba(245,243,238,.5);font-size:.85rem;margin-top:.8rem;">Fester Ansprechpartner statt
+            wechselnder Projektteams. DSGVO-konformes Tracking. Hosting in der EU.</p>
         </div>
         <div
           style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.8rem;text-align:center;">
           <div style="font-family:var(--H);font-size:2.2rem;font-weight:800;color:var(--green);letter-spacing:-.04em;">
-            &lt;24h</div>
-          <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Antwortzeit</p>
+            48h</div>
+          <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Reaktionszeit</p>
         </div>
         <div
           style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.8rem;text-align:center;">
-          <div style="font-family:var(--H);font-size:2.2rem;font-weight:800;color:var(--ink);letter-spacing:-.04em;">100%
+          <div style="font-family:var(--H);font-size:2.2rem;font-weight:800;color:var(--ink);letter-spacing:-.04em;">
+            100%
           </div>
           <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Fokus auf dich</p>
         </div>
@@ -2595,33 +3194,74 @@
       <div class="home-faq-grid">
         <div class="home-faq-copy">
           <p class="page-label sr">FAQ</p>
-          <h2 class="sr" data-d="1" style="font-family:var(--H);font-size:clamp(2rem,4vw,3.2rem);font-weight:800;letter-spacing:-.05em;line-height:1.05;margin-bottom:1rem;">Fragen, die im Erstgespraech fast immer <span style="color:var(--green);">auf den Tisch kommen.</span></h2>
-          <p class="sr" data-d="2">Von Preisrahmen bis Erwartungsmanagement: hier sind die Punkte, die B2B-Sicherheitsfirmen vor dem Start meistens klaeren wollen.</p>
+          <h2 class="sr" data-d="1"
+            style="font-family:var(--H);font-size:clamp(2rem,4vw,3.2rem);font-weight:800;letter-spacing:-.05em;line-height:1.05;margin-bottom:1rem;">
+            Fragen, die im Erstgespräch fast immer <span style="color:var(--green);">auf den Tisch kommen.</span></h2>
+          <p class="sr" data-d="2">Von Preisrahmen bis Erwartungsmanagement: hier sind die Punkte, die
+            B2B-Sicherheitsfirmen vor dem Start meistens klären wollen.</p>
         </div>
         <div class="home-faq-list sr-r">
           <div class="faq-card hover-underline-card">
-            <button class="faq-q" onclick="toggleFaq(this)">Mit welchem Budget sollten wir rechnen? <span class="faq-ico">+</span></button>
-            <div class="faq-a"><div class="faq-a-inner"><p>Das haengt vom Kanal und vom Ziel ab. Fuer Websites arbeiten wir projektbasiert, fuer Ads mit fixer Betreuung plus Mediabudget. Im Erstgespraech sagen wir dir offen, was fuer eure Ausgangslage realistisch ist.</p></div></div>
+            <button class="faq-q" onclick="toggleFaq(this)">Mit welchem Budget sollten wir rechnen? <span
+                class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>Webseiten starten ab ca. 1.500 € (projektbasiert). Ads-Betreuung ab ca. 600 €/Monat plus Mediabudget.
+                  Im Erstgespräch bekommst du eine konkrete Einschätzung für deine Situation — ohne versteckte Kosten.
+                </p>
+              </div>
+            </div>
           </div>
           <div class="faq-card hover-underline-card">
-            <button class="faq-q" onclick="toggleFaq(this)">Wie lange laeuft eine Zusammenarbeit typischerweise? <span class="faq-ico">+</span></button>
-            <div class="faq-a"><div class="faq-a-inner"><p>Webprojekte sind klar abgegrenzt. Bei Ads ist eine Laufzeit von mehreren Monaten sinnvoll, weil wir Kampagnen erst aufsetzen, dann Daten sammeln und anschliessend sauber optimieren.</p></div></div>
+            <button class="faq-q" onclick="toggleFaq(this)">Wie lange läuft eine Zusammenarbeit typischerweise? <span
+                class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>Webprojekte: 2–4 Wochen, dann abgeschlossen. Ads: mindestens 3 Monate empfohlen — in Monat 1 setzen
+                  wir auf, in Monat 2–3 optimieren wir datenbasiert. Keine Knebelverträge.</p>
+              </div>
+            </div>
           </div>
           <div class="faq-card hover-underline-card">
-            <button class="faq-q" onclick="toggleFaq(this)">Wann sehen wir erste Ergebnisse? <span class="faq-ico">+</span></button>
-            <div class="faq-a"><div class="faq-a-inner"><p>Erste Signale sehen wir oft schon in den ersten Wochen. Belastbare Aussagen kommen in der Regel nach der ersten Lernphase, sobald genug Daten fuer Optimierungen vorliegen.</p></div></div>
+            <button class="faq-q" onclick="toggleFaq(this)">Wann sehen wir erste Ergebnisse? <span
+                class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>Bei Ads: erste Leads oft in Woche 1–2. Belastbare Optimierung nach 4–6 Wochen. Bei Webseiten: sofort
+                  mehr Vertrauen und bessere Conversion — SEO-Effekte nach 2–3 Monaten.</p>
+              </div>
+            </div>
           </div>
           <div class="faq-card hover-underline-card">
-            <button class="faq-q" onclick="toggleFaq(this)">Arbeitet ihr auch mit bestehenden Websites oder Accounts? <span class="faq-ico">+</span></button>
-            <div class="faq-a"><div class="faq-a-inner"><p>Ja. Wenn vorhandene Assets Potenzial haben, bauen wir darauf auf. Wir pruefen zuerst, was tragfaehig ist und was euch eher bremst, statt alles pauschal neu zu machen.</p></div></div>
+            <button class="faq-q" onclick="toggleFaq(this)">Arbeitet ihr auch mit bestehenden Websites oder Accounts?
+              <span class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>Ja. Wir prüfen zuerst, was funktioniert und was bremst. Bestehende Google- oder Meta-Accounts
+                  übernehmen wir, wenn die Struktur tragfähig ist — sonst bauen wir sauber neu auf.</p>
+              </div>
+            </div>
           </div>
           <div class="faq-card hover-underline-card">
-            <button class="faq-q" onclick="toggleFaq(this)">Wie stark muessen wir intern eingebunden sein? <span class="faq-ico">+</span></button>
-            <div class="faq-a"><div class="faq-a-inner"><p>Wir brauchen zu Beginn klare Ziele, Einblicke in eure Leistungen und schnelles Feedback. Danach halten wir die Schleifen bewusst schlank, damit eure Mannschaft im Alltag nicht ausgebremst wird.</p></div></div>
+            <button class="faq-q" onclick="toggleFaq(this)">Wie stark müssen wir intern eingebunden sein? <span
+                class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>Am Anfang: 1–2 Stunden für Kickoff und Material. Danach: wöchentlich 15 Minuten für Freigaben. Wir
+                  halten den Aufwand bewusst gering — du sollst dein Business führen, nicht uns managen.</p>
+              </div>
+            </div>
           </div>
           <div class="faq-card hover-underline-card">
-            <button class="faq-q" onclick="toggleFaq(this)">Was unterscheidet euch von allgemeinen Marketing-Agenturen? <span class="faq-ico">+</span></button>
-            <div class="faq-a"><div class="faq-a-inner"><p>Wir denken Kommunikation, Vertrauen und Lead-Qualitaet speziell fuer Sicherheitsunternehmen. Dadurch sehen Landingpages, Angebote und Kampagnen bei uns nicht generisch aus, sondern treffen eure reale Vertriebsarbeit.</p></div></div>
+            <button class="faq-q" onclick="toggleFaq(this)">Was unterscheidet euch von allgemeinen Marketing-Agenturen?
+              <span class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>Wir sind neu, aber nicht generisch: 100 % Fokus auf Sicherheitsunternehmen, ein fester
+                  Ansprechpartner und ehrliche Reports. Kein 20-köpfiges Team, das dein Projekt zwischen fünf
+                  Praktikanten rotiert.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2635,59 +3275,14 @@
       <h2
         style="font-family:var(--H);font-size:clamp(2rem,5vw,4.5rem);font-weight:800;letter-spacing:-.05em;color:var(--cream);line-height:1.05;">
         Erstgespräch.<br>Kostenlos. Unverbindlich.</h2>
-      <p style="color:rgba(245,243,238,.45);margin-top:1.2rem;font-size:.95rem;">30 Minuten, die dein Business verändern
-        könnten.</p>
-      <a href="#" onclick="navigate('contact');return false;" class="btn-ink"
-        style="margin-top:2.5rem;display:inline-flex;background:var(--green);color:var(--ink);">Kostenlosen Marketing-Check anfordern →</a>
+      <p style="color:rgba(245,243,238,.45);margin-top:1.2rem;font-size:.95rem;">30 Minuten. Konkreter Plan — keine
+        leeren Versprechen.</p>
+      <a href="#" onclick="goToKontakt();return false;" class="btn-ink"
+        style="margin-top:2.5rem;display:inline-flex;background:var(--green);color:var(--ink);">Frage stellen —
+        kostenlos und unverbindlich →</a>
     </section>
 
-    <footer>
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#" onclick="navigate('home');return false;" class="logo" style="color:var(--cream);">
-            <svg viewBox="0 0 40 40" width="26" fill="none">
-              <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" />
-              <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-            InboxElevate
-          </a>
-          <p>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
-        </div>
-        <div class="footer-col">
-          <h5>Leistungen</h5>
-          <a href="#" onclick="navigate('services');return false;">Webentwicklung</a>
-          <a href="#" onclick="navigate('services');return false;">Meta Ads</a>
-          <a href="#" onclick="navigate('services');return false;">Google Ads</a>
-          <a href="#" onclick="navigate('services');return false;">LinkedIn Ads</a>
-        </div>
-        <div class="footer-col">
-          <h5>Agentur</h5>
-          <a href="#" onclick="navigate('about');return false;">Über uns</a>
-          <a href="#" onclick="navigate('process');return false;">Prozess</a>
-          <a href="#" onclick="navigate('contact');return false;">Kontakt</a>
-        </div>
-        <div class="footer-col">
-          <h5>Kontakt</h5>
-          <a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a>
-          <a href="#" onclick="navigate('contact');return false;">Anfrage stellen</a>
-        </div>
-      </div>
-      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
-          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
-          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
-        </div>
-      <div class="footer-bottom">
-        <p>© 2026 InboxElevate. Alle Rechte vorbehalten.</p>
-        <div class="socials">
-          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer" class="soc">in</a>
-          <!-- Instagram coming soon -->
-          <a href="mailto:david@inbox-elevate.de" class="soc">✉</a>
-        </div>
-      </div>
-    </footer>
+    <footer data-site-footer></footer>
   </div>
 
   <!-- ══════════════════ SERVICES PAGE ══════════════════ -->
@@ -2695,7 +3290,9 @@
     <div class="page-hero">
       <p class="page-label">Was wir anbieten</p>
       <h1 class="page-h1">Leistungen für <span>Sicherheitsunternehmen.</span></h1>
-      <p class="page-sub">Webseiten und Ads, die speziell auf die Anforderungen von Sicherheitsdiensten und Alarmanlagen-Anbietern ausgerichtet sind.</p>
+      <p class="page-sub">Webseiten und Ads, die speziell auf die Anforderungen von Sicherheitsdiensten und
+        Alarmanlagen-Anbietern ausgerichtet sind.</p>
+      <span class="price-signal">Webseite ab 1.500 € · Ads-Betreuung ab 600 €/Monat</span>
     </div>
 
     <div class="services-categories">
@@ -2705,7 +3302,8 @@
         <div class="svc-cat-head">
           <div class="svc-cat-icon">🌐</div>
           <h2>Webseiten für Sicherheitsunternehmen</h2>
-          <p>Webseiten, die Vertrauen aufbauen und Anfragen auslösen — mit Notrufnummer, Zertifikaten und lokaler SEO.</p>
+          <p>Webseiten, die Vertrauen aufbauen und Anfragen auslösen — mit Notrufnummer, Zertifikaten und lokaler SEO.
+          </p>
         </div>
 
         <div class="svc-panel active" id="svc-web">
@@ -2716,7 +3314,8 @@
             </div>
             <div class="panel-feat">
               <h4>Vertrauen aufbauen</h4>
-              <p>Zertifikate, Bewertungen und Referenzen prominent platziert — damit Besucher sofort Vertrauen fassen.</p>
+              <p>Zertifikate, Bewertungen und Referenzen prominent platziert — damit Besucher sofort Vertrauen fassen.
+              </p>
             </div>
             <div class="panel-feat">
               <h4>Lokale SEO</h4>
@@ -2724,7 +3323,8 @@
             </div>
             <div class="panel-feat">
               <h4>Strukturierte Seiten</h4>
-              <p>Eigene Seiten für Alarmanlagen, Objektschutz, Revierdienst & mehr — klar strukturiert für Google und Besucher.</p>
+              <p>Eigene Seiten für Alarmanlagen, Objektschutz, Revierdienst & mehr — klar strukturiert für Google und
+                Besucher.</p>
             </div>
           </div>
           <div class="panel-cta-bar">
@@ -2739,7 +3339,8 @@
         <div class="svc-cat-head">
           <div class="svc-cat-icon">📣</div>
           <h2>Paid Ads</h2>
-          <p>Google Search und Meta Ads gezielt für Alarmanlagen-Anfragen, Objektschutz-Leads und Bewerbungen von Sicherheitsmitarbeitern.</p>
+          <p>Google Search und Meta Ads gezielt für Alarmanlagen-Anfragen, Objektschutz-Leads und Bewerbungen von
+            Sicherheitsmitarbeitern.</p>
         </div>
 
         <!-- Sub-Tab-Bar -->
@@ -2757,7 +3358,8 @@
           <div class="panel-features">
             <div class="panel-feat">
               <h4>Anfragen für Alarmanlagen</h4>
-              <p>Gezielte Kampagnen für Privatpersonen und Unternehmen, die eine Alarmanlage installieren lassen wollen.</p>
+              <p>Gezielte Kampagnen für Privatpersonen und Unternehmen, die eine Alarmanlage installieren lassen wollen.
+              </p>
             </div>
             <div class="panel-feat">
               <h4>Leads für Objektschutz</h4>
@@ -2765,7 +3367,8 @@
             </div>
             <div class="panel-feat">
               <h4>Bewerbungen gewinnen</h4>
-              <p>Recruiting-Kampagnen für Sicherheitsmitarbeiter — auf Facebook und Instagram, wo deine Zielgruppe aktiv ist.</p>
+              <p>Recruiting-Kampagnen für Sicherheitsmitarbeiter — auf Facebook und Instagram, wo deine Zielgruppe aktiv
+                ist.</p>
             </div>
             <div class="panel-feat">
               <h4>Qualifizierte Klicks</h4>
@@ -2787,7 +3390,8 @@
           <div class="panel-features">
             <div class="panel-feat">
               <h4>„Sicherheitsdienst + Stadt"</h4>
-              <p>Wir schalten dich genau dann, wenn jemand aktiv nach einem Sicherheitsdienst in deiner Region sucht.</p>
+              <p>Wir schalten dich genau dann, wenn jemand aktiv nach einem Sicherheitsdienst in deiner Region sucht.
+              </p>
             </div>
             <div class="panel-feat">
               <h4>Alarmanlagen-Anfragen</h4>
@@ -2828,7 +3432,8 @@
             </div>
             <div class="panel-feat">
               <h4>Hinweis</h4>
-              <p>LinkedIn eignet sich vor allem für B2B-Sicherheitsdienstleistungen. Für Privatkundengeschäft empfehlen wir Google und Meta.</p>
+              <p>LinkedIn eignet sich vor allem für B2B-Sicherheitsdienstleistungen. Für Privatkundengeschäft empfehlen
+                wir Google und Meta.</p>
             </div>
           </div>
           <div class="panel-platforms">
@@ -2843,51 +3448,7 @@
       </div>
     </div>
 
-    <footer>
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#" onclick="navigate('home');return false;" class="logo" style="color:var(--cream);">
-            <svg viewBox="0 0 40 40" width="26" fill="none">
-              <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" />
-              <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-            InboxElevate
-          </a>
-          <p>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
-        </div>
-        <div class="footer-col">
-          <h5>Navigation</h5><a href="#" onclick="navigate('home');return false;">Start</a><a href="#"
-            onclick="navigate('process');return false;">Prozess</a><a href="#"
-            onclick="navigate('about');return false;">Über uns</a><a href="#"
-            onclick="navigate('contact');return false;">Kontakt</a>
-        </div>
-        <div class="footer-col">
-          <h5>Leistungen</h5><a href="#" onclick="showService('web');return false;">Webentwicklung</a><a href="#"
-            onclick="showService('meta');return false;">Meta Ads</a><a href="#"
-            onclick="showService('google');return false;">Google Ads</a><a href="#"
-            onclick="showService('linkedin');return false;">LinkedIn Ads</a>
-        </div>
-        <div class="footer-col">
-          <h5>Kontakt</h5><a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a><a
-            href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      </div>
-      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
-          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
-          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
-        </div>
-      <div class="footer-bottom">
-        <p>© 2026 InboxElevate. Alle Rechte vorbehalten.</p>
-        <div class="socials">
-          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer" class="soc">in</a>
-          <!-- Instagram coming soon -->
-          <a href="mailto:david@inbox-elevate.de" class="soc">✉</a>
-        </div>
-      </div>
-    </footer>
+    <footer data-site-footer></footer>
   </div>
 
   <!-- ══════════════════ PROCESS PAGE ══════════════════ -->
@@ -2904,7 +3465,8 @@
         <div class="tl-num">01</div>
         <div class="tl-content">
           <h3>Erstkontakt & Kennenlernen</h3>
-          <p>Du schreibst uns über das Kontaktformular oder per Mail. Innerhalb eines Werktages melden wir uns mit einem Terminvorschlag für ein kostenloses 30-minütiges Erstgespräch per Video-Call. Wir lernen dein Unternehmen,
+          <p>Du schreibst uns über das Kontaktformular oder per Mail. Innerhalb von 48 Stunden melden wir uns mit einem
+            Terminvorschlag für ein kostenloses 30-minütiges Erstgespräch per Video-Call. Wir lernen dein Unternehmen,
             deine Ziele und dein Budget kennen — und du lernst uns kennen. Kein Verkaufsdruck.</p>
           <div class="tl-tags"><span class="tl-tag">Kostenlos</span><span class="tl-tag">30 min</span><span
               class="tl-tag">Video-Call</span></div>
@@ -2914,7 +3476,9 @@
         <div class="tl-num">02</div>
         <div class="tl-content">
           <h3>Analyse & Strategie</h3>
-          <p>Wir schauen uns dein bestehendes Setup an — Website, Sichtbarkeit bei Google, Wettbewerber in deiner Region. Darauf aufbauend erstellen wir einen konkreten Vorschlag: Welche Kanäle? Welche Zielgruppen? Welche Budgetverteilung? Mit realistischen Erwartungswerten — keine aufgeblasenen Versprechen.</p>
+          <p>Wir schauen uns dein bestehendes Setup an — Website, Sichtbarkeit bei Google, Wettbewerber in deiner
+            Region. Darauf aufbauend erstellen wir einen konkreten Vorschlag: Welche Kanäle? Welche Zielgruppen? Welche
+            Budgetverteilung? Mit realistischen Erwartungswerten — keine aufgeblasenen Versprechen.</p>
           <div class="tl-tags"><span class="tl-tag">Zielgruppenanalyse</span><span
               class="tl-tag">Kanalauswahl</span><span class="tl-tag">Mediaplan</span></div>
         </div>
@@ -2934,7 +3498,9 @@
         <div class="tl-num">04</div>
         <div class="tl-content">
           <h3>Optimierung & Skalierung</h3>
-          <p>Wir stellen sicher, dass dein Budget nicht in unqualifizierte Klicks fließt, sondern in echte Anfragen für Sicherheitsdienstleistungen. Wir analysieren wöchentlich Daten, testen Varianten und optimieren kontinuierlich. Erste aussagekräftige Ergebnisse sind nach 4–6 Wochen spürbar.</p>
+          <p>Wir stellen sicher, dass dein Budget nicht in unqualifizierte Klicks fließt, sondern in echte Anfragen für
+            Sicherheitsdienstleistungen. Wir analysieren wöchentlich Daten, testen Varianten und optimieren
+            kontinuierlich. Erste aussagekräftige Ergebnisse sind nach 4–6 Wochen spürbar.</p>
           <div class="tl-tags"><span class="tl-tag">A/B-Testing</span><span class="tl-tag">Wöchentliche
               Analyse</span><span class="tl-tag">Reporting</span></div>
         </div>
@@ -2958,51 +3524,12 @@
         Starte mit einem<br><span style="color:var(--green)">kostenlosen Gespräch.</span></h2>
       <p style="color:rgba(245,243,238,.5);margin-top:1rem;font-size:.95rem;">Kein Druck. Nur ein offenes Gespräch über
         dein Business und wie wir helfen können.</p>
-      <a href="#" onclick="navigate('contact');return false;" class="btn-ink"
-        style="margin-top:2rem;display:inline-flex;background:var(--green);color:var(--ink);">Kostenlosen Marketing-Check anfordern →</a>
+      <a href="#" onclick="goToKontakt();return false;" class="btn-ink"
+        style="margin-top:2rem;display:inline-flex;background:var(--green);color:var(--ink);">Zeig mir, wie das für
+        meine Firma aussieht →</a>
     </section>
 
-    <footer>
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#" onclick="navigate('home');return false;" class="logo" style="color:var(--cream);">
-            <svg viewBox="0 0 40 40" width="26" fill="none">
-              <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" />
-              <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-            InboxElevate
-          </a>
-          <p>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
-        </div>
-        <div class="footer-col">
-          <h5>Navigation</h5><a href="#" onclick="navigate('home');return false;">Start</a><a href="#"
-            onclick="navigate('services');return false;">Leistungen</a><a href="#"
-            onclick="navigate('about');return false;">Über uns</a><a href="#"
-            onclick="navigate('contact');return false;">Kontakt</a>
-        </div>
-        <div class="footer-col">
-          <h5>Leistungen</h5><a href="#" onclick="navigate('services');return false;">Webentwicklung</a><a href="#"
-            onclick="navigate('services');return false;">Meta Ads</a><a href="#"
-            onclick="navigate('services');return false;">Google Ads</a><a href="#"
-            onclick="navigate('services');return false;">LinkedIn Ads</a>
-        </div>
-        <div class="footer-col">
-          <h5>Kontakt</h5><a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a>
-        </div>
-      </div>
-      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
-          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
-          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
-        </div>
-      <div class="footer-bottom">
-        <p>© 2026 InboxElevate.</p>
-        <div class="socials"><a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer"
-            class="soc">in</a><!-- Instagram coming soon --></div>
-      </div>
-    </footer>
+    <footer data-site-footer></footer>
   </div>
 
   <!-- ══════════════════ ABOUT PAGE ══════════════════ -->
@@ -3013,13 +3540,22 @@
           <p
             style="font-family:var(--M);font-size:.68rem;letter-spacing:.12em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">
             Über InboxElevate</p>
-          <h2>Digitales Marketing.<br>Spezialisiert auf<br><span>die Sicherheitsbranche.</span></h2>
-          <p style="color:rgba(245,243,238,.5);margin-top:1.2rem;font-size:.95rem;line-height:1.7;">Kein aufgeblähtes Agentur-Team. Kein Bullshit-Reporting. Was wir liefern: messbare Ergebnisse — für Sicherheitsunternehmen, die wirklich wachsen wollen.</p>
+          <h2>Wir bauen unsere<br>Expertise in der<br><span>Sicherheitsbranche auf.</span></h2>
+          <p style="color:rgba(245,243,238,.5);margin-top:1.2rem;font-size:.95rem;line-height:1.7;">Kein aufgeblähtes
+            Team, keine versteckten Gebühren. Was wir haben: Fokus auf echte Partnerschaften und messbare Ergebnisse —
+            speziell für Sicherheitsunternehmen.</p>
+        </div>
+        <div class="founder-card">
+          <h3>David Matuttis</h3>
+          <div class="founder-role">Gründer · Dein fester Ansprechpartner</div>
+          <p>Wir sind eine neue Agentur — und genau das ist unser Vorteil: Kein überladenes Team, keine versteckten
+            Kosten. Du arbeitest direkt mit mir, von der ersten Idee bis zum Report. Ich kenne dein Projekt, weil ich es
+            selbst umsetze.</p>
         </div>
         <div class="about-manifesto">
           <div class="manifesto-item">
             <div class="m-label">Unser Versprechen</div>
-            <p>Fester Ansprechpartner, echte Ergebnisse — keine Agentur-Prosa, sondern messbare Arbeit.</p>
+            <p>Fester Ansprechpartner statt wechselnder Projektteams — du weißt immer, mit wem du sprichst.</p>
           </div>
           <div class="manifesto-item">
             <div class="m-label">Unsere Stärke</div>
@@ -3027,7 +3563,7 @@
           </div>
           <div class="manifesto-item">
             <div class="m-label">Unser Ansporn</div>
-            <p>DSGVO-konformes Setup, Cloudflare-Hosting mit EU-Rechenzentren — Sicherheit auch im Marketing.</p>
+            <p>DSGVO-konforme Tracking-Setups, Hosting in der EU — Sicherheit auch im Marketing.</p>
           </div>
         </div>
       </div>
@@ -3036,32 +3572,33 @@
         <h2
           style="font-family:var(--H);font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;letter-spacing:-.05em;line-height:1.05;">
           Warum Sicherheitsfirmen<br>mit uns arbeiten.</h2>
-        <p style="color:var(--muted);margin-top:1rem;font-size:.9rem;line-height:1.7;">Wir kombinieren fundiertes Performance-Marketing-Know-how mit einem tiefen Verständnis für die Sicherheitsbranche — und dem Anspruch, nur zu versprechen, was wir auch halten.</p>
+        <p style="color:var(--muted);margin-top:1rem;font-size:.9rem;line-height:1.7;">Wir bauen unsere Expertise in der
+          Sicherheitsbranche gezielt auf — mit Fokus auf echte Partnerschaften statt schnellen Abschlüssen.</p>
         <div class="about-values">
           <div class="value-card">
-            <div class="value-icon" style="font-family:var(--M);font-size:.7rem;letter-spacing:.1em;color:var(--green);">01</div>
+            <div class="value-icon">🎯</div>
             <h4>Fester Ansprechpartner</h4>
             <p>Kein wechselndes Projektteam. Du hast immer eine direkte Ansprechperson, die dein Business kennt.</p>
           </div>
           <div class="value-card">
-            <div class="value-icon" style="font-family:var(--M);font-size:.7rem;letter-spacing:.1em;color:var(--green);">02</div>
+            <div class="value-icon">📊</div>
             <h4>Klare Reports</h4>
             <p>Keine Buzzword-Reports. Klare Zahlen, klare Aussagen — auch wenn etwas nicht funktioniert.</p>
           </div>
           <div class="value-card">
-            <div class="value-icon" style="font-family:var(--M);font-size:.7rem;letter-spacing:.1em;color:var(--green);">03</div>
+            <div class="value-icon">⚡</div>
             <h4>Schnelle Reaktion</h4>
             <p>Schnelle Reaktionszeiten, wenn es brennt — weil in der Sicherheitsbranche Verlässlichkeit zählt.</p>
           </div>
           <div class="value-card">
-            <div class="value-icon" style="font-family:var(--M);font-size:.7rem;letter-spacing:.1em;color:var(--green);">04</div>
+            <div class="value-icon">🔒</div>
             <h4>DSGVO-konform</h4>
-            <p>DSGVO-konformes Setup und Cloudflare-Hosting mit EU-Rechenzentren — Sicherheit auch im digitalen Marketing.</p>
+            <p>DSGVO-konforme Tracking-Setups und Hosting in der EU — Sicherheit auch im digitalen Marketing.</p>
           </div>
         </div>
         <div class="about-stat-row">
           <div class="astat">
-            <div class="n">&lt;24h</div>
+            <div class="n">48h</div>
             <div class="l">Erste Antwort</div>
           </div>
           <div class="astat">
@@ -3073,56 +3610,13 @@
             <div class="l">Fokus auf dich</div>
           </div>
         </div>
-        <div style="margin-top:2rem;background:rgba(29,186,110,.08);border:1px solid rgba(29,186,110,.18);border-radius:12px;padding:1rem 1.2rem;">
-          <p style="font-size:.82rem;color:var(--muted);line-height:1.65;"><strong style="color:var(--ink);">Wir sind eine neue Agentur</strong> — und genau deshalb haben wir jeden Anreiz, bei jedem Kunden wirklich zu liefern. Keine aufgeblähte Referenzliste, dafür volle Aufmerksamkeit.</p>
-        </div>
-        <div style="margin-top:1.5rem;">
-          <a href="#" onclick="navigate('contact');return false;" class="btn-ink">Gespräch vereinbaren →</a>
+        <div style="margin-top:2rem;">
+          <a href="#" onclick="goToKontakt();return false;" class="btn-ink">Gespräch vereinbaren →</a>
         </div>
       </div>
     </div>
 
-    <footer>
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#" onclick="navigate('home');return false;" class="logo" style="color:var(--cream);">
-            <svg viewBox="0 0 40 40" width="26" fill="none">
-              <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" />
-              <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-            InboxElevate
-          </a>
-          <p>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
-        </div>
-        <div class="footer-col">
-          <h5>Navigation</h5><a href="#" onclick="navigate('home');return false;">Start</a><a href="#"
-            onclick="navigate('services');return false;">Leistungen</a><a href="#"
-            onclick="navigate('process');return false;">Prozess</a><a href="#"
-            onclick="navigate('contact');return false;">Kontakt</a>
-        </div>
-        <div class="footer-col">
-          <h5>Leistungen</h5><a href="#" onclick="navigate('services');return false;">Webentwicklung</a><a href="#"
-            onclick="navigate('services');return false;">Meta & Google Ads</a><a href="#"
-            onclick="navigate('services');return false;">LinkedIn Ads</a>
-        </div>
-        <div class="footer-col">
-          <h5>Kontakt</h5><a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a><a
-            href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      </div>
-      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
-          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
-          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
-        </div>
-      <div class="footer-bottom">
-        <p>© 2026 InboxElevate.</p>
-        <div class="socials"><a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer"
-            class="soc">in</a><!-- Instagram coming soon --></div>
-      </div>
-    </footer>
+    <footer data-site-footer></footer>
   </div>
 
   <!-- ══════════════════ CONTACT PAGE ══════════════════ -->
@@ -3133,7 +3627,8 @@
           style="font-family:var(--M);font-size:.68rem;letter-spacing:.12em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;position:relative;z-index:1;">
           Kontakt aufnehmen</p>
         <h2>Lass uns<br>gemeinsam <span>wachsen.</span></h2>
-        <p>Schreib uns kurz, worum es geht — wir melden uns am nächsten Werktag mit einer ehrlichen Einschätzung und einem konkreten Vorschlag.</p>
+        <p>Schreib uns kurz, worum es geht — wir melden uns innerhalb von 48 Stunden mit einer ehrlichen Einschätzung
+          und einem konkreten Vorschlag.</p>
         <div class="contact-details">
           <div class="cd-item">
             <div class="cd-icon">✉️</div>
@@ -3141,7 +3636,7 @@
           </div>
           <div class="cd-item">
             <div class="cd-icon">in</div>
-            <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer">LinkedIn → InboxElevate</a>
+            <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank">LinkedIn → InboxElevate</a>
           </div>
           <div class="cd-item">
             <div class="cd-icon">📍</div>
@@ -3149,21 +3644,21 @@
           </div>
           <div class="cd-item">
             <div class="cd-icon">🕐</div>
-            <span>Antwort in unter 24 Stunden</span>
+            <span>Antwort innerhalb 48h</span>
           </div>
         </div>
       </div>
 
-      <div class="contact-right">
+      <div class="contact-right" id="kontakt">
         <p class="page-label">Schreib uns</p>
         <h2 style="font-family:var(--H);font-size:1.8rem;font-weight:800;letter-spacing:-.04em;margin-bottom:.5rem;">
-          Kostenlosen Marketing-Check anfordern</h2>
-        <p style="color:var(--muted);font-size:.88rem;margin-bottom:1.5rem;">Wir zeigen dir konkret, wo du aktuell Anfragen verlierst.</p>
+          Webseite &amp; Marketing-Check anfordern</h2>
+        <p style="color:var(--muted);font-size:.88rem;margin-bottom:1.5rem;">Wir zeigen dir konkret, wo du bei Webseite
+          und Marketing aktuell Anfragen verlierst.</p>
 
         <div id="cForm">
           <form id="contactForm" onsubmit="submitForm(event)">
             <input type="hidden" name="_replyto" value="david@inbox-elevate.de">
-            <input type="text" name="_gotcha" style="display:none!important;position:absolute;left:-9999px;" tabindex="-1" autocomplete="off" aria-hidden="true">
             <input type="hidden" name="_subject" value="Neue Anfrage über InboxElevate.de">
             <div class="f-row">
               <div class="f-group"><label>Vorname</label><input type="text" name="vorname" placeholder="Max" required>
@@ -3178,21 +3673,18 @@
             <div class="f-group">
               <label>Was interessiert dich?</label>
               <select id="serviceSelect" name="interesse" required>
-                <option value="" disabled selected>Bitte wählen</option>
+                <option value="Komplettpaket (Webseite + Marketing)">Komplettpaket (Webseite + Marketing)</option>
                 <option value="Webseiten-Entwicklung">Webseiten-Entwicklung</option>
                 <option value="Meta Ads (Facebook/Instagram)">Meta Ads (Facebook/Instagram)</option>
                 <option value="Google Ads">Google Ads</option>
                 <option value="LinkedIn Ads">LinkedIn Ads</option>
-                <option value="Komplettpaket (Webseite + Ads)">Komplettpaket (Webseite + Ads)</option>
+                <option value="KI im Unternehmen">KI im Unternehmen</option>
                 <option value="Strategie &amp; Beratung">Strategie &amp; Beratung</option>
-                <option value="Sonstiges">Sonstiges</option>
+                <option value="Ich bin noch nicht sicher">Ich bin noch nicht sicher</option>
               </select>
             </div>
             <div class="f-group"><label>Deine Nachricht</label><textarea name="nachricht"
                 placeholder="Erzähl uns kurz von deinem Projekt, Budget oder deinen Fragen..."></textarea></div>
-            <div class="f-group" style="display: flex; justify-content: center; margin: 0.5rem 0;">
-              <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="light"></div>
-            </div>
             <button type="submit" class="btn-submit" id="submitBtn">
               Kostenlosen Marketing-Check anfordern
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -3208,7 +3700,12 @@
         <div class="form-ok" id="cFormOk">
           <div class="ok-icon">🚀</div>
           <h3>Nachricht gesendet!</h3>
-          <p>Wir melden uns spätestens am nächsten Werktag — versprochen.</p>
+          <p>Wir melden uns spätestens am nächsten Werktag — du bekommst eine Bestätigung per E-Mail.</p>
+          <div class="form-ok-actions">
+            <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener">Auf LinkedIn folgen
+              →</a>
+            <a href="mailto:david@inbox-elevate.de">Noch eine Frage? E-Mail schreiben</a>
+          </div>
         </div>
       </div>
     </div>
@@ -3216,260 +3713,212 @@
     <!-- FAQ -->
     <div class="faq-section">
       <p class="page-label">Häufige Fragen</p>
-      <div class="faq-grid">
-        <div class="faq-card">
-          <button class="faq-q" onclick="toggleFaq(this)">Wie läuft das Erstgespräch ab? <span
-              class="faq-ico">+</span></button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              <p>30 Minuten kostenlos per Video-Call. Wir lernen dein Business und deine Ziele kennen und geben dir
-                direkt eine ehrliche Einschätzung — kein Verkaufsgespräch.</p>
+      <div class="faq-columns">
+        <div class="faq-col">
+          <div class="faq-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Wie läuft das Erstgespräch ab? <span
+                class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>30 Minuten per Video-Call, kostenlos und unverbindlich. Wir schauen uns deine aktuelle Webseite und
+                  dein Marketing an, besprechen deine Ziele und geben dir eine ehrliche Einschätzung — inklusive
+                  konkreter nächster Schritte. Kein Verkaufsdruck.</p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Muss ich selbst Content liefern? <span
+                class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>Ja — Fotos, Videos und Firmeninfos kommen von dir. Wir strukturieren, optimieren und platzieren dein
+                  Material professionell. Was du nicht hast, sagen wir dir offen und helfen dir, es pragmatisch zu
+                  beschaffen.</p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Wie schnell kommt die erste Kampagne live? <span
+                class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>Ads: 5–10 Werktage nach Kickoff und Materialfreigabe. Webseite: 2–4 Wochen je nach Umfang.
+                  KI-Projekte: oft innerhalb von 1–2 Wochen für den ersten produktiven Einsatz.</p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="faq-card">
-          <button class="faq-q" onclick="toggleFaq(this)">Muss ich selbst Content liefern? <span
-              class="faq-ico">+</span></button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              <p>Ja — Bilder, Videos und Texte kommen von dir. Wir erstellen keinen eigenen Content, nutzen dein
-                Material aber professionell und optimieren es für jede Plattform.</p>
+        <div class="faq-col">
+          <div class="faq-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Gibt es Mindestlaufzeiten? <span
+                class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>Bei Ads empfehlen wir 3 Monate — darunter lohnt sich kaum Optimierung. Webprojekte sind fix
+                  abgeschlossen. Es gibt keine versteckten Knebelverträge; Laufzeiten besprechen wir vorab transparent.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Kann ich nur Webseite oder nur Ads buchen? <span
+                class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>Ja, alles einzeln buchbar: Webseite, Ads, KI oder Kombipaket. Viele Kunden starten mit einer Webseite
+                  und skalieren dann auf Ads — wir planen das von Anfang an mit.</p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-card">
+            <button class="faq-q" onclick="toggleFaq(this)">Was kostet das? <span class="faq-ico">+</span></button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>Webseite ab ca. 1.500 €. Ads-Betreuung ab ca. 600 €/Monat plus Mediabudget. KI-Beratung ab ca. 800
+                  €/Monat. Im Erstgespräch bekommst du einen konkreten Vorschlag für deinen Bedarf — keine
+                  Pauschalpreise aus der Schublade.</p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="faq-card">
-          <button class="faq-q" onclick="toggleFaq(this)">Wie schnell kommt die erste Kampagne live? <span
-              class="faq-ico">+</span></button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              <p>Nach Kickoff und Materialbereitstellung in der Regel 5–10 Werktage. Bei einer Webseite je nach Umfang
-                2–4 Wochen.</p>
-            </div>
-          </div>
-        </div>
-        <div class="faq-card">
-          <button class="faq-q" onclick="toggleFaq(this)">Gibt es Mindestlaufzeiten? <span
-              class="faq-ico">+</span></button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              <p>Wir empfehlen mindestens 3 Monate für sinnvolle Optimierung. Aber wir zwingen niemanden — reden wir im
-                Erstgespräch ehrlich darüber.</p>
-            </div>
-          </div>
-        </div>
-        <div class="faq-card">
-          <button class="faq-q" onclick="toggleFaq(this)">Kann ich nur Webseite oder nur Ads buchen? <span
-              class="faq-ico">+</span></button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              <p>Ja, beides ist separat buchbar. Kombipakete bieten wir ebenfalls an — zu transparenten Konditionen.</p>
-            </div>
-          </div>
-        </div>
-        <div class="faq-card">
-          <button class="faq-q" onclick="toggleFaq(this)">Was kostet das? <span class="faq-ico">+</span></button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              <p>Das hängt von Umfang und Kanal ab. Im Erstgespräch besprechen wir deinen Bedarf und machen dir einen
-                fairen, konkreten Vorschlag — kein Bauchgefühl-Pricing.</p>
-            </div>
-          </div>
-        </div>
-        <div class="faq-card">
-          <button class="faq-q" onclick="toggleFaq(this)">Habt ihr bereits Erfahrung mit Sicherheitsunternehmen? <span class="faq-ico">+</span></button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              <p>Digitales Marketing funktioniert nach denselben Prinzipien — egal ob für eine Bäckerei oder ein Sicherheitsunternehmen. Wir bringen sauberes Performance-Marketing-Handwerk mit: präzises Targeting, datengetriebene Optimierung und transparentes Reporting. Und wir fokussieren uns ausschließlich auf Sicherheitsunternehmen, weil Nischen-Expertise echte Ergebnisse liefert.</p>
-            </div>
-          </div>
+      </div>
+      <div class="faq-followup">
+        <div class="faq-followup-icon">✉️</div>
+        <div>
+          <h3>Noch Fragen offen?</h3>
+          <p>Schreib uns direkt — wir antworten persönlich, spätestens am nächsten Werktag.</p>
+          <a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a>
         </div>
       </div>
     </div>
 
-    <footer>
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#" onclick="navigate('home');return false;" class="logo" style="color:var(--cream);">
-            <svg viewBox="0 0 40 40" width="26" fill="none">
-              <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" />
-              <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-            InboxElevate
-          </a>
-          <p>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
-        </div>
-        <div class="footer-col">
-          <h5>Navigation</h5><a href="#" onclick="navigate('home');return false;">Start</a><a href="#"
-            onclick="navigate('services');return false;">Leistungen</a><a href="#"
-            onclick="navigate('process');return false;">Prozess</a><a href="#"
-            onclick="navigate('about');return false;">Über uns</a>
-        </div>
-        <div class="footer-col">
-          <h5>Leistungen</h5><a href="#" onclick="navigate('services');return false;">Webentwicklung</a><a href="#"
-            onclick="navigate('services');return false;">Meta & Google Ads</a><a href="#"
-            onclick="navigate('services');return false;">LinkedIn Ads</a>
-        </div>
-        <div class="footer-col">
-          <h5>Kontakt</h5><a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a><a
-            href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
+    <footer data-site-footer></footer>
+  </div>
+
+  <!-- ══════════════════ KI PAGE ══════════════════ -->
+  <div id="page-ki" class="page">
+    <div class="page-hero">
+      <p class="page-label">Extraleistung</p>
+      <h1 class="page-h1">KI im <span>Unternehmen.</span></h1>
+      <p class="page-sub">Pragmatische KI-Implementierungen für Sicherheitsunternehmen — weniger manuelle Arbeit,
+        schnellere Anfragenbearbeitung, klarer ROI.</p>
+      <span class="price-signal">Beratung &amp; Umsetzung ab ca. 800 €/Monat</span>
+    </div>
+    <img class="ki-hero-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80"
+      alt="Moderne Technologie im Unternehmenseinsatz" loading="lazy">
+    <div class="ki-features">
+      <div class="ki-feat-card">
+        <div class="intro-icon">💬</div>
+        <h3>Anfragen automatisch vorqualifizieren</h3>
+        <p>KI-gestützte Formulare und Chat-Assistenten filtern unpassende Anfragen raus — dein Vertrieb spricht nur mit
+          echten Interessenten.</p>
       </div>
-      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
-          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
-          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
-        </div>
-      <div class="footer-bottom">
-        <p>© 2026 InboxElevate.</p>
-        <div class="socials"><a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer"
-            class="soc">in</a><!-- Instagram coming soon --></div>
+      <div class="ki-feat-card">
+        <div class="intro-icon">📋</div>
+        <h3>Content &amp; Angebote schneller erstellen</h3>
+        <p>Von Angebotstexten bis FAQ-Antworten: KI beschleunigt repetitive Schreibarbeit, du gibst die finale Freigabe.
+        </p>
       </div>
-    </footer>
+      <div class="ki-feat-card">
+        <div class="intro-icon">⚙️</div>
+        <h3>Prozesse automatisieren</h3>
+        <p>E-Mail-Sortierung, Lead-Weiterleitung, Terminbestätigungen — wir verbinden Tools, die du ohnehin nutzt (CRM,
+          E-Mail, Kalender).</p>
+      </div>
+      <div class="ki-feat-card">
+        <div class="intro-icon">🔒</div>
+        <h3>DSGVO-konform &amp; transparent</h3>
+        <p>Keine Blackbox: Wir dokumentieren, welche Daten wohin fließen. EU-Hosting wo möglich, klare Opt-ins wo nötig.
+        </p>
+      </div>
+    </div>
+    <section style="background:var(--ink);padding:4rem clamp(1.5rem,5vw,4rem);text-align:center;">
+      <h2
+        style="font-family:var(--H);font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;color:var(--cream);letter-spacing:-.04em;">
+        Neu, aber nicht experimentell — <span style="color:var(--green);">pragmatisch umgesetzt.</span></h2>
+      <p style="color:rgba(245,243,238,.5);margin-top:1rem;font-size:.9rem;max-width:520px;margin-inline:auto;">Wir sind
+        eine junge Agentur. Deshalb setzen wir KI dort ein, wo sie dir sofort Zeit spart — nicht als Buzzword auf der
+        Folie.</p>
+      <a href="#" onclick="navigateWithService('contact','KI im Unternehmen');return false;" class="btn-ink"
+        style="margin-top:2rem;display:inline-flex;background:var(--green);color:var(--ink);">KI-Potenzial für meine
+        Firma prüfen →</a>
+    </section>
+    <footer data-site-footer></footer>
+  </div>
+
+  <!-- ══════════════════ DATENSCHUTZ ══════════════════ -->
+  <div id="page-datenschutz" class="page">
+    <div class="legal-page">
+      <h1>Datenschutzerklärung</h1>
+      <p class="legal-updated">Stand: Juni 2026</p>
+      <h2>1. Verantwortlicher</h2>
+      <p>David Matuttis, InboxElevate, Deutschland<br>E-Mail: <a
+          href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a></p>
+      <h2>2. Erhebung und Speicherung personenbezogener Daten</h2>
+      <p>Beim Besuch dieser Website werden automatisch technische Daten (IP-Adresse, Browsertyp, Zeitpunkt) in
+        Server-Logfiles erhoben. Diese Daten dienen der Sicherheit und Stabilität der Website.</p>
+      <h2>3. Kontaktformular</h2>
+      <p>Wenn du uns über das Kontaktformular schreibst, verarbeiten wir die von dir angegebenen Daten (Name, E-Mail,
+        Nachricht) zur Bearbeitung deiner Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Die Daten werden über
+        Formspree (USA) übermittelt — mit Standardvertragsklauseln gemäß Art. 46 DSGVO.</p>
+      <h2>4. Deine Rechte</h2>
+      <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit
+        und Widerspruch. Beschwerden kannst du bei einer Datenschutz-Aufsichtsbehörde einreichen.</p>
+      <h2>5. Cookies &amp; Tracking</h2>
+      <p>Diese Website setzt keine Tracking-Cookies ein. Externe Schriftarten werden über Google Fonts geladen — dabei
+        kann Google technische Daten erhalten.</p>
+      <p><a href="#" onclick="navigate('home');return false;">← Zurück zur Startseite</a></p>
+    </div>
+    <footer data-site-footer></footer>
   </div>
 
   <!-- ══════════════════ TIPS PAGE ══════════════════ -->
   <div id="page-tips" class="page">
     <div class="tips-hero">
       <p class="page-label">Sofort umsetzbar · Kostenlos</p>
-      <h1 class="page-h1">16 Maßnahmen, die<br><span>heute noch wirken.</span></h1>
-      <p class="page-sub">Klick auf eine Karte für Details und den konkreten Umsetzungsschritt. Kein Budget nötig für den Einstieg.</p>
+      <h1 class="page-h1">Quick-Win Tipps für<br><span>Sicherheitsunternehmen.</span></h1>
+      <p class="page-sub">Klick auf eine Karte für Details. Alle Tipps sind heute noch umsetzbar — viele ohne Budget.
+      </p>
       <div class="tips-filter-bar" id="tipsFilterBar"></div>
     </div>
     <div class="tips-stats-row">
-      <div class="tips-stat"><div class="n">16</div><div class="l">Tipps gesamt</div></div>
-      <div class="tips-stat"><div class="n">9</div><div class="l">Hoher Impact</div></div>
-      <div class="tips-stat"><div class="n">4</div><div class="l">Ohne Budget</div></div>
-      <div class="tips-stat"><div class="n">&lt;1h</div><div class="l">Schnellste Umsetzung</div></div>
+      <div class="tips-stat">
+        <div class="n">16</div>
+        <div class="l">Tipps gesamt</div>
+      </div>
+      <div class="tips-stat">
+        <div class="n">9</div>
+        <div class="l">Hoher Impact</div>
+      </div>
+      <div class="tips-stat">
+        <div class="n">4</div>
+        <div class="l">Ohne Budget</div>
+      </div>
+      <div class="tips-stat">
+        <div class="n">&lt;1h</div>
+        <div class="l">Schnellste Umsetzung</div>
+      </div>
     </div>
     <div class="tips-count" id="tipsCount"></div>
+    <noscript>
+      <p class="tips-noscript-fallback">Aktiviere JavaScript, um alle 16 Tipps mit Details zu sehen — oder <a
+          href="mailto:david@inbox-elevate.de">schreib uns direkt</a> für eine persönliche Empfehlung.</p>
+    </noscript>
     <div class="tips-grid" id="tipsGrid"></div>
     <div class="tips-cta-strip">
-      <p style="font-family:var(--M);font-size:.7rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.2rem;">Willst du mehr?</p>
-      <h2 style="font-family:var(--H);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-.05em;color:var(--cream);line-height:1.05;">Wir setzen das für dich um.<br><span style="color:var(--green)">Professionell & messbar.</span></h2>
-      <p style="color:rgba(245,243,238,.45);margin-top:1rem;font-size:.9rem;">Kostenloser Marketing-Check — wir zeigen dir, wo du gerade Anfragen verlierst.</p>
-      <a href="#" onclick="navigate('contact');return false;" class="btn-ink" style="margin-top:2rem;display:inline-flex;background:var(--green);color:var(--ink);">Kostenlosen Marketing-Check anfordern →</a>
+      <p
+        style="font-family:var(--M);font-size:.7rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:1.2rem;">
+        Willst du mehr?</p>
+      <h2
+        style="font-family:var(--H);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-.05em;color:var(--cream);line-height:1.05;">
+        Wir setzen das für dich um.<br><span style="color:var(--green)">Professionell & messbar.</span></h2>
+      <p style="color:rgba(245,243,238,.45);margin-top:1rem;font-size:.9rem;">Kostenloser Marketing-Check — wir zeigen
+        dir, wo du gerade Anfragen verlierst.</p>
+      <a href="#" onclick="goToKontakt();return false;" class="btn-ink"
+        style="margin-top:2rem;display:inline-flex;background:var(--green);color:var(--ink);">Tipps umsetzen lassen
+        →</a>
     </div>
-    <footer>
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#" onclick="navigate('home');return false;" class="logo" style="color:var(--cream);">
-            <svg viewBox="0 0 40 40" width="26" fill="none">
-              <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            InboxElevate
-          </a>
-          <p>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
-        </div>
-        <div class="footer-col">
-          <h5>Navigation</h5>
-          <a href="#" onclick="navigate('home');return false;">Start</a>
-          <a href="#" onclick="navigate('services');return false;">Leistungen</a>
-          <a href="#" onclick="navigate('process');return false;">Prozess</a>
-          <a href="#" onclick="navigate('about');return false;">Über uns</a>
-        </div>
-        <div class="footer-col">
-          <h5>Leistungen</h5>
-          <a href="#" onclick="navigate('services');return false;">Webentwicklung</a>
-          <a href="#" onclick="navigate('services');return false;">Meta & Google Ads</a>
-          <a href="#" onclick="navigate('services');return false;">LinkedIn Ads</a>
-        </div>
-        <div class="footer-col">
-          <h5>Kontakt</h5>
-          <a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a>
-          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      </div>
-      <div class="footer-legal" style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
-          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(245,243,238,.8)'" onmouseout="this.style.color='rgba(245,243,238,.4)'">Datenschutz</a>
-          <span style="font-size:.75rem;color:rgba(245,243,238,.25);">Cloudflare Pages · GitHub · DSGVO-konform</span>
-        </div>
-      <div class="footer-bottom">
-        <p>© 2026 InboxElevate.</p>
-        <div class="socials">
-          <a href="https://www.linkedin.com/company/inboxelevate/" target="_blank" rel="noopener noreferrer" class="soc">in</a>
-          <!-- Instagram coming soon -->
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <!-- ══════════════════ DATENSCHUTZ PAGE ══════════════════ -->
-  <div id="page-datenschutz" class="page">
-    <div class="page-hero">
-      <p class="page-label">Rechtliches</p>
-      <h1 class="page-h1">Datenschutz&shy;erklärung</h1>
-    </div>
-    <div style="padding:4rem clamp(1.5rem,5vw,4rem);max-width:720px;">
-      <p style="font-family:var(--M);font-size:.7rem;letter-spacing:.1em;color:var(--green);text-transform:uppercase;margin-bottom:2rem;">Gemäß DSGVO · Stand: 2026</p>
-
-      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">1. Verantwortlicher</h2>
-      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
-        Verantwortlich für die Datenverarbeitung auf dieser Website ist InboxElevate, David [Nachname einsetzen], [Adresse einsetzen]. E-Mail: <a href="mailto:david@inbox-elevate.de" style="color:var(--green);">david@inbox-elevate.de</a>
-      </p>
-
-      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">2. Erhobene Daten & Zweck</h2>
-      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
-        Beim Ausfüllen des Kontaktformulars erheben wir Name, E-Mail-Adresse, Unternehmen und die Inhalte deiner Nachricht. Diese Daten werden ausschließlich zur Bearbeitung deiner Anfrage verwendet und nicht an Dritte weitergegeben. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen).
-      </p>
-
-      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">3. Formspree (Kontaktformular)</h2>
-      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
-        Das Kontaktformular wird über Formspree Inc. (USA) verarbeitet. Bei der Übermittlung werden deine Kontaktdaten an Server von Formspree übertragen. Formspree ist unter dem EU-US Data Privacy Framework zertifiziert. Weitere Informationen: <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer" style="color:var(--green);">formspree.io/legal/privacy-policy</a>.
-      </p>
-
-      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">4. Hosting — Cloudflare Pages</h2>
-      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:.75rem;">
-        Diese Website wird über <strong style="color:var(--ink);">Cloudflare Pages</strong> (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA) bereitgestellt. Beim Aufruf der Seite verarbeitet Cloudflare technisch notwendige Daten, insbesondere IP-Adressen, für die Auslieferung der Seite, DDoS-Schutz und Performance-Optimierung.
-      </p>
-      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:.75rem;">
-        Cloudflare betreibt Rechenzentren in der EU (u.a. Frankfurt, Amsterdam). Datentransfers in die USA erfolgen auf Basis der EU-Standardvertragsklauseln (SCC) sowie des EU-US Data Privacy Framework, dem Cloudflare angehört.
-      </p>
-      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
-        Weitere Informationen: <a href="https://www.cloudflare.com/de-de/privacypolicy/" target="_blank" rel="noopener noreferrer" style="color:var(--green);">cloudflare.com/de-de/privacypolicy</a> · Cloudflare DPA: <a href="https://www.cloudflare.com/cloudflare-customer-dpa/" target="_blank" rel="noopener noreferrer" style="color:var(--green);">cloudflare.com/cloudflare-customer-dpa</a>
-      </p>
-
-      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">5. Quellcode — GitHub</h2>
-      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
-        Der Quellcode dieser Website wird auf <strong style="color:var(--ink);">GitHub</strong> (GitHub, Inc., 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, USA; eine Tochtergesellschaft der Microsoft Corporation) verwaltet und von dort automatisch auf Cloudflare Pages deployt. Im Repository werden keine personenbezogenen Daten von Website-Besuchern gespeichert. GitHub verarbeitet Metadaten des Repositories (Commit-Zeitstempel, IP-Adressen bei Git-Operationen). Datentransfers in die USA erfolgen auf Basis der EU-SCC. Weitere Informationen: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer" style="color:var(--green);">GitHub Privacy Statement</a>.
-      </p>
-
-      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">6. Cookies</h2>
-      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
-        Diese Website setzt derzeit keine Tracking-Cookies und keine Analyse-Tools ein. Es werden ausschließlich technisch notwendige Cookies eingesetzt, soweit diese für den Betrieb erforderlich sind.
-      </p>
-
-      <h2 style="font-family:var(--H);font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.6rem;">7. Deine Rechte</h2>
-      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:2rem;">
-        Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Datenübertragbarkeit (Art. 15–20 DSGVO). Du kannst der Verarbeitung jederzeit widersprechen (Art. 21 DSGVO). Wende dich dafür an: <a href="mailto:david@inbox-elevate.de" style="color:var(--green);">david@inbox-elevate.de</a>.
-      </p>
-
-      <div style="background:rgba(29,186,110,.08);border:1px solid rgba(29,186,110,.2);border-radius:var(--r);padding:1.2rem 1.4rem;margin-top:2rem;">
-        <p style="font-size:.82rem;color:var(--muted);line-height:1.7;"><strong style="color:var(--ink);">Hinweis:</strong> Hosting (Cloudflare), Quellcode (GitHub) und Formspree-Verarbeitung sind bereits dokumentiert. Vor Veröffentlichung bitte trotzdem von einem Rechtsanwalt prüfen lassen — insbesondere die Angaben des Verantwortlichen, Speicherdauern und etwaige Analytics-Tools die später hinzukommen.</p>
-      </div>
-    </div>
-    <footer>
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#" onclick="navigate('home');return false;" class="logo" style="color:var(--cream);">
-            <svg viewBox="0 0 40 40" width="26" fill="none"><path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/><path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            InboxElevate
-          </a>
-          <p>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
-        </div>
-        <div class="footer-col"><h5>Navigation</h5><a href="#" onclick="navigate('home');return false;">Start</a><a href="#" onclick="navigate('services');return false;">Leistungen</a><a href="#" onclick="navigate('contact');return false;">Kontakt</a></div>
-        <div class="footer-col"><h5>Rechtliches</h5>
-          <a href="#" onclick="navigate('datenschutz');return false;">Datenschutz</a></div>
-        <div class="footer-col"><h5>Kontakt</h5><a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a></div>
-      </div>
-      <div style="border-top:1px solid rgba(255,255,255,.08);margin-top:.75rem;padding-top:.75rem;display:flex;gap:1.25rem;flex-wrap:wrap;">
-          <a href="#" onclick="navigate('datenschutz');return false;" style="font-size:.75rem;color:rgba(245,243,238,.4);text-decoration:none;">Datenschutz</a>
-      </div>
-      <div class="footer-bottom"><p>© 2026 InboxElevate.</p></div>
-    </footer>
+    <footer data-site-footer></footer>
   </div>
 
   <script>
@@ -3488,17 +3937,23 @@
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const coarsePointerQuery = window.matchMedia('(pointer: coarse)');
     const scrollHeavyPages = new Set(['home', 'tips', 'process']);
-    /* ⚠️  GITHUB DEPLOYMENT CHECKLIST:
-       1. WhatsApp-Nummer ersetzen (wa.me/49BITTEERSETZEN)
-       2. Formspree reCAPTCHA + Rate-Limiting im Dashboard aktivieren
-       4. Datenschutz von Rechtsanwalt prüfen lassen
-       5. Diese Datei vor dem ersten Commit final prüfen
-    */
     const FORMSPREE_ID = 'xvzveqvz';
+    const SITE_CONFIG = {
+      email: 'david@inbox-elevate.de',
+      linkedin: 'https://www.linkedin.com/company/inboxelevate/'
+    };
     const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     const tipsCats = ['Alle', 'Webseite', 'Google Ads', 'Meta Ads', 'Kein Budget'];
+    const HERO_TYPEWRITER_TERMS = [
+      'Sicherheitsunternehmen',
+      'Wachdienstleister',
+      'Alarmanlagen-Anbieter',
+      'Objektschutz-Firmen'
+    ];
 
-    let currentPage = 'home';
+    const initialPath = window.location.pathname.replace(/^\/|\/$/g, '');
+    let currentPage = initialPath || 'home';
+    if (!document.getElementById(`page-${currentPage}`)) currentPage = 'home';
     let tipsActive = 'Alle';
     let reducedMotion = motionQuery.matches;
     let useCustomCursor = !coarsePointerQuery.matches;
@@ -3512,8 +3967,9 @@
     let smoothRaf = 0;
     let isNavigating = false;
     let heroPrepared = false;
+    let typewriterTimeout = 0;
     let smoothBindingsReady = false;
-    let submitBtnHtml = '';
+    const submitBtnHtml = document.getElementById('submitBtn') ? document.getElementById('submitBtn').innerHTML : '';
 
     function clamp(value, min, max) {
       return Math.min(Math.max(value, min), max);
@@ -3530,16 +3986,100 @@
       }
     }
 
+    function getFooterHTML() {
+      return `
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="#" onclick="navigate('home');return false;" class="logo" style="color:var(--cream);">
+              <svg viewBox="0 0 40 40" width="26" fill="none">
+                <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              InboxElevate
+            </a>
+            <p>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
+          </div>
+          <div class="footer-col">
+            <h5>Navigation</h5>
+            <a href="#" onclick="navigate('home');return false;">Start</a>
+            <a href="#" onclick="openLeistungenModal();return false;">Leistungen</a>
+            <a href="#" onclick="navigate('process');return false;">Prozess</a>
+            <a href="#" onclick="navigate('about');return false;">Über uns</a>
+            <a href="#" onclick="navigate('tips');return false;">Tipps</a>
+          </div>
+          <div class="footer-col">
+            <h5>Leistungen</h5>
+            <a href="#" onclick="showService('web');return false;">Webentwicklung</a>
+            <a href="#" onclick="showService('meta');return false;">Paid Ads</a>
+            <a href="#" onclick="navigate('ki');return false;">KI im Unternehmen</a>
+            <a href="#" onclick="showService('linkedin');return false;">LinkedIn Ads</a>
+          </div>
+          <div class="footer-col">
+            <h5>Kontakt</h5>
+            <a href="mailto:${SITE_CONFIG.email}">${SITE_CONFIG.email}</a>
+            <a href="#" onclick="goToKontakt();return false;">Anfrage stellen</a>
+            <a href="#" onclick="navigate('datenschutz');return false;">Datenschutz</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 InboxElevate. Alle Rechte vorbehalten.</p>
+          <div class="socials">
+            <a href="${SITE_CONFIG.linkedin}" target="_blank" rel="noopener noreferrer" class="soc">in</a>
+            <a href="mailto:${SITE_CONFIG.email}" class="soc">✉</a>
+          </div>
+        </div>`;
+    }
+
+    function injectFooters() {
+      document.querySelectorAll('[data-site-footer]').forEach(el => {
+        el.innerHTML = getFooterHTML();
+      });
+      bindCursorHover();
+    }
+
+    function goToKontakt() {
+      if (currentPage === 'contact') {
+        const el = document.getElementById('kontakt');
+        if (el) el.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+        else scrollPageTo(0);
+        return;
+      }
+      navigate('contact');
+      setTimeout(() => {
+        const el = document.getElementById('kontakt');
+        if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
+      }, 500);
+    }
+
+    function openLeistungenModal() {
+      const modal = document.getElementById('leistungenModal');
+      if (modal) modal.classList.add('open');
+    }
+
+    function closeLeistungenModal() {
+      const modal = document.getElementById('leistungenModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function initStickyMobileCta() {
+      const bar = document.getElementById('stickyMobileCta');
+      if (!bar) return;
+      body.classList.add('has-sticky-cta');
+      const onScroll = () => {
+        const show = window.innerWidth <= 768 && window.scrollY > 320 && currentPage !== 'contact';
+        bar.classList.toggle('visible', show);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      onScroll();
+    }
+
     function showToast(title, message, type = 'success') {
       if (!toastStack) return;
       const toast = document.createElement('div');
       toast.className = `toast ${type === 'error' ? 'error' : ''}`.trim();
-      const tDiv = document.createElement('div');
-      tDiv.className = 'toast-title';
-      tDiv.textContent = title;
-      const tP = document.createElement('p');
-      tP.textContent = message;
-      toast.append(tDiv, tP);
+      toast.innerHTML = `<div class="toast-title">${title}</div><p>${message}</p>`;
       toastStack.appendChild(toast);
       requestAnimationFrame(() => toast.classList.add('show'));
       setTimeout(() => {
@@ -3583,7 +4123,8 @@
 
     function updateNavLinks(id) {
       document.querySelectorAll('[data-page]').forEach(link => {
-        link.classList.toggle('active', link.dataset.page === id);
+        const page = link.dataset.page;
+        link.classList.toggle('active', page === id || (page === 'services' && (id === 'ki' || id === 'services')));
       });
     }
 
@@ -3702,7 +4243,7 @@
       });
     }
 
-    async function navigate(id) {
+    async function navigate(id, pushState = true) {
       if (id === currentPage) {
         scrollPageTo(0);
         return;
@@ -3711,6 +4252,12 @@
       const oldPage = document.getElementById(`page-${currentPage}`);
       const nextPage = document.getElementById(`page-${id}`);
       if (!nextPage) return;
+
+      if (pushState) {
+        const urlPath = id === 'home' ? '/' : '/' + id;
+        window.history.pushState({ pageId: id }, '', urlPath);
+      }
+
       isNavigating = true;
       await runPageWipe(() => {
         if (oldPage) oldPage.classList.remove('active');
@@ -3729,6 +4276,13 @@
           initReveal();
           observeScrambleTargets();
           updateScrollChrome();
+          if (id === 'home') {
+            const twEl = document.getElementById('tw-text');
+            if (twEl) twEl.textContent = HERO_TYPEWRITER_TERMS[0];
+            initHeroTypewriter();
+          } else {
+            stopHeroTypewriter();
+          }
         }, 40);
       });
       isNavigating = false;
@@ -3758,6 +4312,10 @@
     }
 
     function showService(id) {
+      if (id === 'ki') {
+        navigate('ki');
+        return;
+      }
       navigate('services');
       const adsMap = { meta: 'meta', google: 'google', linkedin: 'linkedin' };
       if (adsMap[id]) {
@@ -3771,7 +4329,7 @@
     function toggleFaq(button) {
       const card = button.closest('.faq-card');
       const open = card.classList.contains('open');
-      const scope = card.closest('.faq-grid, .home-faq-list') || document;
+      const scope = card.closest('.faq-col, .home-faq-list') || card.parentElement;
       scope.querySelectorAll('.faq-card').forEach(item => item.classList.remove('open'));
       if (!open) card.classList.add('open');
     }
@@ -3779,8 +4337,6 @@
     function toggleMob(force) {
       const shouldOpen = typeof force === 'boolean' ? force : !ham.classList.contains('open');
       ham.classList.toggle('open', shouldOpen);
-      ham.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
-      ham.setAttribute('aria-label', shouldOpen ? 'Menü schließen' : 'Menü öffnen');
       mobMenu.classList.toggle('open', shouldOpen);
     }
 
@@ -3788,7 +4344,6 @@
       event.preventDefault();
       const form = document.getElementById('contactForm');
       const btn = document.getElementById('submitBtn');
-      if (!submitBtnHtml) submitBtnHtml = btn.innerHTML;
       btn.disabled = true;
       btn.textContent = 'Wird gesendet...';
       const data = new FormData(form);
@@ -3799,11 +4354,10 @@
           body: data,
           headers: { Accept: 'application/json' }
         });
-        const json = await response.json();
-        if (!response.ok || json.error) throw new Error(json.error || 'server-error');
+        if (!response.ok) throw new Error('server-error');
         document.getElementById('cForm').style.display = 'none';
         document.getElementById('cFormOk').style.display = 'block';
-        showToast('Nachricht gesendet!', 'Wir melden uns spätestens am nächsten Werktag mit einer ehrlichen Einschätzung.', 'success');
+        showToast('Nachricht gesendet', 'Wir melden uns innerhalb von 48 Stunden mit einer ehrlichen Einschaetzung.', 'success');
       } catch (error) {
         btn.disabled = false;
         btn.innerHTML = submitBtnHtml;
@@ -3891,6 +4445,74 @@
       heroPrepared = true;
     }
 
+    function stopHeroTypewriter() {
+      if (typewriterTimeout) {
+        clearTimeout(typewriterTimeout);
+        typewriterTimeout = 0;
+      }
+    }
+
+    function initHeroTypewriter() {
+      stopHeroTypewriter();
+      const el = document.getElementById('tw-text');
+      if (!el || currentPage !== 'home') return;
+
+      if (reducedMotion) {
+        el.textContent = HERO_TYPEWRITER_TERMS[0];
+        return;
+      }
+
+      let termIndex = 0;
+      let charIndex = el.textContent.trim().length || HERO_TYPEWRITER_TERMS[0].length;
+      let isDeleting = false;
+      const typeMs = 58;
+      const deleteMs = 32;
+      const pauseTyped = 2400;
+      const pauseDeleted = 400;
+
+      function schedule(fn, ms) {
+        typewriterTimeout = window.setTimeout(fn, ms);
+      }
+
+      function step() {
+        const target = document.getElementById('tw-text');
+        if (!target || currentPage !== 'home') return;
+
+        const word = HERO_TYPEWRITER_TERMS[termIndex];
+
+        if (!isDeleting) {
+          if (charIndex < word.length) {
+            charIndex += 1;
+            target.textContent = word.slice(0, charIndex);
+            schedule(step, typeMs);
+          } else {
+            schedule(() => {
+              isDeleting = true;
+              step();
+            }, pauseTyped);
+          }
+          return;
+        }
+
+        if (charIndex > 0) {
+          charIndex -= 1;
+          target.textContent = word.slice(0, charIndex);
+          schedule(step, deleteMs);
+          return;
+        }
+
+        isDeleting = false;
+        termIndex = (termIndex + 1) % HERO_TYPEWRITER_TERMS.length;
+        schedule(step, pauseDeleted);
+      }
+
+      schedule(() => {
+        isDeleting = true;
+        charIndex = HERO_TYPEWRITER_TERMS[termIndex].length;
+        step();
+      }, pauseTyped);
+    }
+
     function startHeroAnimations() {
       prepareHeroWords();
       const heroHeadline = document.querySelector('.hero-h1');
@@ -3898,9 +4520,11 @@
       if (reducedMotion) {
         heroHeadline.classList.add('ready');
         heroHeadline.querySelectorAll('.hero-word').forEach(word => word.classList.add('no-animate'));
+        initHeroTypewriter();
         return;
       }
       requestAnimationFrame(() => heroHeadline.classList.add('ready'));
+      initHeroTypewriter();
     }
 
     function initMagneticButtons() {
@@ -4072,6 +4696,13 @@
       bindCursorHover(bar);
     }
 
+    document.getElementById('leistungenModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'leistungenModal') closeLeistungenModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLeistungenModal();
+    });
+
     initCursor();
     initSmoothScroll();
     initReveal();
@@ -4080,10 +4711,31 @@
     initMagneticButtons();
     initSpotlights();
     initPreloader();
+    injectFooters();
+    initStickyMobileCta();
     updateNavLinks(currentPage);
     updateScrollChrome();
     initTipsFilters();
     renderTips();
+
+    if (currentPage !== 'home') {
+      const homePage = document.getElementById('page-home');
+      const targetPage = document.getElementById(`page-${currentPage}`);
+      if (homePage) homePage.classList.remove('active');
+      if (targetPage) targetPage.classList.add('active');
+      if (currentPage === 'tips') {
+        initTipsFilters();
+        renderTips();
+      }
+    }
+
+    window.addEventListener('popstate', (event) => {
+      const state = event.state;
+      const id = state && state.pageId ? state.pageId : (window.location.pathname.replace(/^\/|\/$/g, '') || 'home');
+      if (document.getElementById(`page-${id}`)) {
+        navigate(id, false);
+      }
+    });
 
     motionQuery.addEventListener('change', event => {
       reducedMotion = event.matches;
@@ -4091,7 +4743,7 @@
       observeScrambleTargets();
       initSmoothScroll();
       initMagneticButtons();
-      if (reducedMotion) startHeroAnimations();
+      if (currentPage === 'home') initHeroTypewriter();
     });
 
     coarsePointerQuery.addEventListener('change', () => {
