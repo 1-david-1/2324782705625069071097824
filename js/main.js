@@ -14,7 +14,7 @@
     const scrollHeavyPages = new Set(['home', 'tips', 'process']);
     const FORMSPREE_ID = 'xvzveqvz';
     const SITE_CONFIG = {
-      email: 'david@inbox-elevate.de',
+      email: ['david', 'inbox-elevate.de'].join('@'),
       linkedin: 'https://www.linkedin.com/company/inboxelevate/'
     };
     const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -100,6 +100,19 @@
             <a href="mailto:${SITE_CONFIG.email}" class="soc">✉</a>
           </div>
         </div>`;
+    }
+
+    function injectEmails() {
+      const email = ['david', 'inbox-elevate.de'].join('@');
+      document.querySelectorAll('.js-email-link').forEach(el => {
+        el.href = 'mailto:' + email;
+        el.textContent = email;
+      });
+      document.querySelectorAll('.js-email-text').forEach(el => {
+        el.textContent = email;
+      });
+      const replyTo = document.getElementById('js-replyto');
+      if (replyTo) replyTo.value = email;
     }
 
     function injectFooters() {
@@ -348,7 +361,7 @@
       } catch (error) {
         btn.disabled = false;
         btn.innerHTML = submitBtnHtml;
-        showToast('Senden fehlgeschlagen', 'Bitte schreib uns direkt an david@inbox-elevate.de oder versuche es gleich erneut.', 'error');
+        showToast('Senden fehlgeschlagen', `Bitte schreib uns direkt an ${SITE_CONFIG.email} oder versuche es gleich erneut.`, 'error');
       }
     }
 
@@ -628,6 +641,7 @@
     initSpotlights();
     initPreloader();
     injectFooters();
+    injectEmails();
     initStickyMobileCta();
     updateScrollChrome();
 
