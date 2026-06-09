@@ -83,39 +83,7 @@
     <a href="/#kontakt">Kontakt →</a>
   </div>
 
-  <div class="modal-overlay" id="leistungenModal" role="dialog" aria-labelledby="leistungenModalTitle"
-    aria-modal="true">
-    <div class="modal-box">
-      <div class="modal-head">
-        <h3 id="leistungenModalTitle">Unsere Leistungen</h3>
-        <button class="modal-close" onclick="closeLeistungenModal()" aria-label="Schließen">×</button>
-      </div>
-      <div class="modal-svc-list">
-        <button class="modal-svc-item" onclick="showService('web');closeLeistungenModal();">
-          <div class="modal-svc-icon">🌐</div>
-          <div>
-            <h4>Webseiten</h4>
-            <p>Conversion-starke Websites für Sicherheitsunternehmen — mit Notrufnummer, Vertrauenssignalen und lokaler
-              SEO.</p>
-          </div>
-        </button>
-        <button class="modal-svc-item" onclick="showService('meta');closeLeistungenModal();">
-          <div class="modal-svc-icon">📣</div>
-          <div>
-            <h4>Paid Ads</h4>
-            <p>Google, Meta und LinkedIn — gezielt für Alarmanlagen-Anfragen, Objektschutz-Leads und Recruiting.</p>
-          </div>
-        </button>
-        <button class="modal-svc-item" onclick="navigate('ki');closeLeistungenModal();">
-          <div class="modal-svc-icon">🤖</div>
-          <div>
-            <h4>KI im Unternehmen</h4>
-            <p>KI-Tools sinnvoll einsetzen: Automatisierung, bessere Anfragenbearbeitung und effizientere Prozesse.</p>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
+  <!-- Leistungen Modal removed – Hub-Teaser on homepage instead -->
 
   <!-- ══════════════════ HOME PAGE ══════════════════ -->
   <div id="home">
@@ -172,36 +140,65 @@
     </div>
 
     <!-- Intro strip -->
-    <div class="intro-strip">
-      <div class="intro-cell sr spotlight-card hover-underline-card" onclick="showService('web');return false;"
-        onkeydown="handleKeyAction(event, function(){ showService('web'); })" role="button" tabindex="0"
-        style="">
-        <div class="intro-icon">🌐</div>
-        <div class="intro-label">Webseiten</div>
-        <h3>Webseiten, die Anfragen bringen</h3>
-        <p>Speziell für Sicherheitsunternehmen: Notrufnummer sichtbar, Vertrauen aufgebaut, Besucher zu Kunden gemacht.
-        </p>
+    <!-- ── LEISTUNGEN HUB TEASER ── -->
+    <section class="svc-hub" aria-labelledby="svc-hub-heading">
+      <div class="svc-hub-header sr">
+        <p class="svc-hub-label">Unsere Leistungen</p>
+        <h2 id="svc-hub-heading">Drei Hebel. Ein Ziel:<br><span>mehr qualifizierte Anfragen.</span></h2>
       </div>
-      <div class="intro-cell sr spotlight-card hover-underline-card" data-d="1"
-        onclick="showService('meta');return false;"
-        onkeydown="handleKeyAction(event, function(){ showService('meta'); })" role="button" tabindex="0"
-        style="">
-        <div class="intro-icon">📣</div>
-        <div class="intro-label">Paid Ads</div>
-        <h3>Ads mit echtem Ergebnis</h3>
-        <p>Google Search und Meta Ads gezielt für Alarmanlagen-Anfragen, Objektschutz-Leads und Bewerbungen von
-          Sicherheitsmitarbeitern.</p>
+      <div class="svc-hub-grid">
+
+        <!-- Webseiten -->
+        <article class="svc-card sr" data-d="0">
+          <div class="svc-card-icon">🌐</div>
+          <div class="svc-card-num">01</div>
+          <h3 class="svc-card-title">Webseiten</h3>
+          <p class="svc-card-desc">Conversion-starke Websites speziell für Sicherheitsunternehmen — mit sichtbarer Notrufnummer, regionaler SEO und klaren Vertrauenssignalen, die Besucher zu Anfragen machen.</p>
+          <ul class="svc-card-tags">
+            <li>Blitzschnell</li>
+            <li>Lokale SEO</li>
+            <li>Mobile First</li>
+            <li>5–10 Werktage</li>
+          </ul>
+          <a href="/leistungen/webseiten" class="svc-card-btn">Mehr erfahren <span class="svc-card-arrow">→</span></a>
+        </article>
+
+        <!-- Paid Ads -->
+        <article class="svc-card sr" data-d="1">
+          <div class="svc-card-icon">📣</div>
+          <div class="svc-card-num">02</div>
+          <h3 class="svc-card-title">Paid Ads</h3>
+          <p class="svc-card-desc">Google Search und Meta Ads — zielgenau ausgesteuert für Alarmanlagen-Anfragen, Objektschutz-Leads und das Recruiting von Sicherheitsmitarbeitern. Ohne Streuverlust.</p>
+          <ul class="svc-card-tags">
+            <li>Google Ads</li>
+            <li>Meta Ads</li>
+            <li>Leadgenerierung</li>
+            <li>Recruiting</li>
+          </ul>
+          <a href="/leistungen/paid-ads" class="svc-card-btn">Mehr erfahren <span class="svc-card-arrow">→</span></a>
+        </article>
+
+        <!-- KI-Automatisierung -->
+        <article class="svc-card svc-card--dark sr" data-d="2">
+          <div class="svc-card-icon">🤖</div>
+          <div class="svc-card-num">03</div>
+          <h3 class="svc-card-title">KI-Automatisierung</h3>
+          <p class="svc-card-desc">Pragmatische KI-Lösungen, die direkt im Tagesgeschäft funktionieren — Anfragen automatisch vorqualifizieren, 24/7-Chatbot, Follow-Up-Sequenzen und CRM-Integration.</p>
+          <ul class="svc-card-tags">
+            <li>24/7 Anfrage-Bot</li>
+            <li>Workflow-Automatisierung</li>
+            <li>CRM-Integration</li>
+            <li>Sofort umsetzbar</li>
+          </ul>
+          <a href="/leistungen/ki" class="svc-card-btn">Mehr erfahren <span class="svc-card-arrow">→</span></a>
+        </article>
+
       </div>
-      <div class="intro-cell sr spotlight-card hover-underline-card" data-d="2" onclick="navigate('ki');return false;"
-        onkeydown="handleKeyAction(event, function(){ navigate('ki'); })" role="button" tabindex="0"
-        style="">
-        <div class="intro-icon">🤖</div>
-        <div class="intro-label">KI im Unternehmen</div>
-        <h3>KI, die wirklich hilft</h3>
-        <p>Automatisierung, schnellere Anfragenbearbeitung und smarte Workflows — ohne Tech-Blabla, mit messbarem
-          Nutzen.</p>
+      <div class="svc-hub-footer sr">
+        <p>Nicht sicher, wo du anfangen sollst?</p>
+        <a href="/#kontakt" class="btn-ink">Im kostenlosen Erstgespräch gemeinsam herausfinden →</a>
       </div>
-    </div>
+    </section>
 
     <!-- Problem Section -->
     <section style="padding:5rem clamp(1.5rem,5vw,4rem);background:var(--ink);color:var(--cream);">
