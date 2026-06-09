@@ -2,12 +2,13 @@
     const nav = document.getElementById('nav');
     const mobMenu = document.getElementById('mobMenu');
     const ham = document.getElementById('ham');
-            const pageWipe = document.getElementById('pageWipe');
+    const pageWipe = document.getElementById('pageWipe');
     const preloader = document.getElementById('preloader');
     const scrollProgress = document.getElementById('scrollProgress');
     const scrollProgressFill = document.getElementById('scrollProgressFill');
     const toastStack = document.getElementById('toastStack');
     const homeStats = document.getElementById('homeStats');
+    let currentPage = 'home';
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const coarsePointerQuery = window.matchMedia('(pointer: coarse)');
     const scrollHeavyPages = new Set(['home', 'tips', 'process']);
@@ -105,9 +106,10 @@
       document.querySelectorAll('[data-site-footer]').forEach(el => {
         el.innerHTML = getFooterHTML();
       });
-          }
+    }
 
-          navigate('contact');
+    function goToKontakt() {
+      navigate('contact');
       setTimeout(() => {
         const el = document.getElementById('kontakt');
         if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
@@ -296,10 +298,12 @@
       if (btn) btn.classList.add('active');
     }
 
-          navigate(page);
+    function navigate(page) {
+      if (page) currentPage = page;
     }
 
-          navigate('services');
+    function showService(id) {
+      navigate('services');
       const adsMap = { meta: 'meta', google: 'google', linkedin: 'linkedin' };
       if (adsMap[id]) {
         setTimeout(() => {
@@ -616,7 +620,7 @@
       if (e.key === 'Escape') closeLeistungenModal();
     });
 
-        initSmoothScroll();
+    initSmoothScroll();
     initReveal();
     observeScrambleTargets();
     initCounters();
@@ -625,10 +629,7 @@
     initPreloader();
     injectFooters();
     initStickyMobileCta();
-    updateNavLinks(currentPage);
     updateScrollChrome();
-        
-        }
 
     
     motionQuery.addEventListener('change', event => {
