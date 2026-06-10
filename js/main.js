@@ -186,7 +186,8 @@
     
     function updateScrollChrome() {
       const y = window.scrollY || 0;
-      nav.classList.toggle('nav-shrink', y > 80);
+      if (nav) nav.classList.toggle('nav-shrink', y > 80);
+      if (!scrollProgress || !scrollProgressFill) return;
       const visible = scrollHeavyPages.has(currentPage) && getScrollMax() > 240;
       scrollProgress.classList.toggle('visible', visible);
       const progress = visible ? clamp(y / Math.max(getScrollMax(), 1), 0, 1) : 0;
@@ -335,6 +336,7 @@
     }
 
     function toggleMob(force) {
+      if (!ham || !mobMenu) return;
       const shouldOpen = typeof force === 'boolean' ? force : !ham.classList.contains('open');
       ham.classList.toggle('open', shouldOpen);
       mobMenu.classList.toggle('open', shouldOpen);
@@ -612,6 +614,10 @@
     }
 
     function initPreloader() {
+      if (!preloader) {
+        startHeroAnimations();
+        return;
+      }
       const ready = () => {
         preloader.classList.add('hide');
         startHeroAnimations();
