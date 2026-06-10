@@ -1971,11 +1971,17 @@
       align-items: center;
       justify-content: center;
       transition: transform .7s cubic-bezier(.22, 1, .36, 1), opacity .45s ease;
+      animation: preloaderAutoHide 0s 3s forwards;
+    }
+
+    @keyframes preloaderAutoHide {
+      to { display: none; opacity: 0; pointer-events: none; }
     }
 
     .preloader.hide {
       transform: translateY(-100%);
       opacity: 0;
+      pointer-events: none;
     }
 
     .preloader-inner {
