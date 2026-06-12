@@ -52,6 +52,25 @@
   }
   window.handleKeyAction = handleKeyAction;
 
+  function initBrandAnimation() {
+    document.querySelectorAll('.logo').forEach(logo => {
+      if (!logo.querySelector('.logo-name')) {
+        const textNode = Array.from(logo.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+        if (textNode) {
+          const span = document.createElement('span');
+          span.className = 'logo-name';
+          span.textContent = textNode.textContent.trim();
+          textNode.replaceWith(span);
+        }
+      }
+      if (reducedMotion) return;
+      logo.classList.remove('brand-animated');
+      void logo.offsetWidth;
+      logo.classList.add('brand-animated');
+      setTimeout(() => logo.classList.remove('brand-animated'), 1700);
+    });
+  }
+
   /* ── Footer HTML ── */
   function getFooterHTML() {
     return `<div class="footer-grid">
@@ -265,6 +284,102 @@
   }
   window.submitForm = submitForm;
 
+  /* ── GSAP Brand & Contact Animations ── */
+  function initGsapInteractions() {
+    if (typeof gsap === 'undefined') return;
+    gsap.registerPlugin(Draggable, InertiaPlugin, Physics2DPlugin);
+
+    const mainEl = document.querySelector('main');
+    if (mainEl) {
+      gsap.set(mainEl, { perspective: 650 });
+      const outerRX = gsap.quickTo('.logo-outer', 'rotationX', { ease: 'power3' });
+      const outerRY = gsap.quickTo('.logo-outer', 'rotationY', { ease: 'power3' });
+      const innerX = gsap.quickTo('.logo', 'x', { ease: 'power3' });
+      const innerY = gsap.quickTo('.logo', 'y', { ease: 'power3' });
+
+      mainEl.addEventListener('pointermove', e => {
+        outerRX(gsap.utils.interpolate(15, -15, e.y / window.innerHeight));
+        outerRY(gsap.utils.interpolate(-15, 15, e.x / window.innerWidth));
+        innerX(gsap.utils.interpolate(-30, 30, e.x / window.innerWidth));
+        innerY(gsap.utils.interpolate(-30, 30, e.y / window.innerHeight));
+      });
+
+      mainEl.addEventListener('pointerleave', () => {
+        outerRX(0);
+        outerRY(0);
+        innerX(0);
+        innerY(0);
+      });
+    }
+
+    const emitter = document.createElement('div');
+    emitter.id = 'emitter';
+    emitter.style.cssText = 'position:absolute; width:0; height:0; pointer-events:none;';
+    document.body.appendChild(emitter);
+
+    const container = document.createElement('div');
+    container.style.cssText = 'position:absolute; left:0; top:0; overflow:visible; z-index:5000; pointer-events:none;';
+    document.body.appendChild(container);
+
+    const emitterSize = 100;
+    const dotQuantity = 25;
+    const dotSizeMax = 20;
+    const dotSizeMin = 10;
+    const speed = 3;
+    const gravity = 3;
+
+    function createExplosion(container) {
+      const tl = gsap.timeline({ paused: true });
+      for (let i = 0; i < dotQuantity; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        const size = gsap.utils.random(dotSizeMin, dotSizeMax, 1);
+        container.appendChild(dot);
+        const angle = Math.random() * Math.PI * 2;
+        const length = Math.random() * (emitterSize / 2 - size / 2);
+        gsap.set(dot, {
+          x: Math.cos(angle) * length,
+          y: Math.sin(angle) * length,
+          width: size,
+          height: size,
+          xPercent: -50,
+          yPercent: -50,
+          force3D: true,
+          borderRadius: '50%',
+          backgroundColor: 'var(--green)',
+          position: 'absolute'
+        });
+        tl.to(dot, {
+          physics2D: {
+            angle: (angle * 180) / Math.PI,
+            velocity: (100 + Math.random() * 250) * speed,
+            gravity: 500 * gravity
+          },
+          duration: 1 + Math.random()
+        }, 0).to(dot, {
+          opacity: 0,
+          duration: 0.2,
+          ease: 'power2.inOut'
+        }, 0.7);
+      }
+      return tl;
+    }
+
+    const explosion = createExplosion(container);
+
+    function explode(element) {
+      const bounds = element.getBoundingClientRect();
+      gsap.set(container, { x: bounds.left + bounds.width / 2, y: bounds.top + bounds.height / 2 });
+      explosion.restart();
+    }
+
+    document.querySelectorAll('.contact-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        explode(btn);
+      });
+    });
+  }
+
   /* ── Reveal on scroll ── */
   function initReveal() {
     if (revealObserver) revealObserver.disconnect();
@@ -347,7 +462,7 @@
 
   /* ── Magnetic buttons ── */
   function initMagneticButtons() {
-    document.querySelectorAll('.btn-ink,.nav-cta').forEach(btn => {
+    document.querySelectorAll('.btn-ink,.nav-cta,.btn-submit,.btn-green,.btn-dark').forEach(btn => {
       btn.classList.add('magnetic');
       if (btn.dataset.magneticBound === 'true' || reducedMotion) return;
       btn.dataset.magneticBound = 'true';
@@ -420,8 +535,10 @@
   initReveal();
   observeScrambleTargets();
   initCounters();
+  initBrandAnimation();
   initMagneticButtons();
   initSpotlights();
+  initGsapInteractions();
   initPreloader();
   injectFooters();
   injectEmails();

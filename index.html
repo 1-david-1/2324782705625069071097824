@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>InboxElevate – Mehr Anfragen für Sicherheitsunternehmen.</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo-mark.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
     href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap"
@@ -49,12 +50,12 @@
   
 
   <div class="sticky-mobile-cta" id="stickyMobileCta">
-    <a href="/#kontakt">Jetzt anfragen →</a>
+    <a href="/#kontakt" class="contact-trigger">Jetzt anfragen →</a>
   </div>
 
   <!-- NAV -->
   <nav id="nav">
-    <a href="#" class="logo" onclick="navigate('home');return false;">
+    <a href="#" class="logo logo-outer" onclick="navigate('home');return false;">
       <svg viewBox="0 0 40 40" fill="none">
         <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
           stroke-linejoin="round" />
@@ -73,7 +74,7 @@
       <li><a href="/prozess">Prozess</a></li>
       <li><a href="/ueber-uns">Über uns</a></li>
       <li><a href="/tipps">Tipps</a></li>
-      <li><a href="/#kontakt" class="nav-cta">Kontakt <span class="nav-arrow">→</span></a></li>
+      <li><a href="/#kontakt" class="nav-cta contact-trigger">Kontakt <span class="nav-arrow">→</span></a></li>
     </ul>
     <button class="ham" id="ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
   </nav>
@@ -89,6 +90,8 @@
     <a href="/tipps">Tipps</a>
     <a href="/kontakt">Kontakt →</a>
   </div>
+
+  <main>
 
   <!-- Leistungen Modal removed – Hub-Teaser on homepage instead -->
 
@@ -135,74 +138,107 @@
         <div class="n"><span class="stat-counter" data-target="100" data-suffix="%">100%</span></div>
         <div class="l">Fokus auf Sicherheitsbranche</div>
       </div>
-      <div class="home-stat">
+      <a class="home-stat home-stat-link" href="/leistungen" aria-label="Zu den Leistungen">
         <div class="n"><span class="stat-counter" data-target="3" data-suffix="">3</span></div>
         <div class="l">Kanäle: Google, Meta, LinkedIn</div>
-      </div>
+      </a>
       <div class="home-stat">
         <div class="n"><span class="stat-counter" data-target="5" data-suffix=" – 10" data-prefix="">5 – 10</span></div>
         <div class="l">Werktage bis erste Kampagne live</div>
       </div>
     </div>
 
-    <!-- Wie wir arbeiten Section -->
-    <section id="prozess-summary">
-      <div class="page-hero">
-        <p class="page-label">Wie wir arbeiten</p>
-        <h1 class="page-h1">Klar. Strukturiert.<br><span>Ohne Überraschungen.</span></h1>
-        <p class="page-sub">Von der ersten Anfrage bis zur laufenden Optimierung — unser Prozess ist transparent und
-          nachvollziehbar.</p>
+    <!-- Leistungen Hub Teaser -->
+    <section class="svc-hub" aria-labelledby="svc-hub-heading">
+      <div class="svc-hub-header sr">
+        <p class="svc-hub-label">Was wir für dich tun</p>
+        <h2 id="svc-hub-heading">Webseiten, die Vertrauen aufbauen und Anfragen bringen.<br><span>Ads, die genau die richtigen Menschen erreichen.</span></h2>
+        <p style="color:var(--muted);font-size:1rem;line-height:1.7;max-width:640px;margin:1rem auto 0;">Keine Pakete von der Stange — sondern das, was für Sicherheitsunternehmen wie deins wirklich funktioniert.</p>
       </div>
+      <div class="svc-hub-grid">
 
-      <div class="process-timeline">
-        <div class="timeline-item sr">
-          <div class="tl-num">01</div>
-          <div class="tl-content">
-            <h3>Erstkontakt & Kennenlernen</h3>
-            <p>Du schreibst uns über das Kontaktformular oder per Mail. Innerhalb von 48 Stunden melden wir uns mit einem
-              Terminvorschlag für ein kostenlosen 30-minütigen Erstgespräch per Video-Call. Wir lernen dein Unternehmen,
-              deine Ziele und dein Budget kennen — und du lernst uns kennen. Kein Verkaufsdruck.</p>
-          </div>
-        </div>
-        <div class="timeline-item sr" data-d="1">
-          <div class="tl-num">02</div>
-          <div class="tl-content">
-            <h3>Analyse & Strategie</h3>
-            <p>Wir schauen uns dein bestehendes Setup an — Website, Sichtbarkeit bei Google, Wettbewerber in deiner
-              Region. Darauf aufbauend erstellen wir einen konkreten Vorschlag: Welche Kanäle? Welche Zielgruppen? Welche
-              Budgetverteilung? Mit realistischen Erwartungswerten — keine aufgeblasenen Versprechen.</p>
-          </div>
-        </div>
-        <div class="timeline-item sr" data-d="2">
-          <div class="tl-num">03</div>
-          <div class="tl-content">
-            <h3>Setup & Launch</h3>
-            <p>Nach deiner Freigabe beginnen wir mit dem technischen Setup: Kampagnenstruktur, Tracking, Creatives (auf
-              Basis deines Materials), Landing Pages oder Webseite. Alles wird vor dem Launch gemeinsam abgestimmt.
-              Typischer Zeitraum bis zur ersten Live-Kampagne: 5–10 Werktage.</p>
-          </div>
-        </div>
-        <div class="timeline-item sr" data-d="3">
-          <div class="tl-num">04</div>
-          <div class="tl-content">
-            <h3>Optimierung & Skalierung</h3>
-            <p>Wir stellen sicher, dass dein Budget nicht in unqualifizierte Klicks fließt, sondern in echte Anfragen für
-              Sicherheitsdienstleistungen. Wir analysieren wöchentlich Daten, testen Varianten und optimieren
-              kontinuierlich. Erste aussagekräftige Ergebnisse sind nach 4–6 Wochen spürbar.</p>
-          </div>
-        </div>
-        <div class="timeline-item sr" data-d="4">
-          <div class="tl-num">05</div>
-          <div class="tl-content">
-            <h3>Reporting & Kommunikation</h3>
-            <p>Regelmäßige Reports — klar und verständlich, ohne unnötigen Fachjargon. Je nach Paket wöchentlich oder
-              monatlich. Dazu steht dir dein persönlicher Ansprechpartner jederzeit für Rückfragen zur Verfügung.</p>
-          </div>
-        </div>
+        <!-- Webseiten -->
+        <article class="svc-card sr" data-d="0">
+          <div class="svc-card-icon">🌐</div>
+          <div class="svc-card-num">01</div>
+          <h3 class="svc-card-title">Webseiten</h3>
+          <p class="svc-card-desc">Website, die dein Telefon klingeln lässt. Notrufnummer ganz oben. Vertrauen sofort sichtbar. Klar strukturiert für Google — und für Kunden, die in 30 Sekunden entscheiden, ob sie anrufen.</p>
+          <ul class="svc-card-tags">
+            <li>Blitzschnell</li>
+            <li>Lokale SEO</li>
+            <li>Mobile First</li>
+            <li>5–10 Werktage</li>
+          </ul>
+          <a href="/leistungen/webseiten" class="svc-card-btn">Mehr erfahren <span class="svc-card-arrow">→</span></a>
+        </article>
+
+        <!-- Paid Ads -->
+        <article class="svc-card sr" data-d="1">
+          <div class="svc-card-icon">📣</div>
+          <div class="svc-card-num">02</div>
+          <h3 class="svc-card-title">Paid Ads</h3>
+          <p class="svc-card-desc">Ads für Anfragen, nicht für Klicks. Google Ads für Objektschutz-Anfragen. Meta Ads für Recruiting. LinkedIn für B2B-Entscheider. Jede Plattform mit Strategie — nicht mit Hoffnung.</p>
+          <ul class="svc-card-tags">
+            <li>Google Ads</li>
+            <li>Meta Ads</li>
+            <li>Leadgenerierung</li>
+            <li>Recruiting</li>
+          </ul>
+          <a href="/leistungen/paid-ads" class="svc-card-btn">Mehr erfahren <span class="svc-card-arrow">→</span></a>
+        </article>
+
+        <!-- KI-Automatisierung -->
+        <article class="svc-card svc-card--dark sr" data-d="2">
+          <div class="svc-card-icon">🤖</div>
+          <div class="svc-card-num">03</div>
+          <h3 class="svc-card-title">KI-Automatisierung</h3>
+          <p class="svc-card-desc">KI ist kein Zukunftsthema mehr — sie ist ein Werkzeug, das jetzt schon Arbeitszeit spart. Bewerbervorfilterung, 24/7-Chatbot, Dienstplanung. Wir setzen KI-Lösungen auf, die zu deiner Unternehmensgröße passen — ohne dass du ein IT-Experte sein musst.</p>
+          <p style="font-size:.8rem;color:rgba(245,243,238,.5);margin-top:.5rem;font-style:italic;">Nicht jede KI passt zu jedem Betrieb. Wir finden raus, was bei deiner Größe Sinn macht.</p>
+          <ul class="svc-card-tags">
+            <li>24/7 Anfrage-Bot</li>
+            <li>Workflow-Automatisierung</li>
+            <li>CRM-Integration</li>
+            <li>Sofort umsetzbar</li>
+          </ul>
+          <a href="/leistungen/ki" class="svc-card-btn">Mehr erfahren <span class="svc-card-arrow">→</span></a>
+        </article>
+
+      </div>
+      <div class="svc-hub-footer sr">
+        <p>Nicht sicher, wo du anfangen sollst?</p>
+        <a href="/#kontakt" class="btn-ink">Im kostenlosen Erstgespräch gemeinsam herausfinden →</a>
+      </div>
+    </section>
+
+    <section class="home-trust" aria-labelledby="home-trust-heading">
+      <div class="home-trust-copy sr">
+        <p class="page-label">Warum das fair ist</p>
+        <h2 id="home-trust-heading">Du musst uns nicht blind glauben.<br><span>Wir starten so, dass Vertrauen entstehen kann.</span></h2>
+        <p>InboxElevate ist neu. Deshalb verkaufen wir dir keine künstliche Erfolgsstory, sondern einen klaren Start: feste Ansprechpartner, transparente Ziele und ein Pilot, bei dem du erst siehst, ob die Richtung stimmt.</p>
+        <a href="/ueber-uns" class="btn-ink">Mehr über uns lesen <span class="btn-arrow">→</span></a>
+      </div>
+      <div class="home-trust-grid">
+        <article class="trust-card sr" data-d="1">
+          <span>01</span>
+          <h3>Direkt statt anonym</h3>
+          <p>Du sprichst nicht mit wechselnden Projektmanagern. Dein Ansprechpartner kennt dein Unternehmen, dein Ziel und den Stand der Umsetzung.</p>
+        </article>
+        <article class="trust-card sr" data-d="2">
+          <span>02</span>
+          <h3>Resultate zuerst</h3>
+          <p>Für passende Pilotprojekte können wir so starten, dass du erst erste nachvollziehbare Signale siehst, bevor du dich langfristig bindest.</p>
+        </article>
+        <article class="trust-card sr" data-d="3">
+          <span>03</span>
+          <h3>Fokus statt Bauchladen</h3>
+          <p>Wir arbeiten gezielt für Sicherheitsunternehmen. Dadurch drehen sich Strategie, Texte und Kampagnen nicht um alles, sondern um deine Branche.</p>
+        </article>
       </div>
     </section>
 
   </div>
+
+  </main>
 
   <!-- ══════════════════ FOOTER ══════════════════ -->
   <footer>
@@ -245,6 +281,10 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Draggable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/InertiaPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Physics2DPlugin.min.js"></script>
   <script src="/js/main.js" defer></script>
 </body>
 
