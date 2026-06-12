@@ -1773,10 +1773,11 @@
     .tw-cursor {
       display: inline-block;
       width: 3px;
-      height: .85em;
+      height: 1em;
       background: var(--green);
-      vertical-align: text-bottom;
+      vertical-align: baseline;
       margin-left: 2px;
+      margin-bottom: -2px;
       animation: twBlink .7s step-end infinite;
     }
 
