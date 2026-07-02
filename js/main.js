@@ -22,9 +22,11 @@
   const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   const HERO_TYPEWRITER_TERMS = [
     'Sicherheitsunternehmen',
+    'Sicherheitsfirmen',
     'Wachdienstleister',
+    'Objektschutz-Firmen',
     'Alarmanlagen-Anbieter',
-    'Objektschutz-Firmen'
+    'Personenschutz-Agenturen'
   ];
 
   /* ── State ── */
