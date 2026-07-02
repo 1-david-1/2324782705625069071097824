@@ -434,23 +434,23 @@
     const el = document.getElementById('tw-text');
     if (!el) return;
     if (reducedMotion) { el.textContent = HERO_TYPEWRITER_TERMS[0]; return; }
-    let termIndex = 0, charIndex = el.textContent.trim().length || HERO_TYPEWRITER_TERMS[0].length, isDeleting = false;
+    let termIndex = 0, charIndex = 0, isDeleting = false;
     const schedule = (fn, ms) => { typewriterTimeout = setTimeout(fn, ms); };
     function step() {
       const target = document.getElementById('tw-text');
       if (!target) return;
       const word = HERO_TYPEWRITER_TERMS[termIndex];
       if (!isDeleting) {
-        if (charIndex < word.length) { charIndex++; target.textContent = word.slice(0, charIndex); schedule(step, 58); }
-        else { schedule(() => { isDeleting = true; step(); }, 2400); }
+        if (charIndex < word.length) { charIndex++; target.textContent = word.slice(0, charIndex); schedule(step, 68); }
+        else { schedule(() => { isDeleting = true; step(); }, 2200); }
         return;
       }
-      if (charIndex > 0) { charIndex--; target.textContent = word.slice(0, charIndex); schedule(step, 32); return; }
+      if (charIndex > 0) { charIndex--; target.textContent = word.slice(0, charIndex); schedule(step, 40); return; }
       isDeleting = false;
       termIndex = (termIndex + 1) % HERO_TYPEWRITER_TERMS.length;
-      schedule(step, 400);
+      schedule(step, 300);
     }
-    schedule(() => { isDeleting = true; charIndex = HERO_TYPEWRITER_TERMS[termIndex].length; step(); }, 2400);
+    schedule(step, 400);
   }
 
   function startHeroAnimations() {
