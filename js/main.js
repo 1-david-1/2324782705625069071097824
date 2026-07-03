@@ -22,11 +22,15 @@
   const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   const HERO_TYPEWRITER_TERMS = [
     'Sicherheitsunternehmen',
-    'IT-Dienstleister',
-    'Handwerksbetriebe',
-    'Steuerkanzleien',
-    'Agenturen',
-    'Fitnessstudios'
+    'Wachdienstleister',
+    'Bewachungsfirmen',
+    'Objektschutz-Firmen',
+    'Personenschutz-Agenturen',
+    'Alarmanlagen-Anbieter',
+    'Videoueberwachung-Dienste',
+    'Zutrittskontrolle-Systeme',
+    'Cybersicherheit-Dienste',
+    'Sicherheitskonsultanten'
   ];
   const HERO_TYPE_SPEED = 72;
   const HERO_DELETE_SPEED = 38;
