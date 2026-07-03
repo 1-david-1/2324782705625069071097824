@@ -340,31 +340,24 @@
       max-width: 1100px;
     }
 
-    .hero-h1 em {
-      font-style: normal;
+    .hero-h1-static {
+      display: inline;
+    }
+
+    .hero-tw-word {
+      white-space: nowrap;
       color: var(--green);
-      position: relative;
-      display: inline-block;
-    }
-
-    .hero-h1 em::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 100%;
-      height: 4px;
-      background: var(--green);
-      border-radius: 2px;
-      transform: scaleX(0);
-      transform-origin: left;
-      animation: underlineIn .6s 1s ease forwards;
-    }
-
-    @keyframes underlineIn {
-      to {
-        transform: scaleX(1);
-      }
+      display: inline-flex;
+      align-items: center;
+      gap: .14em;
+      padding: .08em .38em .14em;
+      margin-left: .08em;
+      border-radius: .35em;
+      background: linear-gradient(135deg, rgba(29, 186, 110, .14), rgba(29, 186, 110, .08));
+      box-shadow: inset 0 0 0 1px rgba(29, 186, 110, .14);
+      min-width: 23ch;
+      justify-content: flex-start;
+      vertical-align: baseline;
     }
 
     .hero-sub-row {
@@ -2087,23 +2080,12 @@
     }
 
     /* ── HOME HERO TYPEWRITER AREA ── */
-    .hero-tw-line {
-      color: var(--green);
-      font-family: var(--H);
-      font-size: clamp(3.2rem, 9vw, 8.5rem);
-      font-weight: 800;
-      line-height: .95;
-      letter-spacing: -.05em;
-      display: inline-flex;
-      align-items: flex-end;
-      gap: .08em;
-      min-height: 1em;
-    }
-
     #tw-text {
       display: inline-block;
-      min-width: 22ch;
+      min-width: 23ch;
       line-height: 1;
+      font-variant-ligatures: none;
+      white-space: nowrap;
     }
 
     /* ── COUNTER STATS on home ── */

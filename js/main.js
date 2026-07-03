@@ -22,12 +22,16 @@
   const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   const HERO_TYPEWRITER_TERMS = [
     'Sicherheitsunternehmen',
-    'Sicherheitsfirmen',
-    'Wachdienstleister',
-    'Objektschutz-Firmen',
-    'Alarmanlagen-Anbieter',
-    'Personenschutz-Agenturen'
+    'IT-Dienstleister',
+    'Handwerksbetriebe',
+    'Steuerkanzleien',
+    'Agenturen',
+    'Fitnessstudios'
   ];
+  const HERO_TYPE_SPEED = 72;
+  const HERO_DELETE_SPEED = 38;
+  const HERO_HOLD_DELAY = 1800;
+  const HERO_PAUSE_DELAY = 280;
 
   /* ── State ── */
   let currentPage = 'home';
@@ -41,7 +45,6 @@
   let scrollCurrent = window.scrollY || 0;
   let smoothScrollEnabled = false;
   let smoothRaf = 0;
-  let heroPrepared = false;
   let typewriterTimeout = 0;
   let smoothBindingsReady = false;
 
@@ -417,23 +420,21 @@
   }
 
   /* ── Hero typewriter ── */
-  function prepareHeroWords() {
-    if (heroPrepared) return;
-    ['tw-line1','tw-line2'].forEach(id => {
-      const line = document.getElementById(id);
-      if (!line) return;
-      line.innerHTML = line.textContent.trim().split(/\s+/).map((w, i) => `<span class="hero-word-clip"><span class="hero-word" style="--word-delay:${i*60}ms">${w}</span></span>`).join(' ');
-    });
-    heroPrepared = true;
+  function stopHeroTypewriter() {
+    if (typewriterTimeout) {
+      clearTimeout(typewriterTimeout);
+      typewriterTimeout = 0;
+    }
   }
-
-  function stopHeroTypewriter() { if (typewriterTimeout) { clearTimeout(typewriterTimeout); typewriterTimeout = 0; } }
 
   function initHeroTypewriter() {
     stopHeroTypewriter();
     const el = document.getElementById('tw-text');
     if (!el) return;
-    if (reducedMotion) { el.textContent = HERO_TYPEWRITER_TERMS[0]; return; }
+    if (reducedMotion) {
+      el.textContent = HERO_TYPEWRITER_TERMS[0];
+      return;
+    }
     let termIndex = 0, charIndex = 0, isDeleting = false;
     const schedule = (fn, ms) => { typewriterTimeout = setTimeout(fn, ms); };
     function step() {
@@ -441,24 +442,34 @@
       if (!target) return;
       const word = HERO_TYPEWRITER_TERMS[termIndex];
       if (!isDeleting) {
-        if (charIndex < word.length) { charIndex++; target.textContent = word.slice(0, charIndex); schedule(step, 68); }
-        else { schedule(() => { isDeleting = true; step(); }, 2200); }
+        if (charIndex < word.length) {
+          charIndex++;
+          target.textContent = word.slice(0, charIndex);
+          schedule(step, HERO_TYPE_SPEED);
+        } else {
+          schedule(() => {
+            isDeleting = true;
+            step();
+          }, HERO_HOLD_DELAY);
+        }
         return;
       }
-      if (charIndex > 0) { charIndex--; target.textContent = word.slice(0, charIndex); schedule(step, 40); return; }
+      if (charIndex > 0) {
+        charIndex--;
+        target.textContent = word.slice(0, charIndex);
+        schedule(step, HERO_DELETE_SPEED);
+        return;
+      }
       isDeleting = false;
       termIndex = (termIndex + 1) % HERO_TYPEWRITER_TERMS.length;
-      schedule(step, 300);
+      schedule(step, HERO_PAUSE_DELAY);
     }
-    schedule(step, 400);
+    schedule(step, 450);
   }
 
   function startHeroAnimations() {
-    prepareHeroWords();
     const h = document.querySelector('.hero-h1');
     if (!h) return;
-    if (reducedMotion) { h.classList.add('ready'); h.querySelectorAll('.hero-word').forEach(w => w.classList.add('no-animate')); }
-    else { requestAnimationFrame(() => h.classList.add('ready')); }
     initHeroTypewriter();
   }
 
