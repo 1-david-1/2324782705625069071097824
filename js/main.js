@@ -435,6 +435,7 @@
       el.textContent = HERO_TYPEWRITER_TERMS[0];
       return;
     }
+    el.textContent = '';
     let termIndex = 0, charIndex = 0, isDeleting = false;
     const schedule = (fn, ms) => { typewriterTimeout = setTimeout(fn, ms); };
     function step() {

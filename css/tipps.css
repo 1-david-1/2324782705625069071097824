@@ -140,6 +140,13 @@
   border-radius: 14px;
 }
 
+.tipp-icon img {
+  width: 42px;
+  height: 42px;
+  display: block;
+  object-fit: contain;
+}
+
 .tipp-category {
   font-family: var(--M);
   font-size: 0.7rem;
