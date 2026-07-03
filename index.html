@@ -32,7 +32,6 @@
           <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
             stroke-linejoin="round" />
         </svg>
-        <span>InboxElevate</span>
       </div>
       <div class="preloader-track">
         <div class="preloader-bar"></div>
@@ -63,7 +62,6 @@
         <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
           stroke-linejoin="round" />
       </svg>
-      InboxElevate
     </a>
     <ul class="nav-links">
       <li><a href="/">Start</a></li>
@@ -99,6 +97,9 @@
   <div id="home">
     <section class="hero">
       <div class="hero-inner">
+        <div class="hero-orb-stage" id="heroOrbStage" aria-hidden="true">
+          <canvas id="heroOrbCanvas"></canvas>
+        </div>
         <div class="hero-label sr">Spezialisiert auf Sicherheitsunternehmen. Und sonst niemanden.</div>
         <h1 class="hero-h1 sr" data-d="1">
           <span class="hero-h1-static">Mehr qualifizierte Anfragen für</span>
@@ -285,6 +286,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Draggable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/InertiaPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Physics2DPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="/js/main.js" defer></script>
 </body>
 

@@ -46,6 +46,7 @@
   let smoothScrollEnabled = false;
   let smoothRaf = 0;
   let typewriterTimeout = 0;
+  let heroOrbStarted = false;
   let smoothBindingsReady = false;
 
   /* ── Utilities ── */
@@ -291,7 +292,13 @@
 
   /* ── GSAP Brand & Contact Animations ── */
   function initGsapInteractions() {
-    if (typeof gsap === 'undefined') return;
+    if (
+      typeof gsap === 'undefined' ||
+      typeof Draggable === 'undefined' ||
+      typeof InertiaPlugin === 'undefined' ||
+      typeof Physics2DPlugin === 'undefined'
+    ) return;
+
     gsap.registerPlugin(Draggable, InertiaPlugin, Physics2DPlugin);
 
     const mainEl = document.querySelector('main');
@@ -471,7 +478,290 @@
   function startHeroAnimations() {
     const h = document.querySelector('.hero-h1');
     if (!h) return;
+    h.classList.add('v');
     initHeroTypewriter();
+  }
+
+  /* ── Hero liquid orb ── */
+  function initHeroOrbAnimation() {
+    if (heroOrbStarted || reducedMotion || typeof THREE === 'undefined') return;
+    const frame = document.getElementById('heroOrbStage');
+    const canvas = document.getElementById('heroOrbCanvas');
+    const pointerSurface = document.querySelector('.hero') || frame;
+    if (!frame || !canvas) return;
+    heroOrbStarted = true;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+
+    const sceneCam = new THREE.PerspectiveCamera(38, 1, 0.1, 20);
+    sceneCam.position.set(0, 0, 6);
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xf5f3ee);
+
+    const blobGeo = new THREE.IcosahedronGeometry(1.15, 7);
+    const blobMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new THREE.Color(0x10a85d) }
+      },
+      vertexShader: `
+        uniform float uTime;
+        varying vec3 vNormal;
+        varying vec3 vNormalObj;
+        varying vec3 vViewPos;
+        varying vec3 vObjPos;
+        void main(){
+          vec3 pos = position;
+          float n1 = sin(pos.x*2.6 + uTime*1.1) * cos(pos.y*2.3 - uTime*0.9) * sin(pos.z*2.8 + uTime*0.7);
+          float n2 = sin(pos.x*5.2 - uTime*1.7 + pos.y*3.1) * cos(pos.z*4.4 + uTime*0.6);
+          float n3 = sin(pos.x*11.0 + pos.y*9.0 - uTime*0.25) * sin(pos.z*10.5 + pos.x*8.0 + uTime*0.2);
+          float wobble = n1*0.68 + n2*0.32;
+          pos += normal * wobble * 0.15;
+          pos += normal * n3 * 0.05;
+          vObjPos = pos;
+          vNormalObj = normal;
+          vNormal = normalMatrix * normalize(normal);
+          vec4 mv = modelViewMatrix * vec4(pos,1.0);
+          vViewPos = mv.xyz;
+          gl_Position = projectionMatrix * mv;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        varying vec3 vNormal;
+        varying vec3 vNormalObj;
+        varying vec3 vViewPos;
+        varying vec3 vObjPos;
+
+        float hash(vec2 p){
+          return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+        }
+        float valueNoise(vec2 p){
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          float a = hash(i);
+          float b = hash(i + vec2(1.0, 0.0));
+          float c = hash(i + vec2(0.0, 1.0));
+          float d = hash(i + vec2(1.0, 1.0));
+          vec2 u = f*f*(3.0 - 2.0*f);
+          return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+        }
+
+        void main(){
+          vec3 n = normalize(vNormal);
+          vec3 v = normalize(-vViewPos);
+          vec3 lightDir = normalize(vec3(0.55, 0.75, 0.65));
+          vec3 halfDir = normalize(lightDir + v);
+
+          float fresnel = pow(1.0 - max(dot(n, v), 0.0), 2.3);
+          float diff = max(dot(n, lightDir), 0.0);
+          float spec = pow(max(dot(n, halfDir), 0.0), 48.0);
+
+          vec3 blendW = abs(normalize(vNormalObj));
+          blendW /= (blendW.x + blendW.y + blendW.z + 0.0001);
+          float nx = valueNoise(vObjPos.yz * 5.0);
+          float ny = valueNoise(vObjPos.xz * 5.0);
+          float nz = valueNoise(vObjPos.xy * 5.0);
+          float craterN = nx*blendW.x + ny*blendW.y + nz*blendW.z;
+
+          float pit = smoothstep(0.30, 0.05, craterN);
+          float rim = smoothstep(0.72, 0.95, craterN);
+
+          vec3 base = mix(uColor*0.32, uColor*1.35, fresnel);
+          base *= (0.55 + 0.55*diff);
+          base *= (1.0 - pit * 0.42);
+          base += vec3(1.0, 1.0, 0.96) * spec * 0.9;
+          base += vec3(1.0) * rim * 0.22;
+
+          gl_FragColor = vec4(base, 1.0);
+        }
+      `
+    });
+
+    const blob = new THREE.Mesh(blobGeo, blobMat);
+    scene.add(blob);
+
+    let rt = new THREE.WebGLRenderTarget(2, 2, { encoding: THREE.sRGBEncoding });
+    const postScene = new THREE.Scene();
+    const postCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const postMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uScene: { value: rt.texture },
+        uResolution: { value: new THREE.Vector2(1, 1) },
+        uRibCount: { value: 26.0 },
+        uStrength: { value: 0.022 }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main(){
+          vUv = uv;
+          gl_Position = vec4(position.xy, 0.0, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform sampler2D uScene;
+        uniform float uRibCount;
+        uniform float uStrength;
+        varying vec2 vUv;
+
+        void main(){
+          vec2 uv = vUv;
+          vec3 straight = texture2D(uScene, uv).rgb;
+          float maxc = max(straight.r, max(straight.g, straight.b));
+          float minc = min(straight.r, min(straight.g, straight.b));
+          float sat = maxc - minc;
+
+          float ribPos = uv.x * uRibCount;
+          float local = fract(ribPos);
+          float centered = local * 2.0 - 1.0;
+          float lens = centered * sqrt(max(0.0, 1.0 - centered*centered));
+
+          float localStrength = uStrength * (0.35 + 2.2 * sat);
+          vec2 dUv = vec2(lens * localStrength, 0.0);
+
+          float ca = 0.0032 * (0.25 + sat);
+          float r = texture2D(uScene, clamp(uv + dUv + vec2(ca,0.0), 0.0, 1.0)).r;
+          float g = texture2D(uScene, clamp(uv + dUv, 0.0, 1.0)).g;
+          float b = texture2D(uScene, clamp(uv + dUv - vec2(ca,0.0), 0.0, 1.0)).b;
+          vec3 col = vec3(r, g, b);
+
+          vec3 glow = vec3(0.0);
+          const int TAPS = 6;
+          for (int i = 0; i < TAPS; i++){
+            float ang = (float(i) / float(TAPS)) * 6.2831853;
+            vec2 off = vec2(cos(ang), sin(ang)) * 0.014;
+            glow += texture2D(uScene, clamp(uv + off, 0.0, 1.0)).rgb;
+          }
+          glow /= float(TAPS);
+          col += (glow - vec3(1.0)) * -0.22 * sat;
+
+          float shade = 1.0 - 0.16 * abs(centered);
+          float highlight = pow(max(0.0, 1.0 - abs(centered - 0.30) * 2.6), 4.0);
+          col *= shade;
+          col += vec3(1.0) * highlight * 0.28;
+
+          float seam = smoothstep(0.985, 1.0, abs(centered));
+          col = mix(col, vec3(0.82, 0.85, 0.84), seam * 0.35);
+
+          float vig = smoothstep(1.1, 0.35, length(uv - 0.5) * 1.3);
+          col = mix(col * 0.94, col, vig);
+
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `
+    });
+    postScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), postMat));
+
+    const raycaster = new THREE.Raycaster();
+    const pointerPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    const pointerNDC = new THREE.Vector2(0, 0);
+    const rawTargetPos = new THREE.Vector3(0, 0, 0);
+    const targetPos = new THREE.Vector3(0, 0, 0);
+    const hitPoint = new THREE.Vector3();
+    const velocity = new THREE.Vector2(0, 0);
+    const BLOB_RADIUS = 1.35;
+    const STIFFNESS = 0.0048;
+    const TARGET_LAG = 0.045;
+    const DAMPING = 0.988;
+    const BOUNCE_RESTITUTION = 0.42;
+    let pointerActive = false;
+    let impactX = 0, impactY = 0;
+
+    function currentBounds() {
+      const dist = sceneCam.position.z;
+      const vFov = sceneCam.fov * Math.PI / 180;
+      const visH = 2 * Math.tan(vFov / 2) * dist;
+      const visW = visH * sceneCam.aspect;
+      return {
+        maxX: Math.max(0, visW / 2 - BLOB_RADIUS),
+        maxY: Math.max(0, visH / 2 - BLOB_RADIUS)
+      };
+    }
+
+    function updatePointer(clientX, clientY) {
+      const rect = frame.getBoundingClientRect();
+      pointerNDC.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+      pointerNDC.y = -(((clientY - rect.top) / rect.height) * 2 - 1);
+      raycaster.setFromCamera(pointerNDC, sceneCam);
+      raycaster.ray.intersectPlane(pointerPlane, hitPoint);
+      rawTargetPos.copy(hitPoint);
+      pointerActive = true;
+    }
+
+    pointerSurface.addEventListener('pointermove', e => updatePointer(e.clientX, e.clientY));
+    pointerSurface.addEventListener('pointerup', () => { pointerActive = false; });
+    pointerSurface.addEventListener('pointercancel', () => { pointerActive = false; });
+    pointerSurface.addEventListener('pointerleave', () => { pointerActive = false; });
+
+    function resizeHeroOrb() {
+      const rect = frame.getBoundingClientRect();
+      const w = Math.max(1, Math.round(rect.width));
+      const h = Math.max(1, Math.round(rect.height));
+      const pr = renderer.getPixelRatio();
+      renderer.setSize(w, h, false);
+      sceneCam.aspect = w / h;
+      sceneCam.updateProjectionMatrix();
+      rt.setSize(w * pr, h * pr);
+      postMat.uniforms.uResolution.value.set(w * pr, h * pr);
+    }
+
+    window.addEventListener('resize', resizeHeroOrb);
+    resizeHeroOrb();
+
+    {
+      const { maxX, maxY } = currentBounds();
+      blob.position.set(-maxX * 0.4, -maxY * 0.25, 0);
+      targetPos.copy(blob.position);
+      rawTargetPos.copy(blob.position);
+    }
+
+    const clock = new THREE.Clock();
+    function animateHeroOrb() {
+      requestAnimationFrame(animateHeroOrb);
+      const t = clock.getElapsedTime();
+      const { maxX, maxY } = currentBounds();
+
+      blobMat.uniforms.uTime.value = t;
+
+      if (pointerActive) targetPos.lerp(rawTargetPos, TARGET_LAG);
+      const ax = pointerActive ? (targetPos.x - blob.position.x) * STIFFNESS : 0;
+      const ay = pointerActive ? (targetPos.y - blob.position.y) * STIFFNESS : 0;
+      velocity.x = (velocity.x + ax) * DAMPING;
+      velocity.y = (velocity.y + ay) * DAMPING;
+
+      let nextX = blob.position.x + velocity.x;
+      let nextY = blob.position.y + velocity.y;
+
+      if (nextX > maxX) { nextX = maxX; velocity.x = -velocity.x * BOUNCE_RESTITUTION; impactX = Math.min(1, Math.abs(velocity.x) * 5.5 + 0.3); }
+      if (nextX < -maxX) { nextX = -maxX; velocity.x = -velocity.x * BOUNCE_RESTITUTION; impactX = Math.min(1, Math.abs(velocity.x) * 5.5 + 0.3); }
+      if (nextY > maxY) { nextY = maxY; velocity.y = -velocity.y * BOUNCE_RESTITUTION; impactY = Math.min(1, Math.abs(velocity.y) * 5.5 + 0.3); }
+      if (nextY < -maxY) { nextY = -maxY; velocity.y = -velocity.y * BOUNCE_RESTITUTION; impactY = Math.min(1, Math.abs(velocity.y) * 5.5 + 0.3); }
+
+      blob.position.x = nextX;
+      blob.position.y = nextY;
+      impactX *= 0.88;
+      impactY *= 0.88;
+
+      const speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
+      const travelStretch = THREE.MathUtils.clamp(speed * 8.0, 0, 0.24);
+      if (speed > 0.0004) {
+        const angle = Math.atan2(velocity.y, velocity.x);
+        blob.rotation.z += (angle - blob.rotation.z) * 0.12;
+      }
+
+      const scaleX = (1 + travelStretch) * (1 - impactX * 0.28 + impactY * 0.18);
+      const scaleY = (1 - travelStretch * 0.42) * (1 - impactY * 0.28 + impactX * 0.18);
+      blob.scale.set(scaleX, scaleY, 1);
+
+      renderer.setRenderTarget(rt);
+      renderer.render(scene, sceneCam);
+      renderer.setRenderTarget(null);
+      renderer.render(postScene, postCam);
+    }
+    animateHeroOrb();
   }
 
   /* ── Magnetic buttons ── */
@@ -534,6 +824,10 @@
       startHeroAnimations();
       return;
     }
+    if (window.getComputedStyle(preloader).display === 'none') {
+      startHeroAnimations();
+      return;
+    }
     Promise.race([
       new Promise(r => window.addEventListener('load', r, { once: true })),
       new Promise(r => setTimeout(r, 1500))
@@ -547,13 +841,15 @@
   /* ── Boot ── */
   initSmoothScroll();
   initReveal();
+  startHeroAnimations();
+  initHeroOrbAnimation();
   observeScrambleTargets();
   initCounters();
   initBrandAnimation();
   initMagneticButtons();
   initSpotlights();
-  initGsapInteractions();
   initPreloader();
+  initGsapInteractions();
   injectFooters();
   injectEmails();
   initStickyMobileCta();
@@ -564,6 +860,7 @@
     reducedMotion = e.matches;
     initReveal(); observeScrambleTargets(); initSmoothScroll(); initMagneticButtons();
     initHeroTypewriter();
+    initHeroOrbAnimation();
   });
 
   coarsePointerQuery.addEventListener('change', () => initSmoothScroll());
