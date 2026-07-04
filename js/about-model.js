@@ -115,10 +115,17 @@
     canvas.addEventListener('pointerdown', stopAutoRotate);
     canvas.addEventListener('wheel', stopAutoRotate);
 
-    // 7. GLTF Loader
+    // 7. GLTF Loader + DRACOLoader (für Draco-komprimiertes Modell)
     if (typeof THREE.GLTFLoader !== 'undefined') {
       const gltfLoader = new THREE.GLTFLoader();
-      
+
+      // DRACOLoader zum Dekomprimieren des Modells
+      if (typeof THREE.DRACOLoader !== 'undefined') {
+        const dracoLoader = new THREE.DRACOLoader();
+        dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+        gltfLoader.setDRACOLoader(dracoLoader);
+      }
+
       gltfLoader.load(
         '/relief_model.glb',
         (gltf) => {
