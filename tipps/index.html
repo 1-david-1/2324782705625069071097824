@@ -60,18 +60,42 @@
     </div>
   </main>
 
-  <div class="tipp-modal" id="tippModal" role="dialog" aria-modal="true">
-    <div class="tipp-modal-content">
-      <button class="tipp-modal-close" id="tippModalClose" aria-label="Schließen">×</button>
-      <div class="tipp-modal-hero">
-        <div class="tipp-category" id="modalCat">Kategorie</div>
-        <h2 class="tipp-title" id="modalTitle" style="font-size:2rem;margin:0;">Titel</h2>
+  <!-- Backdrop -->
+  <div class="tipp-modal-backdrop" id="tippBackdrop"></div>
+
+  <!-- Expandable Card Overlay -->
+  <div class="tipp-expandable-card" id="tippExpandable" role="dialog" aria-modal="true">
+    <div class="tipp-expandable-content">
+      <!-- Image Section -->
+      <div class="tipp-expandable-image">
+        <img id="expandableImg" src="" alt="">
       </div>
-      <div class="tipp-modal-body">
-        <p id="modalBody">Body content</p>
-        <div class="tipp-action-box">
-          <h4>🔥 Umsetzungstipp</h4>
-          <p id="modalAction" style="margin:0;"></p>
+      
+      <!-- Body Content -->
+      <div class="tipp-expandable-body">
+        <!-- Header -->
+        <div class="tipp-expandable-header">
+          <div class="tipp-expandable-info">
+            <p class="tipp-expandable-category" id="expandableCat">KATEGORIE</p>
+            <h2 class="tipp-expandable-title" id="expandableTitle">Titel hier</h2>
+          </div>
+          <button class="tipp-expandable-close" id="expandableClose" aria-label="Schließen">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/>
+              <path d="M12 5v14"/>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Text Content -->
+        <div class="tipp-expandable-text">
+          <p id="expandableBody">Body content</p>
+          
+          <!-- Action Box -->
+          <div class="tipp-expandable-action">
+            <h4>🔥 Umsetzungstipp</h4>
+            <p id="expandableAction"></p>
+          </div>
         </div>
       </div>
     </div>
@@ -113,7 +137,7 @@
       document.getElementById('tippsCount').textContent = `${filtered.length} Tipps gefunden`;
       
       grid.innerHTML = filtered.map((tip, i) => `
-        <article class="tipp-card" data-index="${tipsData.indexOf(tip)}" style="animation: pageIn 0.4s ease forwards; animation-delay: ${i*0.05}s; opacity: 0;">
+        <article class="tipp-card" data-index="${tipsData.indexOf(tip)}" style="animation-delay: ${i * 0.08}s;">
           <div class="tipp-icon">${tip.icon.startsWith('/') ? `<img src="${tip.icon}" alt="" loading="lazy">` : tip.icon}</div>
           <div class="tipp-category">${tip.cat}</div>
           <h3 class="tipp-title">${tip.title}</h3>
@@ -126,37 +150,65 @@
       `).join('');
 
       grid.querySelectorAll('.tipp-card').forEach(card => {
-        card.addEventListener('click', () => openModal(card.dataset.index));
+        card.addEventListener('click', () => openExpandable(card.dataset.index));
       });
     }
 
-    const modal = document.getElementById('tippModal');
-    function openModal(index) {
+    /* ========================================
+       EXPANDABLE CARD SYSTEM
+       Framer-Motion inspired animation
+       ======================================== */
+    const expandable = document.getElementById('tippExpandable');
+    const backdrop = document.getElementById('tippBackdrop');
+    
+    function openExpandable(index) {
       const tip = tipsData[index];
-      document.getElementById('modalCat').textContent = tip.cat;
-      document.getElementById('modalTitle').textContent = tip.title;
-      document.getElementById('modalBody').innerHTML = tip.body;
-      document.getElementById('modalAction').innerHTML = tip.action;
-      modal.classList.add('open');
+      
+      // Set content
+      document.getElementById('expandableCat').textContent = tip.cat.toUpperCase();
+      document.getElementById('expandableTitle').textContent = tip.title;
+      document.getElementById('expandableBody').innerHTML = tip.body;
+      document.getElementById('expandableAction').innerHTML = tip.action;
+      
+      // Set category-specific image
+      let imgSrc = '/assets/tipp-default.svg';
+      if (tip.cat === 'Webseite') imgSrc = '/assets/tipp-webseite.svg';
+      else if (tip.cat === 'Google Ads') imgSrc = '/assets/tipp-google.svg';
+      else if (tip.cat === 'Meta Ads') imgSrc = '/assets/tipp-meta.svg';
+      else if (tip.cat === 'Kein Budget') imgSrc = '/assets/tipp-gratis.svg';
+      document.getElementById('expandableImg').src = imgSrc;
+      
+      // Open with animation
+      backdrop.classList.add('active');
+      expandable.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
-    document.getElementById('tippModalClose').addEventListener('click', () => {
-      modal.classList.remove('open');
+    function closeExpandable() {
+      expandable.classList.remove('active');
+      backdrop.classList.remove('active');
       document.body.style.overflow = '';
-    });
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
+    }
+
+    // Close button
+    document.getElementById('expandableClose').addEventListener('click', closeExpandable);
+    
+    // Click outside to close
+    expandable.addEventListener('click', (e) => {
+      if (e.target === expandable || e.target.closest('.tipp-expandable-content') === null) {
+        closeExpandable();
       }
     });
+    
+    // Escape key to close
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
+      if (e.key === 'Escape' && expandable.classList.contains('active')) {
+        closeExpandable();
       }
     });
+    
+    // Backdrop click
+    backdrop.addEventListener('click', closeExpandable);
 
     renderFilters();
     renderGrid();
