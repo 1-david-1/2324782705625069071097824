@@ -399,18 +399,6 @@
   position: relative;
 }
 
-.tipp-expandable-body::before {
-  content: '';
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
-  background: linear-gradient(to top, var(--white), transparent);
-  pointer-events: none;
-  z-index: 1;
-}
-
 /* Header with title and close button */
 .tipp-expandable-header {
   display: flex;
