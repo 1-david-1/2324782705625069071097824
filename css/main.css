@@ -1111,10 +1111,129 @@
     }
 
     /* ── PROCESS FLOW ANIMATION ── */
+    
+    /* Process page specific styles */
+    .process-page {
+      overflow-x: hidden;
+    }
+    
+    /* Intro hero section before the flow animation */
+    .process-intro-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: calc(68px + 3rem) clamp(1.5rem, 5vw, 4rem) 3rem;
+      background: linear-gradient(180deg, var(--cream) 0%, rgba(245, 243, 238, 0.95) 100%);
+      text-align: center;
+      position: relative;
+    }
+    
+    .process-intro-content {
+      max-width: 720px;
+    }
+    
+    .process-intro-hero .page-label {
+      color: var(--green);
+      font-family: var(--M);
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    
+    .process-intro-hero .page-h1 {
+      font-family: var(--H);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+    
+    .process-intro-text {
+      font-size: 1.15rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+    }
+    
+    .process-intro-stats {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+    
+    .process-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .3rem;
+    }
+    
+    .process-stat-num {
+      font-family: var(--H);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -.02em;
+    }
+    
+    .process-stat-label {
+      font-family: var(--M);
+      font-size: .68rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    
+    .process-scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      color: var(--muted);
+      font-family: var(--M);
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      animation: processScrollBounce 2s ease-in-out infinite;
+    }
+    
+    .process-scroll-arrow {
+      font-size: 1.2rem;
+      color: var(--green);
+    }
+    
+    @keyframes processScrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+    
+    @media (max-width: 760px) {
+      .process-intro-hero {
+        padding: calc(68px + 2rem) 1.2rem 2rem;
+      }
+      
+      .process-intro-stats {
+        gap: 1.5rem;
+      }
+    }
+    
+    /* Main flow animation container */
     .process-flow-shell {
       position: relative;
       background: var(--cream);
-      /* don't add extra margin/padding here; sections will account for the fixed header */
+      /* Account for fixed header - sections start after intro hero */
     }
 
     /* each section should fill the viewport minus the fixed header (68px)
@@ -1128,6 +1247,8 @@
       overflow: hidden;
       border-bottom: 1px solid var(--border);
       padding: 0 clamp(1.5rem, 5vw, 4rem);
+      /* Account for fixed header on process page */
+      padding-top: 68px;
     }
 
     .process-flow-section:last-child {
@@ -1171,6 +1292,18 @@
       z-index: 1;
       max-width: 700px;
     }
+    
+    .process-card-number {
+      position: absolute;
+      top: clamp(1.2rem, 2.5vw, 2rem);
+      right: clamp(1.2rem, 2.5vw, 2rem);
+      font-family: var(--H);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 800;
+      color: rgba(29, 186, 110, 0.12);
+      letter-spacing: -.04em;
+      line-height: 1;
+    }
 
     .process-card-badge {
       position: absolute;
@@ -1213,9 +1346,19 @@
     .process-flow-section .page-sub,
     .process-flow-section .process-card-copy h3,
     .process-flow-section .process-card-copy p,
-    .process-flow-section .page-h1 {
+    .process-flow-section .page-h2 {
       position: relative;
       z-index: 1;
+    }
+    
+    .process-flow-section .page-h2 {
+      font-family: var(--H);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      color: var(--ink);
     }
 
     .process-flow-section .process-card-copy h3 {
@@ -1254,10 +1397,53 @@
         margin-top: 1.2rem;
         width: fit-content;
       }
+      
+      .process-card-number {
+        position: static;
+        margin-bottom: .5rem;
+      }
     }
 
     /* ── HOME TRUST ── */
     .home-trust {
+    }
+    
+    /* ── PROCESS PAGE CTA ── */
+    .process-cta-section {
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem clamp(1.5rem, 5vw, 4rem);
+      background: linear-gradient(180deg, var(--cream) 0%, var(--bg) 100%);
+      text-align: center;
+    }
+    
+    .process-cta-content {
+      max-width: 600px;
+    }
+    
+    .process-cta-content h2 {
+      font-family: var(--H);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: 1rem;
+      color: var(--cream);
+    }
+    
+    .process-cta-content p {
+      color: rgba(245, 243, 238, 0.6);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    
+    /* Process page footer - standard styling */
+    .process-footer {
+      position: relative;
+      z-index: 10;
+    }
       display: grid;
       grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
       gap: 3rem;
