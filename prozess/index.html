@@ -39,17 +39,6 @@
 
   <!-- PROCESS FLOW ANIMATION CONTAINER -->
   <div class="process-flow-shell" data-process-flow>
-    <section class="process-flow-section process-section-intro" data-flow-section data-section-color="cream">
-      <div class="process-flow-card process-intro-card">
-        <div class="process-card-copy">
-          <p class="page-label">Schritt für Schritt</p>
-          <h2 class="page-h2">Klar. Strukturiert.<br><span>Ohne Überraschungen.</span></h2>
-          <p class="page-sub">Jeder Schritt ist nachvollziehbar — du weißt jederzeit, wo wir stehen und was als Nächstes kommt.</p>
-        </div>
-        <div class="process-card-badge">Transparent • zielgerichtet • zuverlässig</div>
-      </div>
-    </section>
-
     <section class="process-flow-section process-step-section" data-flow-section data-section-color="light">
       <div class="process-flow-card process-card-large">
         <div class="process-card-number">01</div>
@@ -178,116 +167,72 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
   <script src="/js/main.js" defer></script>
   <script>
-    // Process Flow Animation - similar to FlowArt component
-    (function() {
+    (function () {
       'use strict';
-      
-      // Wait for DOM and GSAP to be ready
-      function initFlowAnimation() {
-        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-          console.warn('GSAP or ScrollTrigger not loaded');
-          return;
-        }
-        
-        // Check for reduced motion preference
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (reducedMotion) {
-          console.log('Reduced motion preference detected - skipping animation');
-          return;
-        }
-        
+
+      function initFlow() {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
         gsap.registerPlugin(ScrollTrigger);
-        
-        const flow = document.querySelector('[data-process-flow]');
-        if (!flow) {
-          console.warn('Process flow container not found');
-          return;
-        }
-        
-        const sections = gsap.utils.toArray(flow.querySelectorAll('[data-flow-section]'));
-        if (!sections.length) {
-          console.warn('No flow sections found');
-          return;
-        }
-        
-        console.log(`Initializing flow animation with ${sections.length} sections`);
-        
+
+        const sections = gsap.utils.toArray('[data-process-flow] [data-flow-section]');
+        if (!sections.length) return;
+
         const triggers = [];
-        
+
         sections.forEach((section, i) => {
-          // Stack sections with increasing z-index (so they layer on top of each other)
+          // Higher z-index = stacks on top
           gsap.set(section, { zIndex: i + 1 });
-          
-          const inner = section.querySelector('.process-flow-card');
-          if (!inner) return;
-          
-          // Apply rotation to all sections except the first
-          // This creates the "stacked cards" effect
+
+          // All sections except the first rotate in from 25 degrees
           if (i > 0) {
-            gsap.set(inner, { 
-              rotation: 25, 
-              transformOrigin: 'bottom left' 
-            });
-            
-            const tween = gsap.to(inner, {
+            gsap.set(section, { rotation: 25, transformOrigin: 'bottom left' });
+            const tw = gsap.to(section, {
               rotation: 0,
               ease: 'none',
               scrollTrigger: {
                 trigger: section,
                 start: 'top bottom',
-                end: 'top 30%',
+                end: 'top 20%',
                 scrub: 1,
               },
             });
-            
-            if (tween.scrollTrigger) {
-              triggers.push(tween.scrollTrigger);
-            }
+            if (tw.scrollTrigger) triggers.push(tw.scrollTrigger);
           }
-          
-          // Add active state tracking
-          const activeTrigger = ScrollTrigger.create({
+
+          // Active number highlight
+          triggers.push(ScrollTrigger.create({
             trigger: section,
-            start: 'top center',
-            end: 'bottom center',
-            onEnter: () => section.classList.add('is-active'),
+            start: 'top 60%',
+            end: 'bottom 40%',
+            onEnter:     () => section.classList.add('is-active'),
             onEnterBack: () => section.classList.add('is-active'),
-            onLeave: () => section.classList.remove('is-active'),
+            onLeave:     () => section.classList.remove('is-active'),
             onLeaveBack: () => section.classList.remove('is-active'),
-          });
-          triggers.push(activeTrigger);
-          
-          // Pin each section (except the last) while the next one scrolls over it
+          }));
+
+          // Pin all sections except the last so the next one slides over
           if (i < sections.length - 1) {
-            const pinTrigger = ScrollTrigger.create({
+            triggers.push(ScrollTrigger.create({
               trigger: section,
               start: 'bottom bottom',
               end: 'bottom top',
               pin: true,
               pinSpacing: false,
               anticipatePin: 1,
-            });
-            triggers.push(pinTrigger);
+            }));
           }
         });
-        
-        // Refresh ScrollTrigger after setup
+
         ScrollTrigger.refresh();
-        
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', () => {
-          triggers.forEach((t) => t.kill());
-        });
-        
-        console.log('Flow animation initialized successfully');
+        window.addEventListener('beforeunload', () => triggers.forEach(t => t.kill()));
       }
-      
-      // Initialize when DOM is ready
+
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initFlowAnimation);
+        document.addEventListener('DOMContentLoaded', initFlow);
       } else {
-        // Small delay to ensure all scripts are loaded
-        setTimeout(initFlowAnimation, 100);
+        setTimeout(initFlow, 80);
       }
     })();
   </script>
