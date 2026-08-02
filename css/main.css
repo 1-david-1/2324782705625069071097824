@@ -1234,7 +1234,7 @@
       position: relative;
     }
 
-    /* Full-screen panels — no white box, text sits directly on colour */
+    /* Each section IS the full-screen panel and rotates in */
     .process-flow-section {
       min-height: 100vh;
       display: flex;
@@ -1242,7 +1242,7 @@
       justify-content: flex-start;
       position: relative;
       overflow: hidden;
-      padding: clamp(4rem, 8vw, 7rem) clamp(1.8rem, 8vw, 8rem);
+      padding: clamp(3.5rem, 6vw, 6rem) clamp(2rem, 6vw, 6rem);
       will-change: transform;
       transform-origin: bottom left;
     }
@@ -1260,77 +1260,51 @@
     .process-flow-section[data-section-color="light"] {
       --pf-heading:    var(--ink);
       --pf-body:       #5a6075;
-      --pf-label:      var(--green);
       --pf-tag-bg:     rgba(29,186,110,.14);
       --pf-tag-fg:     #0a7a43;
       --pf-num:        rgba(11,14,26,.08);
       --pf-num-active: var(--green);
-      --pf-badge-bg:   rgba(11,14,26,.06);
-      --pf-badge-fg:   var(--ink);
     }
     .process-flow-section[data-section-color="green-light"] {
       --pf-heading:    #0a3d22;
       --pf-body:       #2a6645;
-      --pf-label:      #0a7a43;
       --pf-tag-bg:     rgba(10,122,67,.15);
       --pf-tag-fg:     #0a3d22;
       --pf-num:        rgba(10,61,34,.1);
       --pf-num-active: #0a7a43;
-      --pf-badge-bg:   rgba(10,61,34,.08);
-      --pf-badge-fg:   #0a3d22;
     }
     .process-flow-section[data-section-color="green"] {
       --pf-heading:    #fff;
-      --pf-body:       rgba(255,255,255,.72);
-      --pf-label:      rgba(255,255,255,.55);
+      --pf-body:       rgba(255,255,255,.75);
       --pf-tag-bg:     rgba(255,255,255,.18);
       --pf-tag-fg:     #fff;
       --pf-num:        rgba(255,255,255,.12);
       --pf-num-active: #fff;
-      --pf-badge-bg:   rgba(255,255,255,.15);
-      --pf-badge-fg:   #fff;
     }
     .process-flow-section[data-section-color="green-dark"] {
       --pf-heading:    #fff;
-      --pf-body:       rgba(255,255,255,.65);
-      --pf-label:      rgba(255,255,255,.5);
+      --pf-body:       rgba(255,255,255,.68);
       --pf-tag-bg:     rgba(255,255,255,.14);
       --pf-tag-fg:     #fff;
       --pf-num:        rgba(255,255,255,.1);
       --pf-num-active: #fff;
-      --pf-badge-bg:   rgba(255,255,255,.12);
-      --pf-badge-fg:   #fff;
     }
     .process-flow-section[data-section-color="ink"] {
       --pf-heading:    var(--cream);
-      --pf-body:       rgba(245,243,238,.58);
-      --pf-label:      var(--green-l);
-      --pf-tag-bg:     rgba(29,186,110,.2);
+      --pf-body:       rgba(245,243,238,.6);
+      --pf-tag-bg:     rgba(29,186,110,.22);
       --pf-tag-fg:     var(--green-l);
       --pf-num:        rgba(255,255,255,.06);
       --pf-num-active: var(--green-l);
-      --pf-badge-bg:   rgba(255,255,255,.07);
-      --pf-badge-fg:   rgba(245,243,238,.7);
     }
 
-    /* ── Content wrapper (transparent — no card box) ── */
-    .process-flow-card {
-      position: relative;
-      width: min(100%, 860px);
-      background: none;
-      border: none;
-      box-shadow: none;
-      border-radius: 0;
-      padding: 0;
-    }
-
-    /* ── Step number — bottom-right of the section ── */
+    /* ── Step number — absolutely positioned bottom-right ── */
     .process-card-number {
       position: absolute;
-      bottom: clamp(2rem, 5vw, 4rem);
-      right: clamp(1.8rem, 8vw, 8rem);
+      bottom: clamp(1.5rem, 4vw, 3rem);
+      right: clamp(1.5rem, 4vw, 3rem);
       font-family: var(--H);
-      font-size: clamp(6rem, 18vw, 18rem);
+      font-size: clamp(5rem, 15vw, 16rem);
       font-weight: 800;
       color: var(--pf-num);
       letter-spacing: -.06em;
@@ -1344,48 +1318,27 @@
       color: var(--pf-num-active);
     }
 
-    /* ── Typography ── */
-    .process-flow-section .page-label {
-      font-family: var(--M);
-      font-size: .72rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--pf-label);
-      margin-bottom: 1.2rem;
-    }
-
-    .process-flow-section .page-h2 {
-      font-family: var(--H);
-      font-size: clamp(2.8rem, 6vw, 5rem);
-      font-weight: 800;
-      letter-spacing: -.04em;
-      line-height: 1.05;
-      color: var(--pf-heading);
-      margin-bottom: 1.2rem;
-    }
-
-    .process-flow-section .page-sub {
-      font-size: clamp(1rem, 1.6vw, 1.2rem);
-      line-height: 1.7;
-      color: var(--pf-body);
-      max-width: 580px;
+    /* ─- Typography (no wrapper needed — direct children) ─- */
+    .process-card-copy {
+      position: relative;
+      max-width: 720px;
     }
 
     .process-flow-section .process-card-copy h3 {
       font-family: var(--H);
-      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
       font-weight: 800;
       letter-spacing: -.04em;
-      line-height: 1.05;
+      line-height: 1;
       color: var(--pf-heading);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
 
     .process-flow-section .process-card-copy p {
-      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
       line-height: 1.75;
       color: var(--pf-body);
-      max-width: 620px;
+      max-width: 580px;
     }
 
     /* ── Tags ── */
@@ -1393,7 +1346,7 @@
       display: flex;
       gap: .6rem;
       flex-wrap: wrap;
-      margin-top: 1.4rem;
+      margin-top: 1.5rem;
     }
 
     .process-card-tags span {
@@ -1408,34 +1361,17 @@
       font-family: var(--M);
     }
 
-    /* ── Badge (intro panel) ── */
-    .process-card-badge {
-      display: inline-flex;
-      align-items: center;
-      margin-top: 2rem;
-      padding: .55rem 1rem;
-      border-radius: 999px;
-      background: var(--pf-badge-bg);
-      color: var(--pf-badge-fg);
-      font-family: var(--M);
-      font-size: .72rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      border: 1px solid currentColor;
-      opacity: .6;
-    }
-
     /* ── Responsive ── */
     @media (max-width: 760px) {
       .process-flow-section {
-        padding: 3.5rem 1.4rem 5rem;
+        padding: 3rem 1.4rem 6rem;
         min-height: 100svh;
       }
 
       .process-card-number {
-        right: 1.4rem;
-        bottom: 1.4rem;
-        font-size: 6rem;
+        right: 1rem;
+        bottom: 1rem;
+        font-size: 5rem;
       }
 
       .process-intro-hero {
