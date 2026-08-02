@@ -156,43 +156,62 @@
       const flow = document.querySelector('[data-process-flow]');
       if (!flow) return;
 
-      const sections = gsap.utils.toArray('[data-flow-section]');
-      if (!sections.length) return;
+      const containerRef = flow;
 
-      sections.forEach((section, index) => {
-        const card = section.querySelector('.process-flow-card');
-        if (!card) return;
+      useGSAP(
+        () => {
+          if (!containerRef.current) return;
 
-        gsap.set(section, { zIndex: index + 1 });
+          const sections = Array.from(
+            containerRef.current.querySelectorAll<HTMLElement>('[data-flow-section]'),
+          );
+          if (sections.length === 0) return;
 
-        if (index > 0) {
-          gsap.set(card, { rotation: 20, x: -12, y: 20, transformOrigin: 'bottom left', opacity: 0.96 });
-          gsap.to(card, {
-            rotation: 0,
-            x: 0,
-            y: 0,
-            opacity: 1,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top bottom',
-              end: 'top 20%',
-              scrub: true,
-            },
+          const triggers = [];
+
+          sections.forEach((section, i) => {
+            gsap.set(section, { zIndex: i + 1 });
+
+            const inner = section.querySelector('.process-flow-card');
+            if (!inner) return;
+
+            if (i > 0) {
+              gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
+              const tween = gsap.to(inner, {
+                rotation: 0,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: section,
+                  start: 'top bottom',
+                  end: 'top 25%',
+                  scrub: true,
+                },
+              });
+              if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
+            }
+
+            if (i < sections.length - 1) {
+              triggers.push(
+                ScrollTrigger.create({
+                  trigger: section,
+                  start: 'bottom bottom',
+                  end: 'bottom top',
+                  pin: true,
+                  pinSpacing: false,
+                }),
+              );
+            }
           });
-        }
 
-        if (index < sections.length - 1) {
-          ScrollTrigger.create({
-            trigger: section,
-            start: 'bottom bottom',
-            end: 'bottom top',
-            pin: true,
-            pinSpacing: false,
-            pinReparent: true,
-          });
-        }
-      });
+          ScrollTrigger.refresh();
+
+          return () => {
+            triggers.forEach((t) => t.kill());
+          };
+        },
+        { scope: containerRef, dependencies: [sections.length] },
+      );
+
     });
   </script>
 </body>
