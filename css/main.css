@@ -1118,7 +1118,7 @@
 
     .process-flow-section {
       min-height: 100vh;
-      padding: calc(68px + 4rem) clamp(1.5rem, 5vw, 4rem) 4rem;
+      padding: calc(68px + 3.5rem) clamp(1.5rem, 5vw, 4rem) 3rem;
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -1133,75 +1133,142 @@
 
     .process-flow-card {
       position: relative;
-      width: min(100%, 940px);
+      width: min(100%, 1040px);
+      min-height: min(70vh, 520px);
       padding: clamp(2rem, 4vw, 3rem);
       border: 1px solid var(--border);
-      border-radius: 28px;
-      background: rgba(255, 255, 255, 0.74);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 24px 80px rgba(11, 14, 26, 0.06);
+      border-radius: 36px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,243,238,0.9));
+      backdrop-filter: blur(20px);
+      box-shadow: 0 26px 90px rgba(11, 14, 26, 0.08);
       transform-origin: bottom left;
       will-change: transform;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    .process-flow-section.page-hero .process-flow-card {
-      max-width: 900px;
-      background: rgba(255, 255, 255, 0.58);
-    }
-
-    .process-flow-section.process-step-section .process-flow-card {
-      display: grid;
-      grid-template-columns: 88px 1fr;
-      gap: 1.75rem;
-      align-items: start;
-      max-width: 980px;
-    }
-
-    .process-flow-card::before {
+    .process-flow-card::after {
       content: '';
       position: absolute;
       inset: 0;
-      border-radius: inherit;
-      border: 1px solid rgba(29, 186, 110, 0.18);
+      background: radial-gradient(circle at top left, rgba(29, 186, 110, 0.12), transparent 48%);
       pointer-events: none;
+    }
+
+    .process-intro-card {
+      max-width: 960px;
+      min-height: min(64vh, 460px);
+      justify-content: flex-start;
+      padding-top: clamp(2.4rem, 4vw, 3.2rem);
+    }
+
+    .process-card-large {
+      display: grid;
+      grid-template-columns: minmax(90px, 120px) 1fr;
+      gap: 1.5rem;
+      align-items: center;
+      padding: clamp(2rem, 4vw, 3.2rem);
+    }
+
+    .process-card-number {
+      font-family: var(--H);
+      font-size: clamp(2.6rem, 5vw, 3.8rem);
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -.05em;
+      line-height: .9;
+      align-self: start;
+    }
+
+    .process-card-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+    }
+
+    .process-card-badge {
+      position: absolute;
+      right: clamp(1.2rem, 3vw, 2rem);
+      bottom: clamp(1.2rem, 3vw, 2rem);
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .55rem .95rem;
+      border-radius: 999px;
+      background: rgba(11, 14, 26, 0.04);
+      color: var(--ink2);
+      font-family: var(--M);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(11, 14, 26, 0.08);
+    }
+
+    .process-card-tags {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .process-card-tags span {
+      background: var(--green-dim);
+      color: var(--green);
+      padding: .35rem .75rem;
+      border-radius: 999px;
+      font-size: .73rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-family: var(--M);
     }
 
     .process-flow-section .page-label,
     .process-flow-section .page-sub,
-    .process-flow-section .tl-content h3,
-    .process-flow-section .tl-content p,
+    .process-flow-section .process-card-copy h3,
+    .process-flow-section .process-card-copy p,
     .process-flow-section .page-h1 {
       position: relative;
       z-index: 1;
     }
 
-    .process-flow-section .tl-num {
-      color: var(--green);
-      -webkit-text-stroke: 0;
-      font-size: clamp(3rem, 6vw, 4.3rem);
-      line-height: .9;
-    }
-
-    .process-flow-section .tl-content h3 {
+    .process-flow-section .process-card-copy h3 {
+      font-family: var(--H);
+      font-size: clamp(1.5rem, 2.6vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      margin-bottom: .75rem;
       color: var(--ink);
     }
 
-    .process-flow-section .tl-content p {
+    .process-flow-section .process-card-copy p {
       color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 640px;
     }
 
     @media (max-width: 760px) {
       .process-flow-section {
-        padding: calc(68px + 2.2rem) 1.2rem 2.4rem;
+        padding: calc(68px + 2rem) 1.2rem 2rem;
       }
 
-      .process-flow-section.process-step-section .process-flow-card {
+      .process-card-large {
         grid-template-columns: 1fr;
         gap: 1rem;
       }
 
       .process-flow-card {
         border-radius: 22px;
+        min-height: auto;
+      }
+
+      .process-card-badge {
+        position: static;
+        margin-top: 1.2rem;
+        width: fit-content;
       }
     }
 
