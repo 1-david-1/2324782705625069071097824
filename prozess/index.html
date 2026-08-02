@@ -156,61 +156,52 @@
       const flow = document.querySelector('[data-process-flow]');
       if (!flow) return;
 
-      const containerRef = flow;
+      const sections = gsap.utils.toArray(flow.querySelectorAll('[data-flow-section]'));
+      if (!sections.length) return;
 
-      useGSAP(
-        () => {
-          if (!containerRef.current) return;
+      const triggers = [];
 
-          const sections = Array.from(
-            containerRef.current.querySelectorAll<HTMLElement>('[data-flow-section]'),
-          );
-          if (sections.length === 0) return;
+      sections.forEach((section, i) => {
+        gsap.set(section, { zIndex: i + 1 });
 
-          const triggers = [];
+        const inner = section.querySelector('.process-flow-card');
+        if (!inner) return;
 
-          sections.forEach((section, i) => {
-            gsap.set(section, { zIndex: i + 1 });
-
-            const inner = section.querySelector('.process-flow-card');
-            if (!inner) return;
-
-            if (i > 0) {
-              gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
-              const tween = gsap.to(inner, {
-                rotation: 0,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: section,
-                  start: 'top bottom',
-                  end: 'top 25%',
-                  scrub: true,
-                },
-              });
-              if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
-            }
-
-            if (i < sections.length - 1) {
-              triggers.push(
-                ScrollTrigger.create({
-                  trigger: section,
-                  start: 'bottom bottom',
-                  end: 'bottom top',
-                  pin: true,
-                  pinSpacing: false,
-                }),
-              );
-            }
+        if (i > 0) {
+          gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
+          const tween = gsap.to(inner, {
+            rotation: 0,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top bottom',
+              end: 'top 25%',
+              scrub: true,
+            },
           });
+          if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
+        }
 
-          ScrollTrigger.refresh();
+        if (i < sections.length - 1) {
+          triggers.push(
+            ScrollTrigger.create({
+              trigger: section,
+              start: 'bottom bottom',
+              end: 'bottom top',
+              pin: true,
+              pinSpacing: false,
+              pinReparent: true,
+              anticipatePin: 1,
+            }),
+          );
+        }
+      });
 
-          return () => {
-            triggers.forEach((t) => t.kill());
-          };
-        },
-        { scope: containerRef, dependencies: [sections.length] },
-      );
+      ScrollTrigger.refresh();
+
+      window.addEventListener('beforeunload', () => {
+        triggers.forEach((t) => t.kill());
+      });
 
     });
   </script>
