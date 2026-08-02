@@ -35,6 +35,8 @@
   const HERO_DELETE_SPEED = 38;
   const HERO_HOLD_DELAY = 1800;
   const HERO_PAUSE_DELAY = 280;
+  // Controls for the hero orb/rib visual – set to 'off' to disable
+  const HERO_ORB_MODE = 'off'; // 'off' | 'low' | 'full'
 
   /* ── State ── */
   let currentPage = 'home';
@@ -601,6 +603,11 @@
     if (heroOrbStarted || reducedMotion || typeof THREE === 'undefined') return;
     const frame = document.getElementById('heroOrbStage');
     const canvas = document.getElementById('heroOrbCanvas');
+    // Respect the toggle; hide the frame when disabled
+    if (typeof HERO_ORB_MODE !== 'undefined' && HERO_ORB_MODE === 'off') {
+      if (frame) frame.style.display = 'none';
+      return;
+    }
     const pointerSurface = document.querySelector('.hero') || frame;
     if (!frame || !canvas) return;
     heroOrbStarted = true;
@@ -705,8 +712,8 @@
       uniforms: {
         uScene: { value: rt.texture },
         uResolution: { value: new THREE.Vector2(1, 1) },
-        uRibCount: { value: 26.0 },
-        uStrength: { value: 0.022 }
+        uRibCount: { value: 0.0 },
+        uStrength: { value: 0.0 }
       },
       vertexShader: `
         varying vec2 vUv;
