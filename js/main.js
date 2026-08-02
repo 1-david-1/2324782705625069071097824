@@ -3,15 +3,14 @@
 
   /* ── DOM refs (safe – may be null on sub-pages) ── */
   const body = document.body;
-  const nav = document.getElementById('nav');
-  const mobMenu = document.getElementById('mobMenu');
-  const ham = document.getElementById('ham');
   const pageWipe = document.getElementById('pageWipe');
   const preloader = document.getElementById('preloader');
   const scrollProgress = document.getElementById('scrollProgress');
   const scrollProgressFill = document.getElementById('scrollProgressFill');
   const toastStack = document.getElementById('toastStack');
   const homeStats = document.getElementById('homeStats');
+  // nav & mobMenu resolved after injectNav()
+  let nav, mobMenu, ham;
 
   /* ── Config ── */
   const FORMSPREE_ID = 'xvzveqvz';
@@ -81,6 +80,125 @@
     });
   }
 
+  /* ── Nav HTML ── */
+  function getNavHTML() {
+    const path = window.location.pathname.replace(/\/$/, '') || '/';
+    const links = [
+      { href: '/',          label: 'Start',       shape: '1' },
+      { href: '/leistungen', label: 'Leistungen',  shape: '2' },
+      { href: '/prozess',    label: 'Prozess',     shape: '3' },
+      { href: '/ueber-uns',  label: '\u00dcber uns', shape: '4' },
+      { href: '/tipps',      label: 'Tipps',       shape: '5' },
+    ];
+    const liItems = links.map(({ href, label, shape }) => {
+      const active = (path === href || (href !== '/' && path.startsWith(href))) ? ' active' : '';
+      return `<li class="menu-list-item" data-shape="${shape}">
+          <a href="${href}" class="nav-link w-inline-block${active}">
+            <p class="nav-link-text">${label}</p>
+            <div class="nav-link-hover-bg"></div>
+          </a>
+        </li>`;
+    }).join('\n        ');
+    return `
+    <!-- NAV BAR -->
+    <nav id="nav">
+      <a href="/" class="logo logo-outer" aria-label="InboxElevate \u2013 Startseite">
+        <svg viewBox="0 0 40 40" fill="none">
+          <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <button class="nav-close-btn" id="ham" aria-expanded="false" aria-controls="navOverlay" aria-label="Men\u00fc \u00f6ffnen/schlie\u00dfen">
+        <div class="menu-button-text">
+          <p class="p-large">Men\u00fc</p>
+          <p class="p-large">Schlie\u00dfen</p>
+        </div>
+        <div class="icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" class="menu-button-icon">
+            <path d="M7.33333 16L7.33333 -3.2055e-07L8.66667 -3.78832e-07L8.66667 16L7.33333 16Z" fill="currentColor"></path>
+            <path d="M16 8.66667L-2.62269e-07 8.66667L-3.78832e-07 7.33333L16 7.33333L16 8.66667Z" fill="currentColor"></path>
+            <path d="M6 7.33333L7.33333 7.33333L7.33333 6C7.33333 6.73637 6.73638 7.33333 6 7.33333Z" fill="currentColor"></path>
+            <path d="M10 7.33333L8.66667 7.33333L8.66667 6C8.66667 6.73638 9.26362 7.33333 10 7.33333Z" fill="currentColor"></path>
+            <path d="M6 8.66667L7.33333 8.66667L7.33333 10C7.33333 9.26362 6.73638 8.66667 6 8.66667Z" fill="currentColor"></path>
+            <path d="M10 8.66667L8.66667 8.66667L8.66667 10C8.66667 9.26362 9.26362 8.66667 10 8.66667Z" fill="currentColor"></path>
+          </svg>
+        </div>
+      </button>
+    </nav>
+
+    <!-- FULLSCREEN OVERLAY -->
+    <div data-nav="closed" class="nav-overlay-wrapper" id="navOverlay" style="display:none">
+      <div class="overlay" id="navOverlayBg"></div>
+      <nav class="menu-content" aria-label="Hauptnavigation">
+        <div class="menu-bg">
+          <div class="backdrop-layer first"></div>
+          <div class="backdrop-layer second"></div>
+          <div class="backdrop-layer"></div>
+          <div class="ambient-background-shapes">
+            <svg class="bg-shape bg-shape-1" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+              <circle class="shape-element" cx="80" cy="120" r="40" fill="rgba(29,186,110,0.12)"/>
+              <circle class="shape-element" cx="300" cy="80" r="60" fill="rgba(29,186,110,0.09)"/>
+              <circle class="shape-element" cx="200" cy="300" r="80" fill="rgba(29,186,110,0.07)"/>
+              <circle class="shape-element" cx="350" cy="280" r="30" fill="rgba(29,186,110,0.12)"/>
+            </svg>
+            <svg class="bg-shape bg-shape-2" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+              <path class="shape-element" d="M0 200 Q100 100, 200 200 T 400 200" stroke="rgba(29,186,110,0.18)" stroke-width="60" fill="none"/>
+              <path class="shape-element" d="M0 280 Q100 180, 200 280 T 400 280" stroke="rgba(29,186,110,0.12)" stroke-width="40" fill="none"/>
+            </svg>
+            <svg class="bg-shape bg-shape-3" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+              <circle class="shape-element" cx="50" cy="50" r="8" fill="rgba(29,186,110,0.28)"/>
+              <circle class="shape-element" cx="150" cy="50" r="8" fill="rgba(29,186,110,0.28)"/>
+              <circle class="shape-element" cx="250" cy="50" r="8" fill="rgba(29,186,110,0.28)"/>
+              <circle class="shape-element" cx="350" cy="50" r="8" fill="rgba(29,186,110,0.28)"/>
+              <circle class="shape-element" cx="100" cy="150" r="12" fill="rgba(29,186,110,0.22)"/>
+              <circle class="shape-element" cx="200" cy="150" r="12" fill="rgba(29,186,110,0.22)"/>
+              <circle class="shape-element" cx="300" cy="150" r="12" fill="rgba(29,186,110,0.22)"/>
+              <circle class="shape-element" cx="50" cy="250" r="10" fill="rgba(29,186,110,0.28)"/>
+              <circle class="shape-element" cx="150" cy="250" r="10" fill="rgba(29,186,110,0.28)"/>
+              <circle class="shape-element" cx="250" cy="250" r="10" fill="rgba(29,186,110,0.28)"/>
+              <circle class="shape-element" cx="350" cy="250" r="10" fill="rgba(29,186,110,0.28)"/>
+              <circle class="shape-element" cx="100" cy="350" r="6" fill="rgba(29,186,110,0.28)"/>
+              <circle class="shape-element" cx="200" cy="350" r="6" fill="rgba(29,186,110,0.28)"/>
+              <circle class="shape-element" cx="300" cy="350" r="6" fill="rgba(29,186,110,0.28)"/>
+            </svg>
+            <svg class="bg-shape bg-shape-4" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+              <path class="shape-element" d="M100 100 Q150 50, 200 100 Q250 150, 200 200 Q150 250, 100 200 Q50 150, 100 100" fill="rgba(29,186,110,0.1)"/>
+              <path class="shape-element" d="M250 200 Q300 150, 350 200 Q400 250, 350 300 Q300 350, 250 300 Q200 250, 250 200" fill="rgba(29,186,110,0.08)"/>
+            </svg>
+            <svg class="bg-shape bg-shape-5" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+              <line class="shape-element" x1="0" y1="100" x2="300" y2="400" stroke="rgba(29,186,110,0.13)" stroke-width="30"/>
+              <line class="shape-element" x1="100" y1="0" x2="400" y2="300" stroke="rgba(29,186,110,0.1)" stroke-width="25"/>
+              <line class="shape-element" x1="200" y1="0" x2="400" y2="200" stroke="rgba(29,186,110,0.08)" stroke-width="20"/>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-content-wrapper">
+          <ul class="menu-list">
+        ${liItems}
+          </ul>
+          <div class="menu-footer" data-menu-fade>
+            <a href="/kontakt" class="btn-ink menu-cta">Jetzt anfragen <span class="btn-arrow">→</span></a>
+          </div>
+        </div>
+      </nav>
+    </div>`;
+  }
+
+  function injectNav() {
+    const placeholder = document.querySelector('[data-site-nav]');
+    if (!placeholder) return;
+    placeholder.outerHTML = getNavHTML();
+    // Re-resolve refs after injection
+    nav = document.getElementById('nav');
+    mobMenu = document.getElementById('mobMenu');
+    ham = document.getElementById('ham');
+  }
+
+  /* ── Legacy stub (some pages use onclick="toggleMob()") ── */
+  function toggleMob() { if (ham) ham.click(); }
+  window.toggleMob = toggleMob;
+
   /* ── Footer HTML ── */
   function getFooterHTML() {
     return `<div class="footer-grid">
@@ -143,19 +261,11 @@
     injectEmails(); // re-run after footer injection
   }
 
-  /* ── Nav ── */
-  function toggleMob(force) {
-    if (!ham || !mobMenu) return;
-    const open = typeof force === 'boolean' ? force : !ham.classList.contains('open');
-    ham.classList.toggle('open', open);
-    mobMenu.classList.toggle('open', open);
-  }
-  window.toggleMob = toggleMob;
-
   /* ── Scroll chrome ── */
   function updateScrollChrome() {
     const y = window.scrollY || 0;
-    if (nav) nav.classList.toggle('nav-shrink', y > 80);
+    const navEl = document.getElementById('nav');
+    if (navEl) navEl.classList.toggle('nav-shrink', y > 80);
     if (!scrollProgress || !scrollProgressFill) return;
     const visible = scrollHeavyPages.has(currentPage) && getScrollMax() > 240;
     scrollProgress.classList.toggle('visible', visible);
@@ -782,6 +892,99 @@
     });
   }
 
+  /* ── Fullscreen Menu ── */
+  function initFullscreenMenu() {
+    const btn     = document.getElementById('ham');
+    const overlay = document.getElementById('navOverlay');
+    const overlayBg = document.getElementById('navOverlayBg');
+    if (!btn || !overlay) return;
+
+    let isOpen = false;
+    let gsapReady = typeof gsap !== 'undefined';
+
+    // Register CustomEase if available
+    if (gsapReady && typeof CustomEase !== 'undefined') {
+      try { CustomEase.create('menuEase', '0.65, 0.01, 0.05, 0.99'); } catch (_) {}
+    }
+    const menuEase = (gsapReady && typeof CustomEase !== 'undefined') ? 'menuEase' : 'power2.inOut';
+
+    function openMenu() {
+      if (isOpen) return;
+      isOpen = true;
+      btn.setAttribute('aria-expanded', 'true');
+      overlay.setAttribute('data-nav', 'open');
+      document.body.classList.add('menu-open');
+
+      if (!gsapReady) { overlay.style.display = 'flex'; return; }
+
+      const bgPanels  = overlay.querySelectorAll('.backdrop-layer');
+      const menuLinks = overlay.querySelectorAll('.nav-link');
+      const fadeEls   = overlay.querySelectorAll('[data-menu-fade]');
+      const btnTexts  = btn.querySelectorAll('.p-large');
+      const btnIcon   = btn.querySelector('.menu-button-icon');
+
+      gsap.timeline()
+        .set(overlay, { display: 'flex' })
+        .fromTo(btnTexts, { yPercent: 0 }, { yPercent: -100, stagger: 0.18, duration: 0.45, ease: menuEase })
+        .fromTo(btnIcon, { rotate: 0 }, { rotate: 315, duration: 0.5, ease: menuEase }, '<')
+        .fromTo(overlayBg, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, '<')
+        .fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.1, duration: 0.55, ease: menuEase }, '<')
+        .fromTo(menuLinks, { yPercent: 140, rotate: 10 }, { yPercent: 0, rotate: 0, stagger: 0.055, duration: 0.6, ease: menuEase }, '<+=0.3')
+        .fromTo(fadeEls, { autoAlpha: 0, yPercent: 40 }, { autoAlpha: 1, yPercent: 0, stagger: 0.05, duration: 0.5, clearProps: 'all', ease: menuEase }, '<+=0.15');
+    }
+
+    function closeMenu() {
+      if (!isOpen) return;
+      isOpen = false;
+      btn.setAttribute('aria-expanded', 'false');
+      overlay.setAttribute('data-nav', 'closed');
+      document.body.classList.remove('menu-open');
+
+      if (!gsapReady) { overlay.style.display = 'none'; return; }
+
+      const btnTexts  = btn.querySelectorAll('.p-large');
+      const btnIcon   = btn.querySelector('.menu-button-icon');
+
+      gsap.timeline()
+        .to(overlayBg, { autoAlpha: 0, duration: 0.35, ease: menuEase })
+        .to(overlay.querySelector('.menu-content'), { xPercent: 105, duration: 0.45, ease: menuEase }, '<')
+        .to(btnTexts, { yPercent: 0, duration: 0.35, ease: menuEase }, '<')
+        .to(btnIcon, { rotate: 0, duration: 0.4, ease: menuEase }, '<')
+        .set(overlay, { display: 'none', clearProps: 'xPercent' })
+        .set(overlay.querySelector('.menu-content'), { clearProps: 'xPercent' });
+    }
+
+    function toggleMenu() { isOpen ? closeMenu() : openMenu(); }
+
+    btn.addEventListener('click', toggleMenu);
+    if (overlayBg) overlayBg.addEventListener('click', closeMenu);
+    window.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen) closeMenu(); });
+
+    // Shape hover effects
+    overlay.querySelectorAll('.menu-list-item[data-shape]').forEach(item => {
+      const idx   = item.getAttribute('data-shape');
+      const shapesContainer = overlay.querySelector('.ambient-background-shapes');
+      const shape = shapesContainer ? shapesContainer.querySelector(`.bg-shape-${idx}`) : null;
+      if (!shape || !gsapReady) return;
+      const shapeEls = shape.querySelectorAll('.shape-element');
+
+      item.addEventListener('mouseenter', () => {
+        shapesContainer.querySelectorAll('.bg-shape').forEach(s => s.classList.remove('active'));
+        shape.classList.add('active');
+        gsap.fromTo(shapeEls,
+          { scale: 0.5, opacity: 0, rotation: -10 },
+          { scale: 1, opacity: 1, rotation: 0, duration: 0.55, stagger: 0.07, ease: 'back.out(1.7)', overwrite: 'auto' }
+        );
+      });
+      item.addEventListener('mouseleave', () => {
+        gsap.to(shapeEls, {
+          scale: 0.8, opacity: 0, duration: 0.28, ease: 'power2.in',
+          onComplete: () => shape.classList.remove('active'), overwrite: 'auto'
+        });
+      });
+    });
+  }
+
   /* ── Spotlight cards ── */
   function initSpotlights() {
     document.querySelectorAll('.spotlight-card').forEach(card => {
@@ -843,6 +1046,8 @@
   }
 
   /* ── Boot ── */
+  injectNav();
+  initFullscreenMenu();
   initSmoothScroll();
   initReveal();
   startHeroAnimations();
