@@ -1114,17 +1114,20 @@
     .process-flow-shell {
       position: relative;
       background: var(--cream);
+      /* don't add extra margin/padding here; sections will account for the fixed header */
     }
 
+    /* each section should fill the viewport minus the fixed header (68px)
+       this makes the card occupy the entire visible area between header and footer */
     .process-flow-section {
-      min-height: 100vh;
-      padding: calc(68px + 3.5rem) clamp(1.5rem, 5vw, 4rem) 3rem;
+      min-height: calc(100vh - 68px);
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       position: relative;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
     }
 
     .process-flow-section:last-child {
@@ -1133,13 +1136,13 @@
 
     .process-flow-card {
       position: relative;
-      width: min(100%, 1040px);
-      min-height: min(70vh, 520px);
-      padding: clamp(2rem, 4vw, 3rem);
+      width: min(100%, 1100px);
+      height: calc(100vh - 68px - 3.5rem); /* keep some internal breathing room for large screens */
+      padding: clamp(1.5rem, 3.2vw, 2.6rem);
       border: 1px solid var(--border);
-      border-radius: 36px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,243,238,0.9));
-      backdrop-filter: blur(20px);
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(245,243,238,0.95));
+      backdrop-filter: blur(14px);
       box-shadow: 0 26px 90px rgba(11, 14, 26, 0.08);
       transform-origin: bottom left;
       will-change: transform;
@@ -1153,31 +1156,12 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top left, rgba(29, 186, 110, 0.12), transparent 48%);
+      background: radial-gradient(circle at top left, rgba(29, 186, 110, 0.08), transparent 48%);
       pointer-events: none;
     }
 
     .process-intro-card {
       max-width: 960px;
-      min-height: min(64vh, 460px);
-      justify-content: flex-start;
-      padding-top: clamp(2.4rem, 4vw, 3.2rem);
-    }
-
-    .process-card-large {
-      display: grid;
-      grid-template-columns: minmax(90px, 120px) 1fr;
-      gap: 1.5rem;
-      align-items: center;
-      padding: clamp(2rem, 4vw, 3.2rem);
-    }
-
-    .process-card-number {
-      font-family: var(--H);
-      font-size: clamp(2.6rem, 5vw, 3.8rem);
-      font-weight: 800;
-      color: var(--green);
-      letter-spacing: -.05em;
       line-height: .9;
       align-self: start;
     }
