@@ -340,10 +340,37 @@
       z-index: 10;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       height: 100%;
-      padding: clamp(4rem, 10vh, 6rem) clamp(2.5rem, 8vw, 5rem);
-      gap: 2rem;
+      padding: clamp(2.5rem, 6vh, 4rem) clamp(2.5rem, 8vw, 5rem);
+      gap: 3rem;
+      padding-top: clamp(2.5rem, 6vh, 4rem);
+    }
+
+    /* Menu logo */
+    .menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: rgba(245, 243, 238, 0.95);
+      margin-bottom: 1rem;
+      transition: opacity 0.25s;
+    }
+    .menu-logo:hover {
+      opacity: 0.8;
+    }
+    .menu-logo svg {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+    }
+    .menu-logo-text {
+      font-family: var(--H);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: rgba(245, 243, 238, 0.95);
     }
 
     .menu-list {
