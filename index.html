@@ -208,44 +208,84 @@
 
   </main>
 
-  <!-- ══════════════════ FOOTER ══════════════════ -->
-  <footer>
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <svg viewBox="0 0 40 40" fill="none" style="width:30px;">
-          <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <p><strong>InboxElevate</strong><br>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
+  <!-- ══════════════════ GRADIENT FOOTER ══════════════════ -->
+  <footer class="gradient-footer" id="gradientFooter">
+    <div class="gradient-footer-content">
+      <div class="gradient-footer-grid">
+        <div class="gradient-footer-brand">
+          <svg viewBox="0 0 40 40" fill="none" class="gradient-footer-logo">
+            <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="gradient-footer-brand-text">
+            <strong>InboxElevate</strong>
+            <p>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
+          </div>
+        </div>
+        <nav class="gradient-footer-nav">
+          <div class="gradient-footer-col">
+            <h5>Navigation</h5>
+            <a href="/">Start</a>
+            <a href="/leistungen">Leistungen</a>
+            <a href="/prozess">Prozess</a>
+            <a href="/ueber-uns">Über uns</a>
+            <a href="/tipps">Tipps</a>
+          </div>
+          <div class="gradient-footer-col">
+            <h5>Leistungen</h5>
+            <a href="/leistungen/webseiten">Webentwicklung</a>
+            <a href="/leistungen/paid-ads">Paid Ads</a>
+            <a href="/leistungen/ki">KI-Automatisierung</a>
+          </div>
+          <div class="gradient-footer-col">
+            <h5>Kontakt</h5>
+            <a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a>
+            <a href="/#kontakt">Anfrage stellen</a>
+            <a href="/datenschutz">Datenschutz</a>
+          </div>
+        </nav>
       </div>
-      <div class="footer-col">
-        <h5>Navigation</h5>
-        <a href="/">Start</a>
-        <a href="/leistungen">Leistungen</a>
-        <a href="/prozess">Prozess</a>
-        <a href="/ueber-uns">Über uns</a>
-        <a href="/tipps">Tipps</a>
-      </div>
-      <div class="footer-col">
-        <h5>Leistungen</h5>
-        <a href="/leistungen/webseiten">Webentwicklung</a>
-        <a href="/leistungen/paid-ads">Paid Ads</a>
-        <a href="/leistungen/ki">KI-Automatisierung</a>
-      </div>
-      <div class="footer-col">
-        <h5>Kontakt</h5>
-        <a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a>
-        <a href="/#kontakt">Anfrage stellen</a>
-        <a href="/datenschutz">Datenschutz</a>
+      <div class="gradient-footer-bottom">
+        <span>© 2026 InboxElevate</span>
+        <span class="gradient-footer-status">
+          <span class="gradient-footer-status-dot"></span>
+          Alle Systeme normal
+        </span>
+        <span>Remote · Deutschland</span>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2026 InboxElevate. Alle Rechte vorbehalten.</p>
-      <div class="socials">
-        <a href="https://www.linkedin.com/company/inboxelevate/" class="soc" title="LinkedIn">in</a>
-        <a href="mailto:david@inbox-elevate.de" class="soc" title="Email">✉</a>
-      </div>
+    <!-- Gradient Band - pinned to viewport bottom -->
+    <div class="gradient-footer-band" id="gradientBand" aria-hidden="true">
+      <svg viewBox="0 0 1271 599" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gradientFooterGrad" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#340B05"/>
+            <stop offset="0.1827" stop-color="#0358F7"/>
+            <stop offset="0.2837" stop-color="#5092C7"/>
+            <stop offset="0.4135" stop-color="#E1ECFE"/>
+            <stop offset="0.5866" stop-color="#FFD400"/>
+            <stop offset="0.6827" stop-color="#FA3D1D"/>
+            <stop offset="0.8029" stop-color="#FD02F5"/>
+            <stop offset="1" stop-color="#FFC0FD" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="gradientFooterBlur" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="15"/>
+          </filter>
+        </defs>
+        <!-- Gradient bars - will be scaled via JS -->
+        <g filter="url(#gradientFooterBlur)">
+          <rect class="gradient-bar" x="0" y="30" width="175" height="569" fill="url(#gradientFooterGrad)"/>
+          <rect class="gradient-bar" x="141" y="180" width="175" height="419" fill="url(#gradientFooterGrad)"/>
+          <rect class="gradient-bar" x="282" y="280" width="175" height="319" fill="url(#gradientFooterGrad)"/>
+          <rect class="gradient-bar" x="423" y="320" width="175" height="279" fill="url(#gradientFooterGrad)"/>
+          <rect class="gradient-bar" x="564" y="300" width="175" height="299" fill="url(#gradientFooterGrad)"/>
+          <rect class="gradient-bar" x="705" y="280" width="175" height="319" fill="url(#gradientFooterGrad)"/>
+          <rect class="gradient-bar" x="846" y="180" width="175" height="419" fill="url(#gradientFooterGrad)"/>
+          <rect class="gradient-bar" x="987" y="100" width="175" height="499" fill="url(#gradientFooterGrad)"/>
+          <rect class="gradient-bar" x="1128" y="50" width="175" height="549" fill="url(#gradientFooterGrad)"/>
+        </g>
+      </svg>
     </div>
   </footer>
 
@@ -256,6 +296,37 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Physics2DPlugin.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="/js/main.js" defer></script>
+  <script>
+    // Gradient Footer Reveal Effect
+    (function() {
+      'use strict';
+      
+      const band = document.getElementById('gradientBand');
+      if (!band) return;
+      
+      const minReveal = 0.045; // Starting height as fraction
+      let currentProgress = minReveal;
+      
+      function clamp01(v) {
+        return Math.max(0, Math.min(1, v));
+      }
+      
+      function measure() {
+        const h = band.offsetHeight || 1;
+        const left = document.documentElement.scrollHeight - window.innerHeight - window.scrollY;
+        const t = clamp01((h - left) / h);
+        currentProgress = minReveal + (1 - minReveal) * t;
+        band.style.transform = 'scaleY(' + currentProgress + ')';
+      }
+      
+      // Initial measure
+      measure();
+      
+      // Listen for scroll and resize
+      window.addEventListener('scroll', measure, { passive: true });
+      window.addEventListener('resize', measure, { passive: true });
+    })();
+  </script>
 </body>
 
 </html>
