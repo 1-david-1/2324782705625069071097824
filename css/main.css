@@ -1233,44 +1233,106 @@
     .process-flow-shell {
       position: relative;
       background: var(--cream);
-      /* Account for fixed header - sections start after intro hero */
     }
 
-    /* each section should fill the viewport minus the fixed header (68px)
-       this makes the card occupy the entire visible area between header and footer */
+    /* Each section fills full viewport and covers the header */
     .process-flow-section {
-      min-height: calc(100vh - 68px);
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
-      border-bottom: 1px solid var(--border);
       padding: 0 clamp(1.5rem, 5vw, 4rem);
-      /* Account for fixed header on process page */
-      padding-top: 68px;
     }
-
-    .process-flow-section:last-child {
-      border-bottom: none;
+    
+    /* Color themes for each section */
+    .process-flow-section[data-section-color="cream"] {
+      background: var(--cream);
+    }
+    
+    .process-flow-section[data-section-color="light"] {
+      background: linear-gradient(135deg, #f8f7f4 0%, var(--cream) 100%);
+    }
+    
+    .process-flow-section[data-section-color="green-light"] {
+      background: linear-gradient(135deg, #e8f5f0 0%, #d4f0e4 100%);
+    }
+    
+    .process-flow-section[data-section-color="green"] {
+      background: linear-gradient(135deg, #1dba6e 0%, #109e56 100%);
+    }
+    
+    .process-flow-section[data-section-color="green"] .process-card-copy h3,
+    .process-flow-section[data-section-color="green"] .process-card-copy p,
+    .process-flow-section[data-section-color="green"] .page-label {
+      color: var(--white);
+    }
+    
+    .process-flow-section[data-section-color="green"] .process-card-tags span {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+    }
+    
+    .process-flow-section[data-section-color="green-dark"] {
+      background: linear-gradient(135deg, #0a8f4d 0%, #087a42 100%);
+    }
+    
+    .process-flow-section[data-section-color="green-dark"] .process-card-copy h3,
+    .process-flow-section[data-section-color="green-dark"] .process-card-copy p,
+    .process-flow-section[data-section-color="green-dark"] .page-label {
+      color: var(--white);
+    }
+    
+    .process-flow-section[data-section-color="green-dark"] .process-card-tags span {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+    }
+    
+    .process-flow-section[data-section-color="ink"] {
+      background: linear-gradient(135deg, var(--ink) 0%, #0a0d1c 100%);
+    }
+    
+    .process-flow-section[data-section-color="ink"] .process-card-copy h3,
+    .process-flow-section[data-section-color="ink"] .process-card-copy p,
+    .process-flow-section[data-section-color="ink"] .page-label {
+      color: var(--cream);
+    }
+    
+    .process-flow-section[data-section-color="ink"] .process-card-tags span {
+      background: rgba(29, 186, 110, 0.3);
+      color: var(--green-l);
+    }
+    
+    /* Last section doesn't cover footer */
+    .process-section-last {
+      margin-bottom: 0;
     }
 
     .process-flow-card {
       position: relative;
-      width: min(100%, 1100px);
-      height: calc(100vh - 68px - 3.5rem); /* keep some internal breathing room for large screens */
-      padding: clamp(1.5rem, 3.2vw, 2.6rem);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(245,243,238,0.95));
-      backdrop-filter: blur(14px);
-      box-shadow: 0 26px 90px rgba(11, 14, 26, 0.08);
+      width: min(100%, 1200px);
+      min-height: 60vh;
+      padding: clamp(2rem, 4vw, 3.5rem);
+      border: 1px solid rgba(11, 14, 26, 0.08);
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 30px 100px rgba(11, 14, 26, 0.12);
       transform-origin: bottom left;
       will-change: transform;
       display: flex;
       flex-direction: column;
       justify-content: center;
       overflow: hidden;
+    }
+    
+    /* Dark theme cards need different styling */
+    .process-flow-section[data-section-color="green"] .process-flow-card,
+    .process-flow-section[data-section-color="green-dark"] .process-flow-card,
+    .process-flow-section[data-section-color="ink"] .process-flow-card {
+      background: rgba(255, 255, 255, 0.98);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .process-flow-card::after {
@@ -1295,14 +1357,21 @@
     
     .process-card-number {
       position: absolute;
-      top: clamp(1.2rem, 2.5vw, 2rem);
-      right: clamp(1.2rem, 2.5vw, 2rem);
+      top: clamp(1.5rem, 3vw, 2.5rem);
+      right: clamp(1.5rem, 3vw, 2.5rem);
       font-family: var(--H);
-      font-size: clamp(3rem, 6vw, 5rem);
+      font-size: clamp(3.5rem, 8vw, 7rem);
       font-weight: 800;
-      color: rgba(29, 186, 110, 0.12);
+      color: rgba(29, 186, 110, 0.15);
       letter-spacing: -.04em;
       line-height: 1;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    
+    /* Active state when section is in view */
+    .process-flow-section.is-active .process-card-number {
+      color: var(--green);
+      transform: scale(1.05);
     }
 
     .process-card-badge {
@@ -1363,44 +1432,58 @@
 
     .process-flow-section .process-card-copy h3 {
       font-family: var(--H);
-      font-size: clamp(1.5rem, 2.6vw, 2rem);
+      font-size: clamp(2rem, 4vw, 3.5rem);
       font-weight: 800;
       letter-spacing: -.04em;
-      margin-bottom: .75rem;
+      margin-bottom: 1rem;
       color: var(--ink);
+      line-height: 1.1;
     }
 
     .process-flow-section .process-card-copy p {
       color: var(--muted);
-      font-size: 1rem;
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
       line-height: 1.75;
-      max-width: 640px;
+      max-width: 680px;
     }
 
     @media (max-width: 760px) {
       .process-flow-section {
-        padding: calc(68px + 2rem) 1.2rem 2rem;
-      }
-
-      .process-card-large {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .process-flow-card {
-        border-radius: 22px;
+        padding: 2rem 1rem;
         min-height: auto;
       }
 
-      .process-card-badge {
-        position: static;
-        margin-top: 1.2rem;
-        width: fit-content;
+      .process-flow-card {
+        border-radius: 24px;
+        min-height: auto;
+        padding: 2rem 1.5rem;
       }
       
       .process-card-number {
         position: static;
-        margin-bottom: .5rem;
+        margin-bottom: 1rem;
+        font-size: 3rem;
+      }
+      
+      .process-card-badge {
+        position: static;
+        margin-top: 1.5rem;
+        width: fit-content;
+      }
+      
+      .process-intro-hero {
+        min-height: auto;
+        padding: calc(68px + 2rem) 1.2rem 3rem;
+      }
+      
+      .process-intro-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+      .process-cta-section {
+        min-height: auto;
+        padding: 3rem 1.2rem;
       }
     }
 
