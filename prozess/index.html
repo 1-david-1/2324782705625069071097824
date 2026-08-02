@@ -39,7 +39,7 @@
 
   <!-- PROCESS FLOW ANIMATION CONTAINER -->
   <div class="process-flow-shell" data-process-flow>
-    <section class="process-flow-section page-hero" data-flow-section>
+    <section class="process-flow-section process-section-intro" data-flow-section data-section-color="cream">
       <div class="process-flow-card process-intro-card">
         <div class="process-card-copy">
           <p class="page-label">Schritt für Schritt</p>
@@ -50,7 +50,7 @@
       </div>
     </section>
 
-    <section class="process-flow-section process-step-section" data-flow-section>
+    <section class="process-flow-section process-step-section" data-flow-section data-section-color="light">
       <div class="process-flow-card process-card-large">
         <div class="process-card-number">01</div>
         <div class="process-card-copy">
@@ -65,7 +65,7 @@
       </div>
     </section>
 
-    <section class="process-flow-section process-step-section" data-flow-section>
+    <section class="process-flow-section process-step-section" data-flow-section data-section-color="green-light">
       <div class="process-flow-card process-card-large">
         <div class="process-card-number">02</div>
         <div class="process-card-copy">
@@ -80,7 +80,7 @@
       </div>
     </section>
 
-    <section class="process-flow-section process-step-section" data-flow-section>
+    <section class="process-flow-section process-step-section" data-flow-section data-section-color="green">
       <div class="process-flow-card process-card-large">
         <div class="process-card-number">03</div>
         <div class="process-card-copy">
@@ -95,7 +95,7 @@
       </div>
     </section>
 
-    <section class="process-flow-section process-step-section" data-flow-section>
+    <section class="process-flow-section process-step-section" data-flow-section data-section-color="green-dark">
       <div class="process-flow-card process-card-large">
         <div class="process-card-number">04</div>
         <div class="process-card-copy">
@@ -110,7 +110,7 @@
       </div>
     </section>
 
-    <section class="process-flow-section process-step-section" data-flow-section>
+    <section class="process-flow-section process-step-section process-section-last" data-flow-section data-section-color="ink">
       <div class="process-flow-card process-card-large">
         <div class="process-card-number">05</div>
         <div class="process-card-copy">
@@ -215,7 +215,7 @@
         const triggers = [];
         
         sections.forEach((section, i) => {
-          // Stack sections with increasing z-index
+          // Stack sections with increasing z-index (so they layer on top of each other)
           gsap.set(section, { zIndex: i + 1 });
           
           const inner = section.querySelector('.process-flow-card');
@@ -225,7 +225,7 @@
           // This creates the "stacked cards" effect
           if (i > 0) {
             gsap.set(inner, { 
-              rotation: 30, 
+              rotation: 25, 
               transformOrigin: 'bottom left' 
             });
             
@@ -235,8 +235,8 @@
               scrollTrigger: {
                 trigger: section,
                 start: 'top bottom',
-                end: 'top 25%',
-                scrub: true,
+                end: 'top 30%',
+                scrub: 1,
               },
             });
             
@@ -244,6 +244,18 @@
               triggers.push(tween.scrollTrigger);
             }
           }
+          
+          // Add active state tracking
+          const activeTrigger = ScrollTrigger.create({
+            trigger: section,
+            start: 'top center',
+            end: 'bottom center',
+            onEnter: () => section.classList.add('is-active'),
+            onEnterBack: () => section.classList.add('is-active'),
+            onLeave: () => section.classList.remove('is-active'),
+            onLeaveBack: () => section.classList.remove('is-active'),
+          });
+          triggers.push(activeTrigger);
           
           // Pin each section (except the last) while the next one scrolls over it
           if (i < sections.length - 1) {
