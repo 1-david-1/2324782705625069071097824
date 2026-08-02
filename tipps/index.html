@@ -12,34 +12,9 @@
 <body>
 
   <!-- NAV -->
-  <nav id="nav">
-    <a href="/" class="logo">
-      <svg viewBox="0 0 40 40" fill="none" style="width:30px;">
-        <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      InboxElevate
-    </a>
-    <ul class="nav-links">
-      <li><a href="/">Start</a></li>
-      <li><a href="/leistungen">Leistungen</a></li>
-      <li><a href="/prozess">Prozess</a></li>
-      <li><a href="/ueber-uns">Über uns</a></li>
-      <li><a href="/tipps" class="active">Tipps</a></li>
-      <li><a href="/kontakt" class="nav-cta">Kontakt <span class="nav-arrow">→</span></a></li>
-    </ul>
-    <button class="ham" id="ham" onclick="document.getElementById('mobMenu').classList.toggle('open')"><span></span><span></span><span></span></button>
-  </nav>
+  <!-- NAV (injected by JS) -->
+  <div data-site-nav></div>
 
-  <div class="mob-menu" id="mobMenu">
-    <a href="/">Start</a>
-    <a href="/leistungen">Leistungen</a>
-    <a href="/prozess">Prozess</a>
-    <a href="/ueber-uns">Über uns</a>
-    <a href="/tipps">Tipps</a>
-    <a href="/kontakt" style="color:var(--green)">Kontakt →</a>
-  </div>
 
   <main class="tipps-layout">
     <aside class="tipps-sidebar">
@@ -255,5 +230,6 @@
   </footer>
 
 
+  <script src="/js/main.js" defer></script>
 </body>
 </html>
