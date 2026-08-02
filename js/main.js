@@ -110,6 +110,7 @@
           <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
           <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
+        <span class="logo-name">InboxElevate</span>
       </a>
       <button class="nav-close-btn" id="ham" aria-expanded="false" aria-controls="navOverlay" aria-label="Men\u00fc \u00f6ffnen/schlie\u00dfen">
         <div class="menu-button-text">
@@ -176,6 +177,14 @@
           </div>
         </div>
         <div class="menu-content-wrapper">
+          <a href="/" class="menu-logo" aria-label="InboxElevate – Startseite">
+            <svg viewBox="0 0 40 40" fill="none" width="36" height="36">
+              <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="menu-logo-text">InboxElevate</span>
+          </a>
           <ul class="menu-list">
         ${liItems}
           </ul>
