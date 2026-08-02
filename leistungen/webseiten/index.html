@@ -3,116 +3,377 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webdesign für Sicherheitsunternehmen – InboxElevate</title>
+  <title>Leistungen für Sicherheitsunternehmen – InboxElevate</title>
+  <meta name="description" content="Webseiten, Paid Ads und KI-Automatisierung speziell für Sicherheitsunternehmen. Mehr Anfragen, mehr Bewerbungen, weniger manuelle Arbeit.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/leistungen.css">
+  <style>
+    /* ── HUB PAGE STYLES ── */
+    .hub-page { padding-top: 68px; }
+
+    .hub-hero {
+      padding: 7rem clamp(1.5rem,5vw,5rem) 5rem;
+      background: var(--ink);
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .hub-hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(29,186,110,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hub-hero-label {
+      font-family: var(--M);
+      font-size: .7rem;
+      letter-spacing: .14em;
+      color: var(--green);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: 2rem;
+    }
+    .hub-hero-label::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--green);
+    }
+    .hub-hero h1 {
+      font-family: var(--H);
+      font-size: clamp(3rem,7vw,6rem);
+      font-weight: 800;
+      letter-spacing: -.05em;
+      line-height: .95;
+      margin-bottom: 2rem;
+      max-width: 900px;
+    }
+    .hub-hero h1 span { color: var(--green); }
+    .hub-hero p {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: rgba(245,243,238,.72);
+      max-width: 600px;
+    }
+
+    /* ── SERVICE GRID ── */
+    .hub-services {
+      padding: 6rem clamp(1.5rem,5vw,5rem);
+      background: var(--cream);
+      display: grid;
+      gap: 2px;
+    }
+
+    .hub-service-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+    }
+    .hub-service-row:first-child { border-top: 1px solid var(--border); }
+
+    .hub-service-cell {
+      background: var(--cream);
+      padding: 4rem clamp(1.5rem,4vw,4rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: background .25s;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+    }
+    .hub-service-cell:hover { background: rgba(29,186,110,.04); }
+    .hub-service-cell::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 0; height: 3px;
+      background: var(--green);
+      transition: width .35s ease;
+    }
+    .hub-service-cell:hover::after { width: 100%; }
+
+    .hub-svc-num {
+      font-family: var(--M);
+      font-size: .68rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+      margin-bottom: 2rem;
+    }
+    .hub-svc-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: rgba(29,186,110,.1);
+      border: 1px solid rgba(29,186,110,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .hub-svc-title {
+      font-family: var(--H);
+      font-size: clamp(1.8rem,3vw,2.8rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1;
+      margin-bottom: 1.2rem;
+      color: var(--ink);
+    }
+    .hub-svc-desc {
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      max-width: 400px;
+    }
+    .hub-svc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-bottom: 2.5rem;
+    }
+    .hub-svc-tag {
+      font-family: var(--M);
+      font-size: .68rem;
+      letter-spacing: .06em;
+      background: rgba(11,14,26,.06);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: .3rem .8rem;
+      color: var(--ink);
+    }
+    .hub-svc-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--H);
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--ink);
+      margin-top: auto;
+      transition: gap .2s;
+    }
+    .hub-svc-cta .arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      transition: background .2s, transform .2s;
+    }
+    .hub-service-cell:hover .hub-svc-cta { gap: .8rem; }
+    .hub-service-cell:hover .hub-svc-cta .arrow {
+      background: var(--green);
+      color: var(--ink);
+      transform: translateX(4px);
+    }
+
+    /* KI wide card */
+    .hub-service-wide {
+      grid-column: 1 / -1;
+      background: var(--ink);
+      color: var(--cream);
+    }
+    .hub-service-wide:hover { background: #111520; }
+    .hub-service-wide .hub-svc-title { color: var(--cream); }
+    .hub-service-wide .hub-svc-desc { color: rgba(245,243,238,.65); max-width: 650px; }
+    .hub-service-wide .hub-svc-tag {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.12);
+      color: rgba(245,243,238,.8);
+    }
+    .hub-service-wide .hub-svc-cta { color: var(--green); }
+    .hub-service-wide .hub-svc-cta .arrow { background: var(--green); color: var(--ink); }
+    .hub-service-wide:hover .hub-svc-cta .arrow { background: var(--cream); color: var(--ink); }
+    .hub-service-wide .hub-svc-num { color: rgba(245,243,238,.3); }
+    .hub-service-wide .hub-svc-icon {
+      background: rgba(29,186,110,.15);
+      border-color: rgba(29,186,110,.3);
+    }
+
+    /* ── BOTTOM CTA ── */
+    .hub-bottom-cta {
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+      padding: 6rem clamp(1.5rem,5vw,5rem);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+    }
+    .hub-bottom-cta h2 {
+      font-family: var(--H);
+      font-size: clamp(1.8rem,4vw,3rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      max-width: 600px;
+    }
+    .hub-bottom-cta h2 span { color: var(--green); }
+    .hub-bottom-cta p {
+      color: var(--muted);
+      margin-top: .8rem;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    /* ── FOOTER ── */
+    .hub-footer {
+      background: var(--ink);
+      color: rgba(245,243,238,.4);
+      padding: 2rem clamp(1.5rem,5vw,5rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .8rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .hub-footer a { color: rgba(245,243,238,.4); text-decoration: none; }
+    .hub-footer a:hover { color: var(--cream); }
+
+    @media(max-width:800px) {
+      .hub-service-row { grid-template-columns: 1fr; }
+      .hub-service-wide { grid-column: unset; }
+      .hub-bottom-cta { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav id="nav">
-    <a href="/" class="logo">
-      <svg viewBox="0 0 40 40" fill="none" style="width:30px;">
-        <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      InboxElevate
-    </a>
-    <ul class="nav-links">
-      <li><a href="/">Start</a></li>
-      <li><a href="/leistungen" class="active">Leistungen</a></li>
-      <li><a href="/prozess">Prozess</a></li>
-      <li><a href="/ueber-uns">Über uns</a></li>
-      <li><a href="/tipps">Tipps</a></li>
-      <li><a href="/kontakt" class="nav-cta">Kontakt <span class="nav-arrow">→</span></a></li>
-    </ul>
-    <button class="ham" id="ham" onclick="document.getElementById('mobMenu').classList.toggle('open')"><span></span><span></span><span></span></button>
-  </nav>
+  <!-- NAV (injected by JS) -->
+  <div data-site-nav></div>
 
-  <div class="mob-menu" id="mobMenu">
-    <a href="/">Start</a>
-    <a href="/leistungen" style="color:var(--green)">Leistungen</a>
-    <a href="/prozess">Prozess</a>
-    <a href="/ueber-uns">Über uns</a>
-    <a href="/tipps">Tipps</a>
-    <a href="/kontakt">Kontakt →</a>
-  </div>
 
-  <main>
-    <section class="spoke-hero">
-      <div class="spoke-hero-content">
-        <div style="font-family:var(--M);font-size:0.75rem;letter-spacing:0.1em;color:var(--green);text-transform:uppercase;margin-bottom:1.5rem;">Webseiten Entwicklung</div>
-        <h1>Webseiten, die aus Besuchern <span style="color:var(--green)">Aufträge machen.</span></h1>
-        <p>Eine hübsche Webseite reicht heute nicht mehr. Wenn Entscheider im Bereich Objektschutz oder Alarmanlagen nach Dienstleistern suchen, wollen sie sofort Klarheit, Vertrauen und Erreichbarkeit.</p>
-        <a href="/kontakt" class="btn-ink">Kostenlosen Marketing-Check anfordern <span style="font-size:1.2em">→</span></a>
-      </div>
-      <div class="spoke-hero-visual">
-        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Webseite Analyse" style="width:100%; border-radius: 24px; box-shadow: 0 40px 80px rgba(11, 14, 26, 0.15);">
-      </div>
+  <main class="hub-page">
+
+    <!-- HERO -->
+    <section class="hub-hero">
+      <div class="hub-hero-label">Unsere Leistungen</div>
+      <h1>Wachstum für<br><span>Sicherheits&shy;unternehmen.</span></h1>
+      <p>Kein Baukastendenken. Wir kombinieren genau die Maßnahmen, die deinem Unternehmen jetzt mehr qualifizierte Anfragen und Bewerbungen bringen.</p>
     </section>
 
-    <!-- Problem-Agitation -->
-    <section class="spoke-section spoke-section-dark">
-      <div class="spoke-section-title">
-        <h2>Warum die meisten Websites scheitern</h2>
-        <p>Viele Webdesigner kennen sich mit Ästhetik aus – aber nicht mit der Sicherheitsbranche. Das Ergebnis sind Seiten, die zwar gut aussehen, aber die typischen Fehler machen.</p>
+    <!-- SERVICE GRID -->
+    <section class="hub-services">
+
+      <div class="hub-service-row">
+        <!-- Webseiten -->
+        <a href="/leistungen/webseiten" class="hub-service-cell">
+          <div class="hub-svc-num">01</div>
+          <div class="hub-svc-icon">🌐</div>
+          <h2 class="hub-svc-title">Webseiten</h2>
+          <p class="hub-svc-desc">Conversion-starke Websites die speziell für Sicherheitsunternehmen entwickelt werden — mit sichtbarer Notrufnummer, Vertrauenssignalen und starker lokaler SEO.</p>
+          <div class="hub-svc-tags">
+            <span class="hub-svc-tag">Blitzschnell</span>
+            <span class="hub-svc-tag">Lokale SEO</span>
+            <span class="hub-svc-tag">Mobile First</span>
+            <span class="hub-svc-tag">5–10 Werktage</span>
+          </div>
+          <div class="hub-svc-cta">Mehr erfahren <span class="arrow">→</span></div>
+        </a>
+
+        <!-- Paid Ads -->
+        <a href="/leistungen/paid-ads" class="hub-service-cell">
+          <div class="hub-svc-num">02</div>
+          <div class="hub-svc-icon">📣</div>
+          <h2 class="hub-svc-title">Paid Ads</h2>
+          <p class="hub-svc-desc">Google Search und Meta Ads — zielgenau ausgesteuert für Alarmanlagen-Anfragen, Objektschutz-Leads und das Recruiting von Sicherheitsmitarbeitern.</p>
+          <div class="hub-svc-tags">
+            <span class="hub-svc-tag">Google Ads</span>
+            <span class="hub-svc-tag">Meta Ads</span>
+            <span class="hub-svc-tag">Leadgenerierung</span>
+            <span class="hub-svc-tag">Recruiting</span>
+          </div>
+          <div class="hub-svc-cta">Mehr erfahren <span class="arrow">→</span></div>
+        </a>
       </div>
-      <div class="spoke-features">
-        <div class="spoke-feature">
-          <div class="spoke-feature-icon">📵</div>
-          <h3>Schlechte Erreichbarkeit</h3>
-          <p>Potenzielle Kunden in einer Notsituation wollen nicht lange suchen. Wenn die Notrufnummer nicht sofort klickbar im Header ist, gehen Anfragen verloren.</p>
-        </div>
-        <div class="spoke-feature">
-          <div class="spoke-feature-icon">🐌</div>
-          <h3>Lange Ladezeiten</h3>
-          <p>Die meisten User springen ab, wenn eine Seite länger als 3 Sekunden lädt. Überladene Slider und riesige Bilder zerstören deine Conversion-Rate.</p>
-        </div>
-        <div class="spoke-feature">
-          <div class="spoke-feature-icon">🔍</div>
-          <h3>Keine lokale SEO</h3>
-          <p>Du wirst in Google nicht gefunden, weil wichtige lokale Keywords wie "Sicherheitsdienst Düsseldorf" im Content, in der URL-Struktur und den Meta-Tags fehlen.</p>
-        </div>
+
+      <!-- KI wide -->
+      <div class="hub-service-row">
+        <a href="/leistungen/ki" class="hub-service-cell hub-service-wide">
+          <div class="hub-svc-num">03</div>
+          <div class="hub-svc-icon">🤖</div>
+          <h2 class="hub-svc-title">KI-Automatisierung</h2>
+          <p class="hub-svc-desc">Weniger manuelle Arbeit, schnellere Anfragenbearbeitung und klarer ROI. Wir implementieren KI-Lösungen, die direkt im Tagesgeschäft eines Sicherheitsunternehmens funktionieren — nicht im Labor.</p>
+          <div class="hub-svc-tags">
+            <span class="hub-svc-tag">Anfragequalifizierung</span>
+            <span class="hub-svc-tag">24/7 KI-Bot</span>
+            <span class="hub-svc-tag">Workflow-Automatisierung</span>
+            <span class="hub-svc-tag">Sofortige Umsetzung</span>
+          </div>
+          <div class="hub-svc-cta">Mehr erfahren <span class="arrow">→</span></div>
+        </a>
       </div>
+
     </section>
 
-    <!-- Lösung (Features) -->
-    <section class="spoke-section">
-      <div class="spoke-section-title">
-        <h2 style="color:var(--ink)">Unsere Lösung für dich</h2>
-        <p>Wir bauen Websites, die als digitaler Vertriebsmitarbeiter funktionieren. Sie beantworten Fragen, bauen Vertrauen auf und filtern unpassende Anfragen heraus.</p>
+    <!-- BOTTOM CTA -->
+    <div class="hub-bottom-cta">
+      <div>
+        <h2>Nicht sicher, was<br><span>zu dir passt?</span></h2>
+        <p>Im kostenlosen Marketing-Check analysieren wir gemeinsam deine Situation und zeigen dir, welche Maßnahmen den größten Hebel haben.</p>
       </div>
-      <div class="spoke-features">
-        <div class="spoke-feature" style="border-color: rgba(29, 186, 110, 0.3); background: rgba(29, 186, 110, 0.03);">
-          <div class="spoke-feature-icon">⚡</div>
-          <h3 style="color:var(--ink)">Rasend schnelle Ladezeiten</h3>
-          <p>Wir verzichten auf schwere Baukästen wie Wordpress-Elementor und bauen extrem schlanke, performante Webseiten, die bei Google PageSpeed glänzen.</p>
-        </div>
-        <div class="spoke-feature" style="border-color: rgba(29, 186, 110, 0.3); background: rgba(29, 186, 110, 0.03);">
-          <div class="spoke-feature-icon">🛡️</div>
-          <h3 style="color:var(--ink)">Integrierte Vertrauenssignale</h3>
-          <p>Wir platzieren deine Zertifikate (IHK, DIN, VdS), Referenzen und Google-Bewertungen exakt dort, wo sie den Besucher überzeugen.</p>
-        </div>
-        <div class="spoke-feature" style="border-color: rgba(29, 186, 110, 0.3); background: rgba(29, 186, 110, 0.03);">
-          <div class="spoke-feature-icon">🎯</div>
-          <h3 style="color:var(--ink)">Conversion-Formulare</h3>
-          <p>Smarte, mehrstufige Anfrage-Formulare. So qualifizierst du Leads vorab (z.B. nach Budget oder Einsatzort), bevor du überhaupt das erste Gespräch führst.</p>
-        </div>
-      </div>
-    </section>
-
-    <section style="padding:6rem clamp(1.5rem,5vw,4rem); background:var(--ink); color:var(--cream); text-align:center;">
-      <h2 style="font-family:var(--H); font-size:3rem; margin-bottom:1.5rem;">Bereit für mehr Anfragen?</h2>
-      <p style="color:rgba(245,243,238,0.7); max-width:600px; margin:0 auto 2.5rem; line-height:1.7;">Lass uns in einem kurzen, unverbindlichen Call herausfinden, wie viel Potenzial in deinem aktuellen Webauftritt steckt.</p>
-      <a href="/kontakt" style="display:inline-flex; align-items:center; gap:0.5rem; background:var(--green); color:var(--ink); padding:1rem 2rem; border-radius:50px; font-family:var(--B); font-weight:700; text-decoration:none; transition:transform 0.2s ease;">
-        Jetzt Termin vereinbaren
-      </a>
-    </section>
+      <a href="/#kontakt" class="btn-ink">Marketing-Check anfordern →</a>
+    </div>
 
   </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <svg viewBox="0 0 40 40" fill="none" style="width:30px;">
+          <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p><strong>InboxElevate</strong><br>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Navigation</h5>
+        <a href="/">Start</a>
+        <a href="/leistungen">Leistungen</a>
+        <a href="/prozess">Prozess</a>
+        <a href="/ueber-uns">Über uns</a>
+        <a href="/tipps">Tipps</a>
+      </div>
+      <div class="footer-col">
+        <h5>Leistungen</h5>
+        <a href="/leistungen/webseiten">Webentwicklung</a>
+        <a href="/leistungen/paid-ads">Paid Ads</a>
+        <a href="/leistungen/ki">KI-Automatisierung</a>
+      </div>
+      <div class="footer-col">
+        <h5>Kontakt</h5>
+        <a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a>
+        <a href="/#kontakt">Anfrage stellen</a>
+        <a href="/datenschutz">Datenschutz</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 InboxElevate. Alle Rechte vorbehalten.</p>
+      <div class="socials">
+        <a href="https://www.linkedin.com/company/inboxelevate/" class="soc" title="LinkedIn">in</a>
+        <a href="mailto:david@inbox-elevate.de" class="soc" title="Email">✉</a>
+      </div>
+    </div>
+  </footer>
+
 
 </body>
 </html>
