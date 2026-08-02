@@ -7,32 +7,9 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-  <nav id="nav">
-    <a href="/" class="logo logo-outer">
-      <svg viewBox="0 0 40 40" fill="none">
-        <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-        <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" />
-        <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-    </a>
-    <ul class="nav-links">
-      <li><a href="/">Start</a></li>
-      <li><a href="/leistungen">Leistungen</a></li>
-      <li><a href="/prozess">Prozess</a></li>
-      <li><a href="/ueber-uns">Über uns</a></li>
-      <li><a href="/tipps">Tipps</a></li>
-      <li><a href="/kontakt" class="nav-cta">Kontakt <span class="nav-arrow">→</span></a></li>
-    </ul>
-    <button class="ham" id="ham" onclick="this.classList.toggle('open');document.getElementById('mobMenu').classList.toggle('open')"><span></span><span></span><span></span></button>
-  </nav>
-  <div class="mob-menu" id="mobMenu">
-    <a href="/">Start</a>
-    <a href="/leistungen">Leistungen</a>
-    <a href="/prozess">Prozess</a>
-    <a href="/ueber-uns">Über uns</a>
-    <a href="/tipps">Tipps</a>
-    <a href="/kontakt">Kontakt →</a>
-  </div>
+  <!-- NAV (injected by JS) -->
+  <div data-site-nav></div>
+
 
   <main class="legal-page">
     <h1>Datenschutzerklärung</h1>
@@ -83,5 +60,11 @@
       </div>
     </div>
   </footer>
+  <script src="/js/main.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/CustomEase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Draggable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/InertiaPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Physics2DPlugin.min.js"></script>
 </body>
 </html>
