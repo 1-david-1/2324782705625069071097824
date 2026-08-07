@@ -1,2 +1,9 @@
 relief_model_original.glb
 .DS_Store ignored in future
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
