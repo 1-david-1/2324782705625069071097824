@@ -11,6 +11,7 @@
     href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/door-gate.css">
   <style>
     /* Failsafe: hide preloader after 2.5s even if JS fails */
     @keyframes _preloader_escape {
@@ -22,6 +23,57 @@
 
 <body>
 
+  <!-- ══════════════════ TÜR-EINGANG / SICHERHEITS-GATE ══════════════════
+       Erscheint vor dem eigentlichen Seiteninhalt. Besucher klickt auf die
+       Tür im Haus-Bild, gibt einen Zahlencode über ein Tastenfeld ein;
+       bei korrektem Code "entriegelt" die Tür und gibt den Blick auf die
+       Website frei. Logik in /js/door-gate.js, Styles in /css/door-gate.css.
+       Den Zugangscode kannst du oben in door-gate.js unter ACCESS_CODE ändern.
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="doorGate" aria-hidden="false">
+    <div class="door-gate-bg"></div>
+
+    <button type="button"
+            id="doorHotspot"
+            class="door-gate-hotspot"
+            aria-label="Zur Haustür gehen und Zugangscode eingeben, um die Website zu betreten"></button>
+
+    <div id="doorTooltip" class="door-gate-tooltip">Hier klicken, um einzutreten</div>
+
+    <div id="doorKeypadOverlay" class="door-gate-keypad-overlay" aria-hidden="true">
+      <div class="door-gate-keypad-card">
+        <div class="door-gate-keypad-icon">🔒</div>
+        <h2>Sicherheitsbereich</h2>
+        <p>Dieses Haus ist gesichert. Bitte gib den 4-stelligen Zugangscode ein, um die Tür zu entriegeln.</p>
+
+        <div class="door-gate-keypad-display" id="doorKeypadDisplay">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+
+        <div class="door-gate-keypad-grid">
+          <button type="button" data-num="1">1</button>
+          <button type="button" data-num="2">2</button>
+          <button type="button" data-num="3">3</button>
+          <button type="button" data-num="4">4</button>
+          <button type="button" data-num="5">5</button>
+          <button type="button" data-num="6">6</button>
+          <button type="button" data-num="7">7</button>
+          <button type="button" data-num="8">8</button>
+          <button type="button" data-num="9">9</button>
+          <button type="button" data-action="clear">C</button>
+          <button type="button" data-num="0">0</button>
+          <button type="button" data-action="back">⌫</button>
+        </div>
+
+        <p class="door-gate-keypad-error" id="doorKeypadError" aria-live="polite"></p>
+        <button type="button" class="door-gate-keypad-close" id="doorKeypadClose">Abbrechen</button>
+      </div>
+    </div>
+
+    <div class="door-gate-flash" id="doorGateFlash" aria-hidden="true"></div>
+  </div>
+  <!-- ══════════════════ ENDE TÜR-EINGANG ══════════════════ -->
+
   <div class="preloader" id="preloader" aria-hidden="true" style="display:none">
     <div class="preloader-inner">
       <div class="preloader-brand">
@@ -32,6 +84,7 @@
           <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
             stroke-linejoin="round" />
         </svg>
+        <span>InboxElevate</span>
       </div>
       <div class="preloader-track">
         <div class="preloader-bar"></div>
@@ -52,9 +105,43 @@
     <a href="/#kontakt" class="contact-trigger">Jetzt anfragen →</a>
   </div>
 
-  <!-- NAV (injected by JS) -->
-  <div data-site-nav></div>
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="logo logo-outer" onclick="navigate('home');return false;">
+      <svg viewBox="0 0 40 40" fill="none">
+        <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" />
+        <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      InboxElevate
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Start</a></li>
+      <li>
+        <a href="/leistungen">Leistungen</a>
+        
+      </li>
+      <li><a href="/prozess">Prozess</a></li>
+      <li><a href="/ueber-uns">Über uns</a></li>
+      <li><a href="/tipps">Tipps</a></li>
+      <li><a href="/#kontakt" class="nav-cta contact-trigger">Kontakt <span class="nav-arrow">→</span></a></li>
+    </ul>
+    <button class="ham" id="ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
+  </nav>
 
+  <div class="mob-menu" id="mobMenu">
+    <a href="/">Start</a>
+    <a href="/leistungen">Leistungen</a>
+    
+    
+    
+    <a href="/prozess">Prozess</a>
+    <a href="/ueber-uns">Über uns</a>
+    <a href="/tipps">Tipps</a>
+    <a href="/kontakt">Kontakt →</a>
+  </div>
 
   <main>
 
@@ -64,15 +151,12 @@
   <div id="home">
     <section class="hero">
       <div class="hero-inner">
-        <div class="hero-orb-stage" id="heroOrbStage" aria-hidden="true">
-          <canvas id="heroOrbCanvas"></canvas>
-        </div>
         <div class="hero-label sr">Spezialisiert auf Sicherheitsunternehmen. Und sonst niemanden.</div>
         <h1 class="hero-h1 sr" data-d="1">
-          <span class="hero-h1-static">Mehr qualifizierte Anfragen für</span>
-          <span class="hero-tw-word">
-            <span id="tw-text" aria-live="polite">Sicherheitsunternehmen</span><span class="tw-cursor" aria-hidden="true"></span>
-          </span>
+          <span id="tw-line1">Mehr qualifizierte</span><br>
+          <span id="tw-line2">Anfragen für</span><br>
+          <span class="hero-tw-line"><span id="tw-text" aria-live="polite">Sicherheitsunternehmen</span><span
+              class="tw-cursor" aria-hidden="true"></span></span>
         </h1>
         <div class="hero-sub-row">
           <p class="hero-p sr" data-d="2">Du bist gut in deinem Job. Deine Website und deine Ads sollten das genauso klar kommunizieren. Wir kümmern uns darum — und nur darum.</p>
@@ -90,6 +174,12 @@
             <a href="/leistungen" class="btn-ghost">
               Leistungen entdecken <span class="btn-arrow">→</span>
             </a>
+            <a href="/versprechen" class="btn-promise"
+               data-text-hover="Unser Versprechen"
+               data-text-hover-size="18"
+               data-text-hover-width="240"
+               data-text-hover-height="44"
+               aria-label="Unser Versprechen"></a>
           </div>
         </div>
       </div>
@@ -250,12 +340,12 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/CustomEase.min.js"></script>
+  <script src="/js/text-hover-effect.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Draggable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/InertiaPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Physics2DPlugin.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="/js/main.js" defer></script>
+  <script src="/js/door-gate.js" defer></script>
 </body>
 
 </html>
