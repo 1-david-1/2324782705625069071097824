@@ -3,14 +3,15 @@
 
   /* ── DOM refs (safe – may be null on sub-pages) ── */
   const body = document.body;
+  const nav = document.getElementById('nav');
+  const mobMenu = document.getElementById('mobMenu');
+  const ham = document.getElementById('ham');
   const pageWipe = document.getElementById('pageWipe');
   const preloader = document.getElementById('preloader');
   const scrollProgress = document.getElementById('scrollProgress');
   const scrollProgressFill = document.getElementById('scrollProgressFill');
   const toastStack = document.getElementById('toastStack');
   const homeStats = document.getElementById('homeStats');
-  // nav & mobMenu resolved after injectNav()
-  let nav, mobMenu, ham;
 
   /* ── Config ── */
   const FORMSPREE_ID = 'xvzveqvz';
@@ -22,21 +23,11 @@
   const HERO_TYPEWRITER_TERMS = [
     'Sicherheitsunternehmen',
     'Wachdienstleister',
-    'Bewachungsfirmen',
-    'Objektschutz-Firmen',
-    'Personenschutz-Agenturen',
     'Alarmanlagen-Anbieter',
-    'Videoueberwachung-Dienste',
-    'Zutrittskontrolle-Systeme',
-    'Cybersicherheit-Dienste',
-    'Sicherheitskonsultanten'
+    'Objektschutz-Firmen',
+    'Sie',
+    'Ihr Unternehmen'
   ];
-  const HERO_TYPE_SPEED = 72;
-  const HERO_DELETE_SPEED = 38;
-  const HERO_HOLD_DELAY = 1800;
-  const HERO_PAUSE_DELAY = 280;
-  // Controls for the hero orb/rib visual – set to 'off' to disable
-  const HERO_ORB_MODE = 'off'; // 'off' | 'low' | 'full'
 
   /* ── State ── */
   let currentPage = 'home';
@@ -50,8 +41,8 @@
   let scrollCurrent = window.scrollY || 0;
   let smoothScrollEnabled = false;
   let smoothRaf = 0;
+  let heroPrepared = false;
   let typewriterTimeout = 0;
-  let heroOrbStarted = false;
   let smoothBindingsReady = false;
 
   /* ── Utilities ── */
@@ -81,134 +72,6 @@
       setTimeout(() => logo.classList.remove('brand-animated'), 1700);
     });
   }
-
-  /* ── Nav HTML ── */
-  function getNavHTML() {
-    const path = window.location.pathname.replace(/\/$/, '') || '/';
-    const links = [
-      { href: '/',          label: 'Start',       shape: '1' },
-      { href: '/leistungen', label: 'Leistungen',  shape: '2' },
-      { href: '/prozess',    label: 'Prozess',     shape: '3' },
-      { href: '/ueber-uns',  label: '\u00dcber uns', shape: '4' },
-      { href: '/tipps',      label: 'Tipps',       shape: '5' },
-    ];
-    const liItems = links.map(({ href, label, shape }) => {
-      const active = (path === href || (href !== '/' && path.startsWith(href))) ? ' active' : '';
-      return `<li class="menu-list-item" data-shape="${shape}">
-          <a href="${href}" class="nav-link w-inline-block${active}">
-            <p class="nav-link-text">${label}</p>
-            <div class="nav-link-hover-bg"></div>
-          </a>
-        </li>`;
-    }).join('\n        ');
-    return `
-    <!-- NAV BAR -->
-    <nav id="nav">
-      <a href="/" class="logo logo-outer" aria-label="InboxElevate \u2013 Startseite">
-        <svg viewBox="0 0 40 40" fill="none">
-          <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span class="logo-name">InboxElevate</span>
-      </a>
-      <button class="nav-close-btn" id="ham" aria-expanded="false" aria-controls="navOverlay" aria-label="Men\u00fc \u00f6ffnen/schlie\u00dfen">
-        <div class="menu-button-text">
-          <p class="p-large">Men\u00fc</p>
-          <p class="p-large">Schlie\u00dfen</p>
-        </div>
-        <div class="icon-wrap">
-          <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" class="menu-button-icon">
-            <path d="M7.33333 16L7.33333 -3.2055e-07L8.66667 -3.78832e-07L8.66667 16L7.33333 16Z" fill="currentColor"></path>
-            <path d="M16 8.66667L-2.62269e-07 8.66667L-3.78832e-07 7.33333L16 7.33333L16 8.66667Z" fill="currentColor"></path>
-            <path d="M6 7.33333L7.33333 7.33333L7.33333 6C7.33333 6.73637 6.73638 7.33333 6 7.33333Z" fill="currentColor"></path>
-            <path d="M10 7.33333L8.66667 7.33333L8.66667 6C8.66667 6.73638 9.26362 7.33333 10 7.33333Z" fill="currentColor"></path>
-            <path d="M6 8.66667L7.33333 8.66667L7.33333 10C7.33333 9.26362 6.73638 8.66667 6 8.66667Z" fill="currentColor"></path>
-            <path d="M10 8.66667L8.66667 8.66667L8.66667 10C8.66667 9.26362 9.26362 8.66667 10 8.66667Z" fill="currentColor"></path>
-          </svg>
-        </div>
-      </button>
-    </nav>
-
-    <!-- FULLSCREEN OVERLAY -->
-    <div data-nav="closed" class="nav-overlay-wrapper" id="navOverlay" style="display:none">
-      <div class="overlay" id="navOverlayBg"></div>
-      <nav class="menu-content" aria-label="Hauptnavigation">
-        <div class="menu-bg">
-          <div class="backdrop-layer first"></div>
-          <div class="backdrop-layer second"></div>
-          <div class="backdrop-layer"></div>
-          <div class="ambient-background-shapes">
-            <svg class="bg-shape bg-shape-1" viewBox="0 0 400 400" fill="none" aria-hidden="true">
-              <circle class="shape-element" cx="80" cy="120" r="40" fill="rgba(29,186,110,0.12)"/>
-              <circle class="shape-element" cx="300" cy="80" r="60" fill="rgba(29,186,110,0.09)"/>
-              <circle class="shape-element" cx="200" cy="300" r="80" fill="rgba(29,186,110,0.07)"/>
-              <circle class="shape-element" cx="350" cy="280" r="30" fill="rgba(29,186,110,0.12)"/>
-            </svg>
-            <svg class="bg-shape bg-shape-2" viewBox="0 0 400 400" fill="none" aria-hidden="true">
-              <path class="shape-element" d="M0 200 Q100 100, 200 200 T 400 200" stroke="rgba(29,186,110,0.18)" stroke-width="60" fill="none"/>
-              <path class="shape-element" d="M0 280 Q100 180, 200 280 T 400 280" stroke="rgba(29,186,110,0.12)" stroke-width="40" fill="none"/>
-            </svg>
-            <svg class="bg-shape bg-shape-3" viewBox="0 0 400 400" fill="none" aria-hidden="true">
-              <circle class="shape-element" cx="50" cy="50" r="8" fill="rgba(29,186,110,0.28)"/>
-              <circle class="shape-element" cx="150" cy="50" r="8" fill="rgba(29,186,110,0.28)"/>
-              <circle class="shape-element" cx="250" cy="50" r="8" fill="rgba(29,186,110,0.28)"/>
-              <circle class="shape-element" cx="350" cy="50" r="8" fill="rgba(29,186,110,0.28)"/>
-              <circle class="shape-element" cx="100" cy="150" r="12" fill="rgba(29,186,110,0.22)"/>
-              <circle class="shape-element" cx="200" cy="150" r="12" fill="rgba(29,186,110,0.22)"/>
-              <circle class="shape-element" cx="300" cy="150" r="12" fill="rgba(29,186,110,0.22)"/>
-              <circle class="shape-element" cx="50" cy="250" r="10" fill="rgba(29,186,110,0.28)"/>
-              <circle class="shape-element" cx="150" cy="250" r="10" fill="rgba(29,186,110,0.28)"/>
-              <circle class="shape-element" cx="250" cy="250" r="10" fill="rgba(29,186,110,0.28)"/>
-              <circle class="shape-element" cx="350" cy="250" r="10" fill="rgba(29,186,110,0.28)"/>
-              <circle class="shape-element" cx="100" cy="350" r="6" fill="rgba(29,186,110,0.28)"/>
-              <circle class="shape-element" cx="200" cy="350" r="6" fill="rgba(29,186,110,0.28)"/>
-              <circle class="shape-element" cx="300" cy="350" r="6" fill="rgba(29,186,110,0.28)"/>
-            </svg>
-            <svg class="bg-shape bg-shape-4" viewBox="0 0 400 400" fill="none" aria-hidden="true">
-              <path class="shape-element" d="M100 100 Q150 50, 200 100 Q250 150, 200 200 Q150 250, 100 200 Q50 150, 100 100" fill="rgba(29,186,110,0.1)"/>
-              <path class="shape-element" d="M250 200 Q300 150, 350 200 Q400 250, 350 300 Q300 350, 250 300 Q200 250, 250 200" fill="rgba(29,186,110,0.08)"/>
-            </svg>
-            <svg class="bg-shape bg-shape-5" viewBox="0 0 400 400" fill="none" aria-hidden="true">
-              <line class="shape-element" x1="0" y1="100" x2="300" y2="400" stroke="rgba(29,186,110,0.13)" stroke-width="30"/>
-              <line class="shape-element" x1="100" y1="0" x2="400" y2="300" stroke="rgba(29,186,110,0.1)" stroke-width="25"/>
-              <line class="shape-element" x1="200" y1="0" x2="400" y2="200" stroke="rgba(29,186,110,0.08)" stroke-width="20"/>
-            </svg>
-          </div>
-        </div>
-        <div class="menu-content-wrapper">
-          <a href="/" class="menu-logo" aria-label="InboxElevate – Startseite">
-            <svg viewBox="0 0 40 40" fill="none" width="36" height="36">
-              <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="menu-logo-text">InboxElevate</span>
-          </a>
-          <ul class="menu-list">
-        ${liItems}
-          </ul>
-          <div class="menu-footer" data-menu-fade>
-            <a href="/kontakt" class="btn-ink menu-cta">Jetzt anfragen <span class="btn-arrow">→</span></a>
-          </div>
-        </div>
-      </nav>
-    </div>`;
-  }
-
-  function injectNav() {
-    const placeholder = document.querySelector('[data-site-nav]');
-    if (!placeholder) return;
-    placeholder.outerHTML = getNavHTML();
-    // Re-resolve refs after injection
-    nav = document.getElementById('nav');
-    mobMenu = document.getElementById('mobMenu');
-    ham = document.getElementById('ham');
-  }
-
-  /* ── Legacy stub (some pages use onclick="toggleMob()") ── */
-  function toggleMob() { if (ham) ham.click(); }
-  window.toggleMob = toggleMob;
 
   /* ── Footer HTML ── */
   function getFooterHTML() {
@@ -272,11 +135,19 @@
     injectEmails(); // re-run after footer injection
   }
 
+  /* ── Nav ── */
+  function toggleMob(force) {
+    if (!ham || !mobMenu) return;
+    const open = typeof force === 'boolean' ? force : !ham.classList.contains('open');
+    ham.classList.toggle('open', open);
+    mobMenu.classList.toggle('open', open);
+  }
+  window.toggleMob = toggleMob;
+
   /* ── Scroll chrome ── */
   function updateScrollChrome() {
     const y = window.scrollY || 0;
-    const navEl = document.getElementById('nav');
-    if (navEl) navEl.classList.toggle('nav-shrink', y > 80);
+    if (nav) nav.classList.toggle('nav-shrink', y > 80);
     if (!scrollProgress || !scrollProgressFill) return;
     const visible = scrollHeavyPages.has(currentPage) && getScrollMax() > 240;
     scrollProgress.classList.toggle('visible', visible);
@@ -417,13 +288,7 @@
 
   /* ── GSAP Brand & Contact Animations ── */
   function initGsapInteractions() {
-    if (
-      typeof gsap === 'undefined' ||
-      typeof Draggable === 'undefined' ||
-      typeof InertiaPlugin === 'undefined' ||
-      typeof Physics2DPlugin === 'undefined'
-    ) return;
-
+    if (typeof gsap === 'undefined') return;
     gsap.registerPlugin(Draggable, InertiaPlugin, Physics2DPlugin);
 
     const mainEl = document.querySelector('main');
@@ -552,346 +417,49 @@
   }
 
   /* ── Hero typewriter ── */
-  function stopHeroTypewriter() {
-    if (typewriterTimeout) {
-      clearTimeout(typewriterTimeout);
-      typewriterTimeout = 0;
-    }
+  function prepareHeroWords() {
+    if (heroPrepared) return;
+    ['tw-line1','tw-line2'].forEach(id => {
+      const line = document.getElementById(id);
+      if (!line) return;
+      line.innerHTML = line.textContent.trim().split(/\s+/).map((w, i) => `<span class="hero-word-clip"><span class="hero-word" style="--word-delay:${i*60}ms">${w}</span></span>`).join(' ');
+    });
+    heroPrepared = true;
   }
+
+  function stopHeroTypewriter() { if (typewriterTimeout) { clearTimeout(typewriterTimeout); typewriterTimeout = 0; } }
 
   function initHeroTypewriter() {
     stopHeroTypewriter();
     const el = document.getElementById('tw-text');
     if (!el) return;
-    if (reducedMotion) {
-      el.textContent = HERO_TYPEWRITER_TERMS[0];
-      return;
-    }
-    el.textContent = '';
-    let termIndex = 0, charIndex = 0, isDeleting = false;
+    if (reducedMotion) { el.textContent = HERO_TYPEWRITER_TERMS[0]; return; }
+    let termIndex = 0, charIndex = el.textContent.trim().length || HERO_TYPEWRITER_TERMS[0].length, isDeleting = false;
     const schedule = (fn, ms) => { typewriterTimeout = setTimeout(fn, ms); };
     function step() {
       const target = document.getElementById('tw-text');
       if (!target) return;
       const word = HERO_TYPEWRITER_TERMS[termIndex];
       if (!isDeleting) {
-        if (charIndex < word.length) {
-          charIndex++;
-          target.textContent = word.slice(0, charIndex);
-          schedule(step, HERO_TYPE_SPEED);
-        } else {
-          schedule(() => {
-            isDeleting = true;
-            step();
-          }, HERO_HOLD_DELAY);
-        }
+        if (charIndex < word.length) { charIndex++; target.textContent = word.slice(0, charIndex); schedule(step, 58); }
+        else { schedule(() => { isDeleting = true; step(); }, 2400); }
         return;
       }
-      if (charIndex > 0) {
-        charIndex--;
-        target.textContent = word.slice(0, charIndex);
-        schedule(step, HERO_DELETE_SPEED);
-        return;
-      }
+      if (charIndex > 0) { charIndex--; target.textContent = word.slice(0, charIndex); schedule(step, 32); return; }
       isDeleting = false;
       termIndex = (termIndex + 1) % HERO_TYPEWRITER_TERMS.length;
-      schedule(step, HERO_PAUSE_DELAY);
+      schedule(step, 400);
     }
-    schedule(step, 450);
+    schedule(() => { isDeleting = true; charIndex = HERO_TYPEWRITER_TERMS[termIndex].length; step(); }, 2400);
   }
 
   function startHeroAnimations() {
+    prepareHeroWords();
     const h = document.querySelector('.hero-h1');
     if (!h) return;
-    h.classList.add('v');
+    if (reducedMotion) { h.classList.add('ready'); h.querySelectorAll('.hero-word').forEach(w => w.classList.add('no-animate')); }
+    else { requestAnimationFrame(() => h.classList.add('ready')); }
     initHeroTypewriter();
-  }
-
-  /* ── Hero liquid orb ── */
-  function initHeroOrbAnimation() {
-    if (heroOrbStarted || reducedMotion || typeof THREE === 'undefined') return;
-    const frame = document.getElementById('heroOrbStage');
-    const canvas = document.getElementById('heroOrbCanvas');
-    // Respect the toggle; hide the frame when disabled
-    if (typeof HERO_ORB_MODE !== 'undefined' && HERO_ORB_MODE === 'off') {
-      if (frame) frame.style.display = 'none';
-      return;
-    }
-    const pointerSurface = document.querySelector('.hero') || frame;
-    if (!frame || !canvas) return;
-    heroOrbStarted = true;
-
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.outputEncoding = THREE.sRGBEncoding;
-
-    const sceneCam = new THREE.PerspectiveCamera(38, 1, 0.1, 20);
-    sceneCam.position.set(0, 0, 6);
-
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf5f3ee);
-
-    const blobGeo = new THREE.IcosahedronGeometry(1.15, 7);
-    const blobMat = new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: { value: 0 },
-        uColor: { value: new THREE.Color(0x10a85d) }
-      },
-      vertexShader: `
-        uniform float uTime;
-        varying vec3 vNormal;
-        varying vec3 vNormalObj;
-        varying vec3 vViewPos;
-        varying vec3 vObjPos;
-        void main(){
-          vec3 pos = position;
-          float n1 = sin(pos.x*2.6 + uTime*1.1) * cos(pos.y*2.3 - uTime*0.9) * sin(pos.z*2.8 + uTime*0.7);
-          float n2 = sin(pos.x*5.2 - uTime*1.7 + pos.y*3.1) * cos(pos.z*4.4 + uTime*0.6);
-          float n3 = sin(pos.x*11.0 + pos.y*9.0 - uTime*0.25) * sin(pos.z*10.5 + pos.x*8.0 + uTime*0.2);
-          float wobble = n1*0.68 + n2*0.32;
-          pos += normal * wobble * 0.15;
-          pos += normal * n3 * 0.05;
-          vObjPos = pos;
-          vNormalObj = normal;
-          vNormal = normalMatrix * normalize(normal);
-          vec4 mv = modelViewMatrix * vec4(pos,1.0);
-          vViewPos = mv.xyz;
-          gl_Position = projectionMatrix * mv;
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 uColor;
-        varying vec3 vNormal;
-        varying vec3 vNormalObj;
-        varying vec3 vViewPos;
-        varying vec3 vObjPos;
-
-        float hash(vec2 p){
-          return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
-        }
-        float valueNoise(vec2 p){
-          vec2 i = floor(p);
-          vec2 f = fract(p);
-          float a = hash(i);
-          float b = hash(i + vec2(1.0, 0.0));
-          float c = hash(i + vec2(0.0, 1.0));
-          float d = hash(i + vec2(1.0, 1.0));
-          vec2 u = f*f*(3.0 - 2.0*f);
-          return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
-        }
-
-        void main(){
-          vec3 n = normalize(vNormal);
-          vec3 v = normalize(-vViewPos);
-          vec3 lightDir = normalize(vec3(0.55, 0.75, 0.65));
-          vec3 halfDir = normalize(lightDir + v);
-
-          float fresnel = pow(1.0 - max(dot(n, v), 0.0), 2.3);
-          float diff = max(dot(n, lightDir), 0.0);
-          float spec = pow(max(dot(n, halfDir), 0.0), 48.0);
-
-          vec3 blendW = abs(normalize(vNormalObj));
-          blendW /= (blendW.x + blendW.y + blendW.z + 0.0001);
-          float nx = valueNoise(vObjPos.yz * 5.0);
-          float ny = valueNoise(vObjPos.xz * 5.0);
-          float nz = valueNoise(vObjPos.xy * 5.0);
-          float craterN = nx*blendW.x + ny*blendW.y + nz*blendW.z;
-
-          float pit = smoothstep(0.30, 0.05, craterN);
-          float rim = smoothstep(0.72, 0.95, craterN);
-
-          vec3 base = mix(uColor*0.32, uColor*1.35, fresnel);
-          base *= (0.55 + 0.55*diff);
-          base *= (1.0 - pit * 0.42);
-          base += vec3(1.0, 1.0, 0.96) * spec * 0.9;
-          base += vec3(1.0) * rim * 0.22;
-
-          gl_FragColor = vec4(base, 1.0);
-        }
-      `
-    });
-
-    const blob = new THREE.Mesh(blobGeo, blobMat);
-    scene.add(blob);
-
-    let rt = new THREE.WebGLRenderTarget(2, 2, { encoding: THREE.sRGBEncoding });
-    const postScene = new THREE.Scene();
-    const postCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const postMat = new THREE.ShaderMaterial({
-      uniforms: {
-        uScene: { value: rt.texture },
-        uResolution: { value: new THREE.Vector2(1, 1) },
-        uRibCount: { value: 0.0 },
-        uStrength: { value: 0.0 }
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        void main(){
-          vUv = uv;
-          gl_Position = vec4(position.xy, 0.0, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform sampler2D uScene;
-        uniform float uRibCount;
-        uniform float uStrength;
-        varying vec2 vUv;
-
-        void main(){
-          vec2 uv = vUv;
-          vec3 straight = texture2D(uScene, uv).rgb;
-          float maxc = max(straight.r, max(straight.g, straight.b));
-          float minc = min(straight.r, min(straight.g, straight.b));
-          float sat = maxc - minc;
-
-          float ribPos = uv.x * uRibCount;
-          float local = fract(ribPos);
-          float centered = local * 2.0 - 1.0;
-          float lens = centered * sqrt(max(0.0, 1.0 - centered*centered));
-
-          float localStrength = uStrength * (0.35 + 2.2 * sat);
-          vec2 dUv = vec2(lens * localStrength, 0.0);
-
-          float ca = 0.0032 * (0.25 + sat);
-          float r = texture2D(uScene, clamp(uv + dUv + vec2(ca,0.0), 0.0, 1.0)).r;
-          float g = texture2D(uScene, clamp(uv + dUv, 0.0, 1.0)).g;
-          float b = texture2D(uScene, clamp(uv + dUv - vec2(ca,0.0), 0.0, 1.0)).b;
-          vec3 col = vec3(r, g, b);
-
-          vec3 glow = vec3(0.0);
-          const int TAPS = 6;
-          for (int i = 0; i < TAPS; i++){
-            float ang = (float(i) / float(TAPS)) * 6.2831853;
-            vec2 off = vec2(cos(ang), sin(ang)) * 0.014;
-            glow += texture2D(uScene, clamp(uv + off, 0.0, 1.0)).rgb;
-          }
-          glow /= float(TAPS);
-          col += (glow - vec3(1.0)) * -0.22 * sat;
-
-          float shade = 1.0 - 0.16 * abs(centered);
-          float highlight = pow(max(0.0, 1.0 - abs(centered - 0.30) * 2.6), 4.0);
-          col *= shade;
-          col += vec3(1.0) * highlight * 0.28;
-
-          float seam = smoothstep(0.985, 1.0, abs(centered));
-          col = mix(col, vec3(0.82, 0.85, 0.84), seam * 0.35);
-
-          float vig = smoothstep(1.1, 0.35, length(uv - 0.5) * 1.3);
-          col = mix(col * 0.94, col, vig);
-
-          gl_FragColor = vec4(col, 1.0);
-        }
-      `
-    });
-    postScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), postMat));
-
-    const raycaster = new THREE.Raycaster();
-    const pointerPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-    const pointerNDC = new THREE.Vector2(0, 0);
-    const rawTargetPos = new THREE.Vector3(0, 0, 0);
-    const targetPos = new THREE.Vector3(0, 0, 0);
-    const hitPoint = new THREE.Vector3();
-    const velocity = new THREE.Vector2(0, 0);
-    const BLOB_RADIUS = 1.35;
-    const STIFFNESS = 0.0048;
-    const TARGET_LAG = 0.045;
-    const DAMPING = 0.988;
-    const BOUNCE_RESTITUTION = 0.42;
-    let pointerActive = false;
-    let impactX = 0, impactY = 0;
-
-    function currentBounds() {
-      const dist = sceneCam.position.z;
-      const vFov = sceneCam.fov * Math.PI / 180;
-      const visH = 2 * Math.tan(vFov / 2) * dist;
-      const visW = visH * sceneCam.aspect;
-      return {
-        maxX: Math.max(0, visW / 2 - BLOB_RADIUS),
-        maxY: Math.max(0, visH / 2 - BLOB_RADIUS)
-      };
-    }
-
-    function updatePointer(clientX, clientY) {
-      const rect = frame.getBoundingClientRect();
-      pointerNDC.x = ((clientX - rect.left) / rect.width) * 2 - 1;
-      pointerNDC.y = -(((clientY - rect.top) / rect.height) * 2 - 1);
-      raycaster.setFromCamera(pointerNDC, sceneCam);
-      raycaster.ray.intersectPlane(pointerPlane, hitPoint);
-      rawTargetPos.copy(hitPoint);
-      pointerActive = true;
-    }
-
-    pointerSurface.addEventListener('pointermove', e => updatePointer(e.clientX, e.clientY));
-    pointerSurface.addEventListener('pointerup', () => { pointerActive = false; });
-    pointerSurface.addEventListener('pointercancel', () => { pointerActive = false; });
-    pointerSurface.addEventListener('pointerleave', () => { pointerActive = false; });
-
-    function resizeHeroOrb() {
-      const rect = frame.getBoundingClientRect();
-      const w = Math.max(1, Math.round(rect.width));
-      const h = Math.max(1, Math.round(rect.height));
-      const pr = renderer.getPixelRatio();
-      renderer.setSize(w, h, false);
-      sceneCam.aspect = w / h;
-      sceneCam.updateProjectionMatrix();
-      rt.setSize(w * pr, h * pr);
-      postMat.uniforms.uResolution.value.set(w * pr, h * pr);
-    }
-
-    window.addEventListener('resize', resizeHeroOrb);
-    resizeHeroOrb();
-
-    {
-      const { maxX, maxY } = currentBounds();
-      blob.position.set(-maxX * 0.4, -maxY * 0.25, 0);
-      targetPos.copy(blob.position);
-      rawTargetPos.copy(blob.position);
-    }
-
-    const clock = new THREE.Clock();
-    function animateHeroOrb() {
-      requestAnimationFrame(animateHeroOrb);
-      const t = clock.getElapsedTime();
-      const { maxX, maxY } = currentBounds();
-
-      blobMat.uniforms.uTime.value = t;
-
-      if (pointerActive) targetPos.lerp(rawTargetPos, TARGET_LAG);
-      const ax = pointerActive ? (targetPos.x - blob.position.x) * STIFFNESS : 0;
-      const ay = pointerActive ? (targetPos.y - blob.position.y) * STIFFNESS : 0;
-      velocity.x = (velocity.x + ax) * DAMPING;
-      velocity.y = (velocity.y + ay) * DAMPING;
-
-      let nextX = blob.position.x + velocity.x;
-      let nextY = blob.position.y + velocity.y;
-
-      if (nextX > maxX) { nextX = maxX; velocity.x = -velocity.x * BOUNCE_RESTITUTION; impactX = Math.min(1, Math.abs(velocity.x) * 5.5 + 0.3); }
-      if (nextX < -maxX) { nextX = -maxX; velocity.x = -velocity.x * BOUNCE_RESTITUTION; impactX = Math.min(1, Math.abs(velocity.x) * 5.5 + 0.3); }
-      if (nextY > maxY) { nextY = maxY; velocity.y = -velocity.y * BOUNCE_RESTITUTION; impactY = Math.min(1, Math.abs(velocity.y) * 5.5 + 0.3); }
-      if (nextY < -maxY) { nextY = -maxY; velocity.y = -velocity.y * BOUNCE_RESTITUTION; impactY = Math.min(1, Math.abs(velocity.y) * 5.5 + 0.3); }
-
-      blob.position.x = nextX;
-      blob.position.y = nextY;
-      impactX *= 0.88;
-      impactY *= 0.88;
-
-      const speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
-      const travelStretch = THREE.MathUtils.clamp(speed * 8.0, 0, 0.24);
-      if (speed > 0.0004) {
-        const angle = Math.atan2(velocity.y, velocity.x);
-        blob.rotation.z += (angle - blob.rotation.z) * 0.12;
-      }
-
-      const scaleX = (1 + travelStretch) * (1 - impactX * 0.28 + impactY * 0.18);
-      const scaleY = (1 - travelStretch * 0.42) * (1 - impactY * 0.28 + impactX * 0.18);
-      blob.scale.set(scaleX, scaleY, 1);
-
-      renderer.setRenderTarget(rt);
-      renderer.render(scene, sceneCam);
-      renderer.setRenderTarget(null);
-      renderer.render(postScene, postCam);
-    }
-    animateHeroOrb();
   }
 
   /* ── Magnetic buttons ── */
@@ -905,99 +473,6 @@
         btn.style.transform = `translate(${(((e.clientX-r.left)/r.width)-.5)*16}px,${(((e.clientY-r.top)/r.height)-.5)*16}px)`;
       });
       btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-    });
-  }
-
-  /* ── Fullscreen Menu ── */
-  function initFullscreenMenu() {
-    const btn     = document.getElementById('ham');
-    const overlay = document.getElementById('navOverlay');
-    const overlayBg = document.getElementById('navOverlayBg');
-    if (!btn || !overlay) return;
-
-    let isOpen = false;
-    let gsapReady = typeof gsap !== 'undefined';
-
-    // Register CustomEase if available
-    if (gsapReady && typeof CustomEase !== 'undefined') {
-      try { CustomEase.create('menuEase', '0.65, 0.01, 0.05, 0.99'); } catch (_) {}
-    }
-    const menuEase = (gsapReady && typeof CustomEase !== 'undefined') ? 'menuEase' : 'power2.inOut';
-
-    function openMenu() {
-      if (isOpen) return;
-      isOpen = true;
-      btn.setAttribute('aria-expanded', 'true');
-      overlay.setAttribute('data-nav', 'open');
-      document.body.classList.add('menu-open');
-
-      if (!gsapReady) { overlay.style.display = 'flex'; return; }
-
-      const bgPanels  = overlay.querySelectorAll('.backdrop-layer');
-      const menuLinks = overlay.querySelectorAll('.nav-link');
-      const fadeEls   = overlay.querySelectorAll('[data-menu-fade]');
-      const btnTexts  = btn.querySelectorAll('.p-large');
-      const btnIcon   = btn.querySelector('.menu-button-icon');
-
-      gsap.timeline()
-        .set(overlay, { display: 'flex' })
-        .fromTo(btnTexts, { yPercent: 0 }, { yPercent: -100, stagger: 0.18, duration: 0.45, ease: menuEase })
-        .fromTo(btnIcon, { rotate: 0 }, { rotate: 315, duration: 0.5, ease: menuEase }, '<')
-        .fromTo(overlayBg, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, '<')
-        .fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.1, duration: 0.55, ease: menuEase }, '<')
-        .fromTo(menuLinks, { yPercent: 140, rotate: 10 }, { yPercent: 0, rotate: 0, stagger: 0.055, duration: 0.6, ease: menuEase }, '<+=0.3')
-        .fromTo(fadeEls, { autoAlpha: 0, yPercent: 40 }, { autoAlpha: 1, yPercent: 0, stagger: 0.05, duration: 0.5, clearProps: 'all', ease: menuEase }, '<+=0.15');
-    }
-
-    function closeMenu() {
-      if (!isOpen) return;
-      isOpen = false;
-      btn.setAttribute('aria-expanded', 'false');
-      overlay.setAttribute('data-nav', 'closed');
-      document.body.classList.remove('menu-open');
-
-      if (!gsapReady) { overlay.style.display = 'none'; return; }
-
-      const btnTexts  = btn.querySelectorAll('.p-large');
-      const btnIcon   = btn.querySelector('.menu-button-icon');
-
-      gsap.timeline()
-        .to(overlayBg, { autoAlpha: 0, duration: 0.35, ease: menuEase })
-        .to(overlay.querySelector('.menu-content'), { xPercent: 105, duration: 0.45, ease: menuEase }, '<')
-        .to(btnTexts, { yPercent: 0, duration: 0.35, ease: menuEase }, '<')
-        .to(btnIcon, { rotate: 0, duration: 0.4, ease: menuEase }, '<')
-        .set(overlay, { display: 'none', clearProps: 'xPercent' })
-        .set(overlay.querySelector('.menu-content'), { clearProps: 'xPercent' });
-    }
-
-    function toggleMenu() { isOpen ? closeMenu() : openMenu(); }
-
-    btn.addEventListener('click', toggleMenu);
-    if (overlayBg) overlayBg.addEventListener('click', closeMenu);
-    window.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen) closeMenu(); });
-
-    // Shape hover effects
-    overlay.querySelectorAll('.menu-list-item[data-shape]').forEach(item => {
-      const idx   = item.getAttribute('data-shape');
-      const shapesContainer = overlay.querySelector('.ambient-background-shapes');
-      const shape = shapesContainer ? shapesContainer.querySelector(`.bg-shape-${idx}`) : null;
-      if (!shape || !gsapReady) return;
-      const shapeEls = shape.querySelectorAll('.shape-element');
-
-      item.addEventListener('mouseenter', () => {
-        shapesContainer.querySelectorAll('.bg-shape').forEach(s => s.classList.remove('active'));
-        shape.classList.add('active');
-        gsap.fromTo(shapeEls,
-          { scale: 0.5, opacity: 0, rotation: -10 },
-          { scale: 1, opacity: 1, rotation: 0, duration: 0.55, stagger: 0.07, ease: 'back.out(1.7)', overwrite: 'auto' }
-        );
-      });
-      item.addEventListener('mouseleave', () => {
-        gsap.to(shapeEls, {
-          scale: 0.8, opacity: 0, duration: 0.28, ease: 'power2.in',
-          onComplete: () => shape.classList.remove('active'), overwrite: 'auto'
-        });
-      });
     });
   }
 
@@ -1047,10 +522,6 @@
       startHeroAnimations();
       return;
     }
-    if (window.getComputedStyle(preloader).display === 'none') {
-      startHeroAnimations();
-      return;
-    }
     Promise.race([
       new Promise(r => window.addEventListener('load', r, { once: true })),
       new Promise(r => setTimeout(r, 1500))
@@ -1062,19 +533,15 @@
   }
 
   /* ── Boot ── */
-  injectNav();
-  initFullscreenMenu();
   initSmoothScroll();
   initReveal();
-  startHeroAnimations();
-  initHeroOrbAnimation();
   observeScrambleTargets();
   initCounters();
   initBrandAnimation();
   initMagneticButtons();
   initSpotlights();
-  initPreloader();
   initGsapInteractions();
+  initPreloader();
   injectFooters();
   injectEmails();
   initStickyMobileCta();
@@ -1085,7 +552,6 @@
     reducedMotion = e.matches;
     initReveal(); observeScrambleTargets(); initSmoothScroll(); initMagneticButtons();
     initHeroTypewriter();
-    initHeroOrbAnimation();
   });
 
   coarsePointerQuery.addEventListener('change', () => initSmoothScroll());
