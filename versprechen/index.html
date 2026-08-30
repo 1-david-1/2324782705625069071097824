@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unser Versprechen – InboxElevate</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo-mark.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <nav id="nav">
+    <a href="/" class="logo">InboxElevate</a>
+    <ul class="nav-links">
+      <li><a href="/">Start</a></li>
+      <li><a href="/leistungen">Leistungen</a></li>
+      <li><a href="/prozess">Prozess</a></li>
+      <li><a href="/ueber-uns">Über uns</a></li>
+      <li><a href="/tipps">Tipps</a></li>
+      <li><a href="/kontakt" class="nav-cta">Kontakt <span class="nav-arrow">→</span></a></li>
+    </ul>
+    <button class="ham" id="ham" onclick="this.classList.toggle('open');document.getElementById('mobMenu').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mob-menu" id="mobMenu">
+    <a href="/">Start</a>
+    <a href="/leistungen">Leistungen</a>
+    <a href="/prozess">Prozess</a>
+    <a href="/ueber-uns">Über uns</a>
+    <a href="/tipps">Tipps</a>
+    <a href="/kontakt">Kontakt →</a>
+  </div>
+
+  <main class="page-hero promise-hero">
+    <p class="page-label">Unser Versprechen</p>
+    <div class="promise-headline"
+         data-text-hover="Erst liefern. Dann zahlen."
+         data-text-hover-size="42"
+         data-text-hover-width="620"
+         data-text-hover-height="100"
+         role="heading"
+         aria-level="1"></div>
+    <p class="page-sub promise-sub">Du zahlst nicht für Versprechen — sondern für Ergebnisse, die bei dir ankommen.</p>
+  </main>
+
+  <section class="promise-body">
+    <div class="promise-grid">
+      <div class="value-card">
+        <div class="value-icon">01</div>
+        <h4>Keine Vorauszahlung</h4>
+        <p>Wir starten, ohne dass du blind investierst. Dein Budget fließt erst, wenn du siehst, was wir liefern.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">02</div>
+        <h4>Klare Meilensteine</h4>
+        <p>Du weißt vorher, was wann fertig ist — und was es kostet. Keine Überraschungen, keine versteckten Posten.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">03</div>
+        <h4>Dein Risiko: null</h4>
+        <p>Wenn wir nicht liefern, zahlst du nicht. Punkt. So einfach ist unser Modell.</p>
+      </div>
+    </div>
+
+    <div class="promise-cta">
+      <p>Bereit für Marketing ohne Risiko?</p>
+      <a href="/kontakt" class="btn-ink">
+        Kostenlosen Marketing-Check anfordern
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <svg viewBox="0 0 40 40" fill="none" style="width:30px;">
+          <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p><strong>InboxElevate</strong><br>Mehr Anfragen. Mehr Bewerbungen. Spezialisiert auf Sicherheitsunternehmen.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Navigation</h5>
+        <a href="/">Start</a>
+        <a href="/leistungen">Leistungen</a>
+        <a href="/prozess">Prozess</a>
+        <a href="/ueber-uns">Über uns</a>
+        <a href="/tipps">Tipps</a>
+      </div>
+      <div class="footer-col">
+        <h5>Leistungen</h5>
+        <a href="/leistungen/webseiten">Webentwicklung</a>
+        <a href="/leistungen/paid-ads">Paid Ads</a>
+        <a href="/leistungen/ki">KI-Automatisierung</a>
+      </div>
+      <div class="footer-col">
+        <h5>Kontakt</h5>
+        <a href="mailto:david@inbox-elevate.de">david@inbox-elevate.de</a>
+        <a href="/kontakt">Anfrage stellen</a>
+        <a href="/datenschutz">Datenschutz</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 InboxElevate. Alle Rechte vorbehalten.</p>
+      <div class="socials">
+        <a href="https://www.linkedin.com/company/inboxelevate/" class="soc" title="LinkedIn">in</a>
+        <a href="mailto:david@inbox-elevate.de" class="soc" title="Email">✉</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="/js/text-hover-effect.js"></script>
+  <script src="/js/main.js" defer></script>
+</body>
+</html>
