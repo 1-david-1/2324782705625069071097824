@@ -32,7 +32,6 @@
           <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
             stroke-linejoin="round" />
         </svg>
-        <span>InboxElevate</span>
       </div>
       <div class="preloader-track">
         <div class="preloader-bar"></div>
@@ -53,47 +52,9 @@
     <a href="/#kontakt" class="contact-trigger">Jetzt anfragen →</a>
   </div>
 
-  <!-- NAV -->
-  <nav id="nav">
-    <a href="#" class="logo logo-outer" onclick="navigate('home');return false;">
-      <svg viewBox="0 0 40 40" fill="none">
-        <path d="M8 32L34 8M34 8L14 6M34 8L32 28" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-          stroke-linejoin="round" />
-        <path d="M34 8L20 22" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round" />
-        <path d="M20 22L18 32L23 26" stroke="#1dba6e" stroke-width="2.5" stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-      InboxElevate
-    </a>
-    <ul class="nav-links">
-      <li><a href="/">Start</a></li>
-      <li class="nav-dropdown">
-        <a href="/leistungen">Leistungen <span class="nav-dropdown-caret">▾</span></a>
-        <ul class="nav-dropdown-menu">
-          <li><a href="/leistungen/webseiten">Webseiten</a></li>
-          <li><a href="/leistungen/paid-ads">Paid Ads</a></li>
-          <li><a href="/leistungen/ki">KI-Automatisierung</a></li>
-        </ul>
-      </li>
-      <li><a href="/prozess">Prozess</a></li>
-      <li><a href="/ueber-uns">Über uns</a></li>
-      <li><a href="/tipps">Tipps</a></li>
-      <li><a href="/#kontakt" class="nav-cta contact-trigger">Kontakt <span class="nav-arrow">→</span></a></li>
-    </ul>
-    <button class="ham" id="ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
-  </nav>
+  <!-- NAV (injected by JS) -->
+  <div data-site-nav></div>
 
-  <div class="mob-menu" id="mobMenu">
-    <a href="/">Start</a>
-    <a href="/leistungen">Leistungen</a>
-    <a href="/leistungen/webseiten" class="mob-submenu">Webseiten</a>
-    <a href="/leistungen/paid-ads" class="mob-submenu">Paid Ads</a>
-    <a href="/leistungen/ki" class="mob-submenu">KI-Automatisierung</a>
-    <a href="/prozess">Prozess</a>
-    <a href="/ueber-uns">Über uns</a>
-    <a href="/tipps">Tipps</a>
-    <a href="/kontakt">Kontakt →</a>
-  </div>
 
   <main>
 
@@ -103,12 +64,15 @@
   <div id="home">
     <section class="hero">
       <div class="hero-inner">
+        <div class="hero-orb-stage" id="heroOrbStage" aria-hidden="true">
+          <canvas id="heroOrbCanvas"></canvas>
+        </div>
         <div class="hero-label sr">Spezialisiert auf Sicherheitsunternehmen. Und sonst niemanden.</div>
         <h1 class="hero-h1 sr" data-d="1">
-          <span id="tw-line1">Mehr qualifizierte</span><br>
-          <span id="tw-line2">Anfragen für</span><br>
-          <span class="hero-tw-line"><span id="tw-text" aria-live="polite">Sicherheitsunternehmen</span><span
-              class="tw-cursor" aria-hidden="true"></span></span>
+          <span class="hero-h1-static">Mehr qualifizierte Anfragen für</span>
+          <span class="hero-tw-word">
+            <span id="tw-text" aria-live="polite">Sicherheitsunternehmen</span><span class="tw-cursor" aria-hidden="true"></span>
+          </span>
         </h1>
         <div class="hero-sub-row">
           <p class="hero-p sr" data-d="2">Du bist gut in deinem Job. Deine Website und deine Ads sollten das genauso klar kommunizieren. Wir kümmern uns darum — und nur darum.</p>
@@ -126,12 +90,6 @@
             <a href="/leistungen" class="btn-ghost">
               Leistungen entdecken <span class="btn-arrow">→</span>
             </a>
-            <a href="/versprechen" class="btn-promise"
-               data-text-hover="Unser Versprechen"
-               data-text-hover-size="18"
-               data-text-hover-width="240"
-               data-text-hover-height="44"
-               aria-label="Unser Versprechen"></a>
           </div>
         </div>
       </div>
@@ -292,11 +250,12 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/CustomEase.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Draggable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/InertiaPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Physics2DPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="/js/main.js" defer></script>
-  <script src="/js/text-hover-effect.js" defer></script>
 </body>
 
 </html>
