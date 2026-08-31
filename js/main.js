@@ -573,12 +573,6 @@
   initStickyMobileCta();
   updateScrollChrome();
 
-  window.addEventListener('doorgate:unlocked', () => {
-    if (typeof window.startHeroAnimations === 'function') window.startHeroAnimations();
-    initReveal();
-    observeScrambleTargets();
-  });
-
   /* ── Event listeners ── */
   motionQuery.addEventListener('change', e => {
     reducedMotion = e.matches;
