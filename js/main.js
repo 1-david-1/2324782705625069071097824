@@ -144,6 +144,26 @@
   }
   window.toggleMob = toggleMob;
 
+  function initNavDropdowns() {
+    document.querySelectorAll('.nav-dropdown > a').forEach(trigger => {
+      const parent = trigger.closest('.nav-dropdown');
+      if (!parent || parent.dataset.dropdownBound === 'true') return;
+      parent.dataset.dropdownBound = 'true';
+      trigger.addEventListener('click', e => {
+        if (window.innerWidth > 900) return;
+        e.preventDefault();
+        const open = !parent.classList.contains('open');
+        document.querySelectorAll('.nav-dropdown.open').forEach(d => { if (d !== parent) d.classList.remove('open'); });
+        parent.classList.toggle('open', open);
+      });
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.nav-dropdown')) {
+        document.querySelectorAll('.nav-dropdown.open').forEach(d => d.classList.remove('open'));
+      }
+    });
+  }
+
   /* ── Scroll chrome ── */
   function updateScrollChrome() {
     const y = window.scrollY || 0;
@@ -457,10 +477,15 @@
     prepareHeroWords();
     const h = document.querySelector('.hero-h1');
     if (!h) return;
+    document.querySelectorAll('.hero .sr, .hero .sr-l, .hero .sr-r').forEach(el => el.classList.add('v'));
+    const label = document.querySelector('.hero-label');
+    if (label && label.dataset.scrambled !== 'true') scrambleText(label);
     if (reducedMotion) { h.classList.add('ready'); h.querySelectorAll('.hero-word').forEach(w => w.classList.add('no-animate')); }
     else { requestAnimationFrame(() => h.classList.add('ready')); }
     initHeroTypewriter();
   }
+
+  window.startHeroAnimations = startHeroAnimations;
 
   /* ── Magnetic buttons ── */
   function initMagneticButtons() {
@@ -541,11 +566,18 @@
   initMagneticButtons();
   initSpotlights();
   initGsapInteractions();
+  initNavDropdowns();
   initPreloader();
   injectFooters();
   injectEmails();
   initStickyMobileCta();
   updateScrollChrome();
+
+  window.addEventListener('doorgate:unlocked', () => {
+    if (typeof window.startHeroAnimations === 'function') window.startHeroAnimations();
+    initReveal();
+    observeScrambleTargets();
+  });
 
   /* ── Event listeners ── */
   motionQuery.addEventListener('change', e => {
