@@ -11,7 +11,6 @@
     href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/door-gate.css">
   <style>
     /* Failsafe: hide preloader after 2.5s even if JS fails */
     @keyframes _preloader_escape {
@@ -22,57 +21,6 @@
 </head>
 
 <body>
-
-  <!-- ══════════════════ TÜR-EINGANG / SICHERHEITS-GATE ══════════════════
-       Erscheint vor dem eigentlichen Seiteninhalt. Besucher klickt auf die
-       Tür im Haus-Bild, gibt einen Zahlencode über ein Tastenfeld ein;
-       bei korrektem Code "entriegelt" die Tür und gibt den Blick auf die
-       Website frei. Logik in /js/door-gate.js, Styles in /css/door-gate.css.
-       Den Zugangscode kannst du oben in door-gate.js unter ACCESS_CODE ändern.
-  ═══════════════════════════════════════════════════════════════════════ -->
-  <div id="doorGate" aria-hidden="false">
-    <div class="door-gate-bg"></div>
-
-    <button type="button"
-            id="doorHotspot"
-            class="door-gate-hotspot"
-            aria-label="Zur Haustür gehen und Zugangscode eingeben, um die Website zu betreten"></button>
-
-    <div id="doorTooltip" class="door-gate-tooltip">Hier klicken, um einzutreten</div>
-
-    <div id="doorKeypadOverlay" class="door-gate-keypad-overlay" aria-hidden="true">
-      <div class="door-gate-keypad-card">
-        <div class="door-gate-keypad-icon">🔒</div>
-        <h2>Sicherheitsbereich</h2>
-        <p>Dieses Haus ist gesichert. Bitte gib den 4-stelligen Zugangscode ein, um die Tür zu entriegeln.</p>
-
-        <div class="door-gate-keypad-display" id="doorKeypadDisplay">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        </div>
-
-        <div class="door-gate-keypad-grid">
-          <button type="button" data-num="1">1</button>
-          <button type="button" data-num="2">2</button>
-          <button type="button" data-num="3">3</button>
-          <button type="button" data-num="4">4</button>
-          <button type="button" data-num="5">5</button>
-          <button type="button" data-num="6">6</button>
-          <button type="button" data-num="7">7</button>
-          <button type="button" data-num="8">8</button>
-          <button type="button" data-num="9">9</button>
-          <button type="button" data-action="clear">C</button>
-          <button type="button" data-num="0">0</button>
-          <button type="button" data-action="back">⌫</button>
-        </div>
-
-        <p class="door-gate-keypad-error" id="doorKeypadError" aria-live="polite"></p>
-        <button type="button" class="door-gate-keypad-close" id="doorKeypadClose">Abbrechen</button>
-      </div>
-    </div>
-
-    <div class="door-gate-flash" id="doorGateFlash" aria-hidden="true"></div>
-  </div>
-  <!-- ══════════════════ ENDE TÜR-EINGANG ══════════════════ -->
 
   <div class="preloader" id="preloader" aria-hidden="true" style="display:none">
     <div class="preloader-inner">
@@ -349,7 +297,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Physics2DPlugin.min.js"></script>
   <script src="/js/main.js" defer></script>
   <script src="/js/text-hover-effect.js" defer></script>
-  <script src="/js/door-gate.js" defer></script>
 </body>
 
 </html>
