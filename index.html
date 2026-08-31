@@ -119,9 +119,13 @@
     </a>
     <ul class="nav-links">
       <li><a href="/">Start</a></li>
-      <li>
-        <a href="/leistungen">Leistungen</a>
-        
+      <li class="nav-dropdown">
+        <a href="/leistungen">Leistungen <span class="nav-dropdown-caret">▾</span></a>
+        <ul class="nav-dropdown-menu">
+          <li><a href="/leistungen/webseiten">Webseiten</a></li>
+          <li><a href="/leistungen/paid-ads">Paid Ads</a></li>
+          <li><a href="/leistungen/ki">KI-Automatisierung</a></li>
+        </ul>
       </li>
       <li><a href="/prozess">Prozess</a></li>
       <li><a href="/ueber-uns">Über uns</a></li>
@@ -134,9 +138,9 @@
   <div class="mob-menu" id="mobMenu">
     <a href="/">Start</a>
     <a href="/leistungen">Leistungen</a>
-    
-    
-    
+    <a href="/leistungen/webseiten" class="mob-submenu">Webseiten</a>
+    <a href="/leistungen/paid-ads" class="mob-submenu">Paid Ads</a>
+    <a href="/leistungen/ki" class="mob-submenu">KI-Automatisierung</a>
     <a href="/prozess">Prozess</a>
     <a href="/ueber-uns">Über uns</a>
     <a href="/tipps">Tipps</a>
@@ -340,11 +344,11 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
-  <script src="/js/text-hover-effect.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Draggable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/InertiaPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/Physics2DPlugin.min.js"></script>
   <script src="/js/main.js" defer></script>
+  <script src="/js/text-hover-effect.js" defer></script>
   <script src="/js/door-gate.js" defer></script>
 </body>
 
