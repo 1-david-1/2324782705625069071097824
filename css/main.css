@@ -523,13 +523,30 @@
       line-height: 1.4;
     }
 
+    .usp-section {
+      padding: clamp(3.5rem, 7vw, 6rem) clamp(1.5rem, 5vw, 5rem);
+      background: var(--ink);
+      color: var(--cream);
+      overflow: hidden;
+    }
+
+    .usp-section-inner {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .usp-label {
+      margin-bottom: 1.25rem;
+      color: var(--green);
+      font-family: var(--M);
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
     .usp-reveal {
       position: relative;
-      max-width: 450px;
-      padding: .9rem 1rem;
       overflow: hidden;
-      border-left: 3px solid var(--green);
-      background: rgba(29, 186, 110, .08);
     }
 
     .usp-reveal::after {
@@ -537,27 +554,30 @@
       position: absolute;
       inset: 0;
       z-index: 1;
-      background: var(--cream);
+      background: var(--ink);
       transform: scaleX(1);
       transform-origin: right center;
-      transition: transform .75s cubic-bezier(.22, 1, .36, 1) .15s;
+      transition: transform .85s cubic-bezier(.22, 1, .36, 1) .12s;
     }
 
-    .usp-reveal.v::after { transform: scaleX(0); }
+    .usp-section.v .usp-reveal::after { transform: scaleX(0); }
 
-    .usp-reveal strong {
-      display: block;
-      color: var(--ink);
+    .usp-reveal h2 {
+      max-width: 900px;
+      color: var(--cream);
       font-family: var(--H);
-      font-size: .9rem;
-      line-height: 1.35;
+      font-size: clamp(2.2rem, 5vw, 4.7rem);
+      font-weight: 800;
+      letter-spacing: -.05em;
+      line-height: .98;
     }
 
     .usp-reveal p {
-      margin-top: .3rem;
-      color: var(--muted);
-      font-size: .76rem;
-      line-height: 1.45;
+      max-width: 620px;
+      margin-top: 1.2rem;
+      color: rgba(245, 243, 238, .68);
+      font-size: 1rem;
+      line-height: 1.6;
     }
 
     [data-text-hover] {
