@@ -89,7 +89,7 @@
         .fromTo(menuButtonTexts, { yPercent: 0 }, { yPercent: -100, stagger: 0.2 }, '<')
         .fromTo(menuButtonIcon, { rotate: 0 }, { rotate: 315 }, '<')
         .fromTo(overlay, { autoAlpha: 0 }, { autoAlpha: 1 }, '<')
-        .fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.12, duration: 0.575, ease: 'power3.inOut' }, '<')
+        .fromTo(bgPanels, { xPercent: -101 }, { xPercent: 0, stagger: 0.12, duration: 0.575, ease: 'power3.inOut' }, '<')
         .fromTo(menuLinks, { yPercent: 140, rotate: 10 }, { yPercent: 0, rotate: 0, stagger: 0.05, ease: 'power3.out' }, '<+=0.35')
         .call(() => menuLinks[0]?.focus());
 
@@ -101,7 +101,7 @@
 
       menuTl
         .to(overlay, { autoAlpha: 0, duration: 0.4 })
-        .to(menu, { xPercent: 120, duration: 0.5, ease: 'power3.in' }, '<')
+        .to(menu, { xPercent: -120, duration: 0.5, ease: 'power3.in' }, '<')
         .to(menuButtonTexts, { yPercent: 0, duration: 0.35 }, '<')
         .to(menuButtonIcon, { rotate: 0, duration: 0.35 }, '<')
         .set(wrapper, { display: 'none' })
@@ -143,9 +143,9 @@
 
   if (typeof gsap !== 'undefined') {
     gsap.set(wrapper, { display: 'none' });
-    gsap.set(menu, { xPercent: 120 });
+    gsap.set(menu, { xPercent: -120 });
     gsap.set(overlay, { autoAlpha: 0 });
-    gsap.set(bgPanels, { xPercent: 101 });
+    gsap.set(bgPanels, { xPercent: -101 });
   }
 
   bindShapeHovers();
